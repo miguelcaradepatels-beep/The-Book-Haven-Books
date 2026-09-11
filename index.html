@@ -55,8 +55,6 @@ body {
         0 10px 30px rgba(60, 40, 20, .10);
 
     --reader-width: 760px;
-    --font-size: 18px;
-    --line-height: 1.75;
 }
 
 /* =========================================================
@@ -1244,6 +1242,7 @@ function showToast(message) {
         toast.classList.remove("show");
 
     }, 2200);
+
 }
 
 
@@ -1276,7 +1275,7 @@ async function openBook() {
 
 
         /* =================================================
-           EVENTO DE LOCALIZAÇÃO
+           LOCALIZAÇÃO
         ================================================= */
 
         rendition.on(
@@ -1318,7 +1317,7 @@ async function openBook() {
 
 
         /* =================================================
-           ESTILO DO EPUB
+           ESTILO
         ================================================= */
 
         rendition.themes.default({
@@ -1326,10 +1325,7 @@ async function openBook() {
             body: {
 
                 "font-family":
-                    "Georgia, serif !important",
-
-                "color":
-                    "inherit !important"
+                    "Georgia, serif !important"
 
             }
 
@@ -1354,14 +1350,16 @@ async function openBook() {
 
 
         /* =================================================
-           MOSTRAR LIVRO
+           ABRIR POSIÇÃO SALVA
         ================================================= */
 
         if (savedCfi) {
 
             try {
 
-                await rendition.display(savedCfi);
+                await rendition.display(
+                    savedCfi
+                );
 
             } catch {
 
@@ -1380,7 +1378,10 @@ async function openBook() {
 
     } catch (error) {
 
-        console.error(error);
+        console.error(
+            "Erro ao abrir EPUB:",
+            error
+        );
 
         loading.innerHTML = `
 
@@ -1400,6 +1401,7 @@ async function openBook() {
                 </p>
 
             </div>
+
         `;
 
     }
@@ -1461,6 +1463,7 @@ async function loadTOC() {
                 "Índice não disponível.";
 
             return;
+
         }
 
 
@@ -1483,7 +1486,9 @@ async function loadTOC() {
                         item.href
                     );
 
-                    tocPanel.classList.remove("open");
+                    tocPanel.classList.remove(
+                        "open"
+                    );
 
                 } catch (error) {
 
@@ -1518,10 +1523,21 @@ async function loadTOC() {
 
 async function updateProgress(location) {
 
-    if (!location || !location.start)
-        return;
+    if (
+        !location ||
+        !location.start
+    ) return;
 
     try {
+
+        if (
+            !book.locations ||
+            !book.locations.length
+        ) {
+
+            return;
+
+        }
 
         const percentage =
             book.locations.percentageFromCfi(
@@ -1543,11 +1559,14 @@ async function updateProgress(location) {
 
         }
 
-    } catch {
+    } catch (error) {
 
-        /* Ignora erros de progresso */
+        console.log(
+            "Progresso ainda não disponível."
+        );
 
     }
+
 }
 
 
@@ -1555,24 +1574,26 @@ async function updateProgress(location) {
    GERAR LOCALIZAÇÕES
 ========================================================= */
 
+async function generateLocations() {
 
-        await new Promise(resolve => {
+    try {
 
-            const check = setInterval(() => {
+        await book.ready;
 
-                if (book) {
+        await book.locations.generate(1000);
 
-                    clearInterval(check);
+        console.log(
+            "Localizações geradas."
+        );
 
-                    resolve();
+    } catch (error) {
 
-                }
+        console.log(
+            "Não foi possível gerar localizações:",
+            error
+        );
 
-            }, 100);
-
-        });
-
-    } catch {}
+    }
 
 }
 
@@ -1594,7 +1615,9 @@ function saveBookmarks() {
 function renderBookmarks() {
 
     const list =
-        document.getElementById("bookmark-list");
+        document.getElementById(
+            "bookmark-list"
+        );
 
     list.innerHTML = "";
 
@@ -1608,73 +1631,80 @@ function renderBookmarks() {
     }
 
 
-    bookmarks.forEach((bookmark, index) => {
+    bookmarks.forEach(
+        (bookmark, index) => {
 
-        const item =
-            document.createElement("div");
+            const item =
+                document.createElement("div");
 
-        item.className =
-            "bookmark";
-
-        const text =
-            document.createElement("span");
-
-        text.textContent =
-            bookmark.label ||
-            "Página marcada";
+            item.className =
+                "bookmark";
 
 
-        const remove =
-            document.createElement("button");
+            const text =
+                document.createElement("span");
 
-        remove.className =
-            "icon-btn";
-
-        remove.textContent =
-            "✕";
-
-        remove.onclick = event => {
-
-            event.stopPropagation();
-
-            bookmarks.splice(index, 1);
-
-            saveBookmarks();
-
-            renderBookmarks();
-
-        };
+            text.textContent =
+                bookmark.label ||
+                "Página marcada";
 
 
-        item.appendChild(text);
+            const remove =
+                document.createElement("button");
 
-        item.appendChild(remove);
+            remove.className =
+                "icon-btn";
+
+            remove.textContent =
+                "✕";
 
 
-        item.onclick = async () => {
+            remove.onclick = event => {
 
-            try {
+                event.stopPropagation();
 
-                await rendition.display(
-                    bookmark.cfi
+                bookmarks.splice(
+                    index,
+                    1
                 );
 
-                bookmarkPanel.classList.remove(
-                    "open"
-                );
+                saveBookmarks();
 
-            } catch (error) {
+                renderBookmarks();
 
-                console.error(error);
-
-            }
-
-        };
+            };
 
 
-        list.appendChild(item);
+            item.appendChild(text);
 
-    });
+            item.appendChild(remove);
+
+
+            item.onclick = async () => {
+
+                try {
+
+                    await rendition.display(
+                        bookmark.cfi
+                    );
+
+                    bookmarkPanel.classList.remove(
+                        "open"
+                    );
+
+                } catch (error) {
+
+                    console.error(error);
+
+                }
+
+            };
+
+
+            list.appendChild(item);
+
+        }
+    );
 
 }
 
@@ -1751,6 +1781,9 @@ function applyReaderSettings() {
     const line =
         settings.lineHeight || 175;
 
+    const width =
+        settings.readerWidth || 760;
+
 
     document.getElementById(
         "font-size"
@@ -1764,8 +1797,7 @@ function applyReaderSettings() {
 
     document.getElementById(
         "reader-width"
-    ).value =
-        settings.readerWidth || 760;
+    ).value = width;
 
 
     document.body.classList.remove(
@@ -1788,6 +1820,19 @@ function applyReaderSettings() {
     }
 
 
+    document.querySelectorAll(
+        ".theme-button"
+    ).forEach(button => {
+
+        button.classList.toggle(
+            "active",
+            button.dataset.theme ===
+            (settings.theme || "paper")
+        );
+
+    });
+
+
     updateEPUBStyles();
 
 }
@@ -1805,30 +1850,23 @@ function updateEPUBStyles() {
     const line =
         settings.lineHeight || 175;
 
-    const width =
-        settings.readerWidth || 760;
-
 
     rendition.themes.override(
         "font-size",
         font + "%"
     );
 
+
     rendition.themes.override(
         "line-height",
         (line / 100).toString()
-    );
-
-    rendition.themes.override(
-        "max-width",
-        width + "px"
     );
 
 }
 
 
 /* =========================================================
-   CONTROLES DE CONFIGURAÇÃO
+   CONTROLES
 ========================================================= */
 
 document.getElementById(
@@ -1885,8 +1923,6 @@ document.getElementById(
             JSON.stringify(settings)
         );
 
-        updateEPUBStyles();
-
     }
 );
 
@@ -1904,8 +1940,10 @@ document.querySelectorAll(
         const theme =
             button.dataset.theme;
 
+
         settings.theme =
             theme;
+
 
         localStorage.setItem(
             "readerSettings",
@@ -1933,12 +1971,16 @@ document.querySelectorAll(
             ".theme-button"
         ).forEach(b => {
 
-            b.classList.remove("active");
+            b.classList.remove(
+                "active"
+            );
 
         });
 
 
-        button.classList.add("active");
+        button.classList.add(
+            "active"
+        );
 
     };
 
@@ -1946,42 +1988,64 @@ document.querySelectorAll(
 
 
 /* =========================================================
-   BOTÕES
+   BOTÃO COMEÇAR
 ========================================================= */
 
 document.getElementById(
     "start-reading"
 ).onclick = async () => {
 
-    home.classList.add("hidden");
+    home.classList.add(
+        "hidden"
+    );
 
-    reader.classList.add("visible");
+    reader.classList.add(
+        "visible"
+    );
 
     await openBook();
 
 };
 
 
+/* =========================================================
+   HOME
+========================================================= */
+
 document.getElementById(
     "home-btn"
 ).onclick = () => {
 
-    reader.classList.remove("visible");
+    reader.classList.remove(
+        "visible"
+    );
 
-    home.classList.remove("hidden");
+    home.classList.remove(
+        "hidden"
+    );
 
 };
 
+
+/* =========================================================
+   TOC
+========================================================= */
 
 document.getElementById(
     "toc-btn"
 ).onclick = () => {
 
-    tocPanel.classList.toggle("open");
+    tocPanel.classList.toggle(
+        "open"
+    );
 
-    settingsPanel.classList.remove("open");
+    settingsPanel.classList.remove(
+        "open"
+    );
 
-    bookmarkPanel.classList.remove("open");
+    bookmarkPanel.classList.remove(
+        "open"
+    );
 
 };
 
@@ -1990,20 +2054,32 @@ document.getElementById(
     "close-toc"
 ).onclick = () => {
 
-    tocPanel.classList.remove("open");
+    tocPanel.classList.remove(
+        "open"
+    );
 
 };
 
+
+/* =========================================================
+   CONFIGURAÇÕES
+========================================================= */
 
 document.getElementById(
     "settings-btn"
 ).onclick = () => {
 
-    settingsPanel.classList.toggle("open");
+    settingsPanel.classList.toggle(
+        "open"
+    );
 
-    tocPanel.classList.remove("open");
+    tocPanel.classList.remove(
+        "open"
+    );
 
-    bookmarkPanel.classList.remove("open");
+    bookmarkPanel.classList.remove(
+        "open"
+    );
 
 };
 
@@ -2012,10 +2088,16 @@ document.getElementById(
     "close-settings"
 ).onclick = () => {
 
-    settingsPanel.classList.remove("open");
+    settingsPanel.classList.remove(
+        "open"
+    );
 
 };
 
+
+/* =========================================================
+   MARCADOR
+========================================================= */
 
 document.getElementById(
     "bookmark-btn"
@@ -2032,14 +2114,24 @@ document.getElementById(
 
     renderBookmarks();
 
-    bookmarkPanel.classList.toggle("open");
+    bookmarkPanel.classList.toggle(
+        "open"
+    );
 
-    tocPanel.classList.remove("open");
+    tocPanel.classList.remove(
+        "open"
+    );
 
-    settingsPanel.classList.remove("open");
+    settingsPanel.classList.remove(
+        "open"
+    );
 
 };
 
+
+/* =========================================================
+   MODO FOCO
+========================================================= */
 
 document.getElementById(
     "focus-btn"
@@ -2067,18 +2159,23 @@ document.addEventListener(
         if (
             event.target.tagName ===
             "INPUT"
-        )
-            return;
+        ) return;
 
 
-        if (event.key === "ArrowRight") {
+        if (
+            event.key ===
+            "ArrowRight"
+        ) {
 
             rendition.next();
 
         }
 
 
-        if (event.key === "ArrowLeft") {
+        if (
+            event.key ===
+            "ArrowLeft"
+        ) {
 
             rendition.prev();
 
@@ -2097,7 +2194,10 @@ document.addEventListener(
         }
 
 
-        if (event.key === "Escape") {
+        if (
+            event.key ===
+            "Escape"
+        ) {
 
             tocPanel.classList.remove(
                 "open"
@@ -2118,10 +2218,11 @@ document.addEventListener(
 
 
 /* =========================================================
-   SWIPE NO CELULAR
+   SWIPE CELULAR
 ========================================================= */
 
 let touchStartX = 0;
+
 
 document.getElementById(
     "reader-area"
@@ -2149,15 +2250,21 @@ document.getElementById(
         const touchEndX =
             event.changedTouches[0].screenX;
 
+
         const difference =
-            touchEndX - touchStartX;
+            touchEndX -
+            touchStartX;
 
 
-        if (Math.abs(difference) < 50)
-            return;
+        if (
+            Math.abs(difference) <
+            50
+        ) return;
 
 
-        if (difference < 0) {
+        if (
+            difference < 0
+        ) {
 
             rendition.next();
 
