@@ -2,16 +2,27 @@
 
 <html lang="pt-BR">
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1.0"
+
+>
 
 <title>The Book Haven</title>
 
-<script src="https://cdn.jsdelivr.net/npm/epubjs/dist/epub.min.js"></script>
+<!--
+    EPUB.JS
+    Carregado de forma assíncrona para não bloquear
+    a renderização inicial da interface.
+-->
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@400;500;600&family=Literata:opsz,wght@7..72,400;7..72,500;7..72,600&display=swap" rel="stylesheet">
+<script
+    src="https://cdn.jsdelivr.net/npm/epubjs/dist/epub.min.js"
+    defer>
+</script>
 
 <style>
 
@@ -20,85 +31,123 @@
 }
 
 :root {
+
     --bg: #eee7da;
     --surface: #f9f5ed;
     --surface-2: #e8dece;
+
     --text: #352b22;
     --text-soft: #756a5d;
+
     --accent: #9b7040;
     --accent-light: #c9a878;
+
     --border: rgba(70, 50, 30, .13);
     --shadow: rgba(45, 31, 20, .15);
 
-    --reader-font-size: 100%;
-    --reader-line-height: 1.8;
     --reader-width: 760px;
+
 }
 
-html,
-body {
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    min-height: 100%;
-}
-
-body {
-    font-family: Inter, sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    transition:
-        background .45s ease,
-        color .45s ease;
-}
 
 /* =====================================================
    TEMAS
 ===================================================== */
 
 body.theme-night {
+
     --bg: #12110f;
     --surface: #1d1b18;
     --surface-2: #29251f;
+
     --text: #e8dfd1;
     --text-soft: #aaa092;
+
     --accent: #c9a66a;
     --accent-light: #e0c18b;
+
     --border: rgba(255,255,255,.09);
     --shadow: rgba(0,0,0,.4);
+
 }
 
+
 body.theme-cozy {
+
     --bg: #2a211b;
     --surface: #352920;
     --surface-2: #46362a;
+
     --text: #ead9bc;
     --text-soft: #bca98e;
+
     --accent: #d0a45e;
     --accent-light: #e0bd82;
+
     --border: rgba(255,255,255,.08);
     --shadow: rgba(0,0,0,.35);
+
 }
 
+
 body.theme-forest {
+
     --bg: #17201b;
     --surface: #202b24;
     --surface-2: #2c3a31;
+
     --text: #e0e5d8;
     --text-soft: #aab4a6;
+
     --accent: #a7ad72;
     --accent-light: #c5cb91;
+
     --border: rgba(255,255,255,.08);
     --shadow: rgba(0,0,0,.35);
+
 }
 
+
 /* =====================================================
-   HEADER
+   BODY
+===================================================== */
+
+html,
+body {
+
+    margin: 0;
+    padding: 0;
+
+    width: 100%;
+    min-height: 100%;
+
+}
+
+
+body {
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    background: var(--bg);
+    color: var(--text);
+
+    transition:
+        background .3s ease,
+        color .3s ease;
+
+}
+
+
+/* =====================================================
+   TOPO
 ===================================================== */
 
 .topbar {
+
     height: 68px;
-    width: 100%;
 
     display: flex;
     align-items: center;
@@ -108,92 +157,123 @@ body.theme-forest {
 
     background: var(--surface);
 
-    border-bottom: 1px solid var(--border);
+    border-bottom:
+        1px solid var(--border);
 
     position: relative;
+
     z-index: 100;
 
-    transition: background .4s ease;
 }
+
 
 .logo {
-    font-family: "Cormorant Garamond", serif;
-    font-size: 29px;
-    font-weight: 700;
-    letter-spacing: .3px;
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size: 28px;
+
+    font-weight: bold;
+
 }
+
 
 .logo span {
+
     color: var(--accent);
+
 }
+
 
 .top-actions {
+
     display: flex;
-    gap: 8px;
+
+    gap: 5px;
+
 }
 
+
 .icon-button {
+
     width: 42px;
     height: 42px;
 
     display: flex;
+
     align-items: center;
     justify-content: center;
 
     border: none;
+
     border-radius: 50%;
 
     background: transparent;
+
     color: var(--text);
 
     font-size: 18px;
 
     cursor: pointer;
 
-    transition:
-        background .2s,
-        transform .2s;
 }
 
+
 .icon-button:hover {
+
     background: var(--surface-2);
-    transform: translateY(-1px);
+
 }
+
 
 /* =====================================================
    HOME
 ===================================================== */
 
 #home {
-    min-height: calc(100vh - 68px);
+
+    min-height:
+        calc(100vh - 68px);
 
     display: flex;
+
     align-items: center;
+
     justify-content: center;
 
-    padding: 50px 20px;
+    padding: 45px 20px;
 
-    animation: fadeIn .7s ease;
 }
 
+
 .home-card {
+
     max-width: 1050px;
+
     width: 100%;
 
     display: grid;
-    grid-template-columns: 330px 1fr;
-    gap: 65px;
+
+    grid-template-columns:
+        330px 1fr;
+
+    gap: 60px;
 
     align-items: center;
+
 }
 
+
 .cover {
+
     width: 330px;
     height: 490px;
 
-    border-radius: 7px;
-
     display: flex;
+
     align-items: center;
     justify-content: center;
 
@@ -201,7 +281,7 @@ body.theme-forest {
 
     text-align: center;
 
-    color: #fff;
+    color: white;
 
     background:
         linear-gradient(
@@ -210,326 +290,577 @@ body.theme-forest {
             #85623e
         );
 
+    border-radius: 7px;
+
     box-shadow:
-        15px 20px 35px var(--shadow);
+        15px 20px 35px
+        var(--shadow);
 
     position: relative;
-    overflow: hidden;
 
-    animation: coverAppear .8s ease;
 }
 
+
 .cover::before {
+
     content: "";
 
     position: absolute;
 
     inset: 12px;
 
-    border: 1px solid rgba(255,255,255,.28);
+    border:
+        1px solid
+        rgba(255,255,255,.28);
 
-    pointer-events: none;
 }
+
 
 .cover-content {
+
     position: relative;
+
     z-index: 1;
+
 }
+
 
 .cover-small {
-    font-family: Inter, sans-serif;
+
+    font-family:
+        Arial,
+        sans-serif;
+
     text-transform: uppercase;
+
     letter-spacing: 4px;
+
     font-size: 11px;
+
     opacity: .8;
+
 }
+
 
 .cover h1 {
-    font-family: "Cormorant Garamond", serif;
+
     font-size: 42px;
+
     line-height: 1.05;
+
     margin: 35px 0;
+
 }
+
 
 .cover-author {
-    font-family: "Cormorant Garamond", serif;
-    font-size: 19px;
+
+    font-size: 18px;
+
 }
 
-.home-info {
-    animation: slideRight .8s ease;
-}
-
-.eyebrow {
-    color: var(--accent);
-    font-size: 13px;
-    text-transform: uppercase;
-    letter-spacing: 3px;
-    font-weight: 600;
-}
 
 .home-info h1 {
-    font-family: "Cormorant Garamond", serif;
+
     font-size: 58px;
-    line-height: .98;
-    margin: 12px 0 20px;
+
+    line-height: 1;
+
+    margin: 15px 0 20px;
+
 }
+
+
+.eyebrow {
+
+    color: var(--accent);
+
+    text-transform: uppercase;
+
+    letter-spacing: 3px;
+
+    font-family:
+        Arial,
+        sans-serif;
+
+    font-size: 12px;
+
+    font-weight: bold;
+
+}
+
 
 .home-info p {
+
     color: var(--text-soft);
+
     line-height: 1.8;
+
     max-width: 580px;
+
 }
 
-.continue-box {
-    margin-top: 28px;
 
-    padding: 17px 20px;
+.continue-box {
+
+    margin-top: 25px;
+
+    padding: 16px;
 
     background: var(--surface);
 
-    border: 1px solid var(--border);
+    border:
+        1px solid
+        var(--border);
 
-    border-radius: 12px;
+    border-radius: 10px;
 
     display: none;
+
 }
+
 
 .continue-box.visible {
+
     display: block;
-    animation: fadeIn .5s ease;
+
 }
+
 
 .continue-top {
+
     display: flex;
-    justify-content: space-between;
+
+    justify-content:
+        space-between;
+
     margin-bottom: 9px;
 
-    font-size: 13px;
+    font-family:
+        Arial,
+        sans-serif;
+
+    font-size: 12px;
+
     color: var(--text-soft);
+
 }
 
+
 .progress-track {
+
     height: 5px;
 
-    background: var(--surface-2);
+    background:
+        var(--surface-2);
 
     border-radius: 20px;
 
     overflow: hidden;
+
 }
+
 
 .progress-fill {
+
     height: 100%;
+
     width: 0%;
 
-    background: var(--accent);
+    background:
+        var(--accent);
 
-    border-radius: 20px;
-
-    transition: width .4s ease;
 }
 
+
 .primary-button {
+
     margin-top: 25px;
 
     padding: 15px 25px;
 
     border: none;
-    border-radius: 9px;
 
-    background: var(--accent);
+    border-radius: 8px;
+
+    background:
+        var(--accent);
+
     color: white;
 
-    font-weight: 600;
+    font-family:
+        Arial,
+        sans-serif;
+
+    font-weight: bold;
 
     cursor: pointer;
 
-    transition:
-        transform .2s,
-        box-shadow .2s;
 }
+
 
 .primary-button:hover {
-    transform: translateY(-2px);
 
-    box-shadow:
-        0 8px 20px var(--shadow);
+    filter: brightness(.92);
+
 }
 
+
 /* =====================================================
-   READER
+   LEITOR
 ===================================================== */
 
 #reader {
+
     display: none;
 
-    height: calc(100vh - 68px);
+    height:
+        calc(100vh - 68px);
 
     flex-direction: column;
 
-    animation: fadeIn .5s ease;
 }
 
+
 .reader-bar {
+
     height: 58px;
 
     display: flex;
+
     align-items: center;
+
     justify-content: space-between;
 
-    padding: 0 18px;
+    padding: 0 15px;
 
-    background: var(--surface);
+    background:
+        var(--surface);
 
-    border-bottom: 1px solid var(--border);
+    border-bottom:
+        1px solid
+        var(--border);
 
-    z-index: 10;
+    position: relative;
+
+    z-index: 20;
+
 }
+
 
 .reader-left,
 .reader-right {
+
     display: flex;
+
     align-items: center;
-    gap: 5px;
+
+    gap: 4px;
+
 }
 
+
 .chapter-name {
-    font-family: "Cormorant Garamond", serif;
-    font-size: 20px;
-    font-weight: 600;
 
     max-width: 400px;
 
     white-space: nowrap;
+
     overflow: hidden;
+
     text-overflow: ellipsis;
+
+    font-size: 18px;
+
+    font-weight: bold;
+
 }
 
+
 #readerProgress {
+
     position: absolute;
 
     top: 0;
     left: 0;
 
-    height: 3px;
-
     width: 0%;
 
-    background: var(--accent);
+    height: 3px;
 
-    transition: width .4s ease;
+    background:
+        var(--accent);
+
+    z-index: 50;
+
 }
 
+
 /* =====================================================
-   EPUB AREA
+   ÁREA DO LIVRO
 ===================================================== */
 
 .reader-area {
+
     flex: 1;
 
     display: flex;
+
     justify-content: center;
 
     overflow: hidden;
 
-    padding: 28px 20px;
+    padding: 20px;
 
-    position: relative;
 }
 
+
 #viewer {
-    width: var(--reader-width);
+
+    width:
+        var(--reader-width);
 
     height: 100%;
 
-    background: var(--surface);
+    background:
+        var(--surface);
 
     box-shadow:
-        0 5px 35px var(--shadow);
+        0 5px 35px
+        var(--shadow);
 
     border-radius: 4px;
 
     overflow: hidden;
 
-    transition:
-        width .4s ease,
-        background .4s ease;
 }
 
+
 /* =====================================================
-   BOTTOM BAR
+   BARRA INFERIOR
 ===================================================== */
 
 .bottom-bar {
+
     height: 58px;
-
-    background: var(--surface);
-
-    border-top: 1px solid var(--border);
 
     display: flex;
 
     align-items: center;
+
     justify-content: center;
 
     gap: 20px;
 
-    position: relative;
+    background:
+        var(--surface);
+
+    border-top:
+        1px solid
+        var(--border);
+
 }
 
+
 .nav-button {
+
     border: none;
 
     background: transparent;
 
     color: var(--text);
 
-    font-size: 15px;
+    padding: 9px 15px;
 
-    padding: 9px 16px;
-
-    border-radius: 8px;
+    border-radius: 7px;
 
     cursor: pointer;
 
-    transition: background .2s;
+    font-family:
+        Arial,
+        sans-serif;
+
 }
+
 
 .nav-button:hover {
-    background: var(--surface-2);
+
+    background:
+        var(--surface-2);
+
 }
+
 
 .page-indicator {
-    color: var(--text-soft);
-    font-size: 13px;
+
+    font-family:
+        Arial,
+        sans-serif;
+
+    font-size: 12px;
+
+    color:
+        var(--text-soft);
+
 }
 
+
 /* =====================================================
-   SIDE PANEL
+   LOADING
 ===================================================== */
 
-.overlay {
+#loadingScreen {
+
     position: fixed;
 
     inset: 0;
 
-    background: rgba(0,0,0,.35);
+    background:
+        var(--bg);
+
+    display: none;
+
+    align-items: center;
+
+    justify-content: center;
+
+    flex-direction: column;
+
+    z-index: 1000;
+
+}
+
+
+#loadingScreen.active {
+
+    display: flex;
+
+}
+
+
+.loading-book {
+
+    font-size: 50px;
+
+    margin-bottom: 20px;
+
+}
+
+
+.loading-title {
+
+    font-size: 24px;
+
+    font-weight: bold;
+
+}
+
+
+.loading-text {
+
+    margin-top: 8px;
+
+    color:
+        var(--text-soft);
+
+    font-family:
+        Arial,
+        sans-serif;
+
+    font-size: 13px;
+
+}
+
+
+.loading-bar {
+
+    width: 180px;
+
+    height: 4px;
+
+    margin-top: 25px;
+
+    background:
+        var(--surface-2);
+
+    border-radius: 20px;
+
+    overflow: hidden;
+
+}
+
+
+.loading-bar-inner {
+
+    width: 35%;
+
+    height: 100%;
+
+    background:
+        var(--accent);
+
+    animation:
+        loadingMove 1.1s
+        infinite ease-in-out;
+
+}
+
+
+@keyframes loadingMove {
+
+    0% {
+
+        transform:
+            translateX(-150%);
+
+    }
+
+    100% {
+
+        transform:
+            translateX(500%);
+
+    }
+
+}
+
+
+/* =====================================================
+   PAINEL
+===================================================== */
+
+.overlay {
+
+    position: fixed;
+
+    inset: 0;
+
+    background:
+        rgba(0,0,0,.4);
 
     opacity: 0;
+
     pointer-events: none;
 
-    transition: opacity .3s;
+    transition:
+        opacity .25s;
 
     z-index: 190;
+
 }
+
 
 .overlay.active {
+
     opacity: 1;
+
     pointer-events: auto;
+
 }
 
+
 .side-panel {
+
     position: fixed;
 
     top: 0;
@@ -537,25 +868,37 @@ body.theme-forest {
 
     height: 100vh;
 
-    width: min(380px, 90vw);
+    width:
+        min(380px, 90vw);
 
-    background: var(--surface);
+    background:
+        var(--surface);
 
-    box-shadow: 10px 0 35px rgba(0,0,0,.25);
+    box-shadow:
+        10px 0 35px
+        rgba(0,0,0,.25);
 
     z-index: 200;
 
-    transform: translateX(-105%);
+    transform:
+        translateX(-105%);
 
     transition:
-        transform .35s cubic-bezier(.22,.61,.36,1);
+        transform .3s ease;
+
 }
+
 
 .side-panel.open {
-    transform: translateX(0);
+
+    transform:
+        translateX(0);
+
 }
 
+
 .panel-header {
+
     height: 70px;
 
     padding: 0 20px;
@@ -563,43 +906,66 @@ body.theme-forest {
     display: flex;
 
     align-items: center;
-    justify-content: space-between;
 
-    border-bottom: 1px solid var(--border);
+    justify-content:
+        space-between;
+
+    border-bottom:
+        1px solid
+        var(--border);
+
 }
+
 
 .panel-title {
-    font-family: "Cormorant Garamond", serif;
+
     font-size: 27px;
-    font-weight: 700;
+
+    font-weight: bold;
+
 }
+
 
 .panel-content {
+
     padding: 20px;
 
-    height: calc(100vh - 70px);
+    height:
+        calc(100vh - 70px);
 
     overflow-y: auto;
+
 }
+
 
 .panel-section {
+
     margin-bottom: 30px;
+
 }
 
+
 .panel-section h3 {
-    font-size: 12px;
+
+    font-family:
+        Arial,
+        sans-serif;
 
     text-transform: uppercase;
 
     letter-spacing: 2px;
 
-    color: var(--text-soft);
+    font-size: 11px;
 
-    margin-bottom: 12px;
+    color:
+        var(--text-soft);
+
 }
+
 
 .toc-item,
 .bookmark-item {
+
     width: 100%;
 
     display: block;
@@ -610,114 +976,170 @@ body.theme-forest {
 
     background: transparent;
 
-    color: var(--text);
+    color:
+        var(--text);
 
-    padding: 12px;
+    padding: 11px;
 
-    border-radius: 8px;
+    border-radius: 7px;
 
     cursor: pointer;
 
-    margin-bottom: 4px;
 }
+
 
 .toc-item:hover,
 .bookmark-item:hover {
-    background: var(--surface-2);
+
+    background:
+        var(--surface-2);
+
 }
 
+
 /* =====================================================
-   SETTINGS
+   CONFIGURAÇÕES
 ===================================================== */
 
 .setting {
-    margin-bottom: 20px;
+
+    margin-bottom: 22px;
+
 }
+
 
 .setting label {
+
     display: block;
 
-    margin-bottom: 9px;
+    margin-bottom: 8px;
 
-    font-size: 14px;
+    font-family:
+        Arial,
+        sans-serif;
 
-    color: var(--text-soft);
+    font-size: 13px;
+
+    color:
+        var(--text-soft);
+
 }
+
 
 .theme-grid {
+
     display: grid;
 
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns:
+        1fr 1fr;
 
-    gap: 8px;
+    gap: 7px;
+
 }
+
 
 .theme-button {
-    padding: 12px;
 
-    border: 1px solid var(--border);
+    padding: 11px;
 
-    background: var(--surface-2);
+    border:
+        1px solid
+        var(--border);
 
-    color: var(--text);
+    background:
+        var(--surface-2);
 
-    border-radius: 8px;
+    color:
+        var(--text);
+
+    border-radius: 7px;
 
     cursor: pointer;
+
 }
+
 
 .theme-button.active {
-    outline: 2px solid var(--accent);
+
+    outline:
+        2px solid
+        var(--accent);
+
 }
 
+
 .range-row {
+
     display: flex;
 
     align-items: center;
 
     gap: 10px;
+
 }
+
 
 .range-row input {
+
     flex: 1;
+
 }
 
+
 .range-value {
+
     width: 45px;
 
     text-align: right;
 
-    font-size: 13px;
+    font-family:
+        Arial,
+        sans-serif;
 
-    color: var(--text-soft);
+    font-size: 12px;
+
+    color:
+        var(--text-soft);
+
 }
 
+
 /* =====================================================
-   FOCUS MODE
+   MODO FOCO
 ===================================================== */
 
 body.focus-mode .topbar,
 body.focus-mode .reader-bar,
 body.focus-mode .bottom-bar {
+
     opacity: 0;
+
     pointer-events: none;
 
-    transition: opacity .35s;
 }
+
 
 body.focus-mode .reader-area {
+
     padding: 0;
+
 }
 
+
 body.focus-mode #viewer {
-    width: var(--reader-width);
+
+    width:
+        var(--reader-width);
 
     border-radius: 0;
 
     box-shadow: none;
+
 }
 
+
 .focus-exit {
+
     position: fixed;
 
     top: 20px;
@@ -726,105 +1148,87 @@ body.focus-mode #viewer {
     z-index: 150;
 
     opacity: 0;
+
     pointer-events: none;
 
     border: none;
 
-    background: var(--surface);
+    background:
+        var(--surface);
 
-    color: var(--text);
+    color:
+        var(--text);
 
     padding: 10px 14px;
 
-    border-radius: 8px;
+    border-radius: 7px;
 
-    box-shadow: 0 5px 20px var(--shadow);
+    cursor: pointer;
 
-    transition: opacity .3s;
 }
+
 
 body.focus-mode .focus-exit {
+
     opacity: 1;
+
     pointer-events: auto;
+
 }
+
 
 /* =====================================================
    TOAST
 ===================================================== */
 
 .toast {
+
     position: fixed;
 
-    bottom: 80px;
+    bottom: 75px;
+
     left: 50%;
 
-    transform: translate(-50%, 20px);
+    transform:
+        translate(-50%, 15px);
 
-    background: #25211d;
+    background:
+        #25211d;
 
     color: white;
 
-    padding: 11px 17px;
+    padding: 10px 16px;
 
-    border-radius: 8px;
+    border-radius: 7px;
 
-    font-size: 13px;
+    font-family:
+        Arial,
+        sans-serif;
+
+    font-size: 12px;
 
     opacity: 0;
 
     pointer-events: none;
 
+    transition:
+        opacity .25s,
+        transform .25s;
+
     z-index: 500;
 
-    transition:
-        opacity .3s,
-        transform .3s;
 }
 
+
 .toast.show {
+
     opacity: 1;
 
     transform:
         translate(-50%, 0);
+
 }
 
-/* =====================================================
-   ANIMAÇÕES
-===================================================== */
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-
-    to {
-        opacity: 1;
-    }
-}
-
-@keyframes coverAppear {
-    from {
-        opacity: 0;
-        transform: translateY(20px) rotate(-2deg);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0) rotate(0);
-    }
-}
-
-@keyframes slideRight {
-    from {
-        opacity: 0;
-        transform: translateX(30px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
-}
 
 /* =====================================================
    MOBILE
@@ -833,95 +1237,119 @@ body.focus-mode .focus-exit {
 @media (max-width: 800px) {
 
     .topbar {
+
         height: 60px;
-        padding: 0 15px;
+
+        padding: 0 14px;
+
     }
+
 
     .logo {
-        font-size: 24px;
+
+        font-size: 23px;
+
     }
+
 
     #home {
-        min-height: calc(100vh - 60px);
-        padding: 30px 18px;
+
+        min-height:
+            calc(100vh - 60px);
+
+        padding: 30px 15px;
+
     }
 
+
     .home-card {
+
         grid-template-columns: 1fr;
 
-        gap: 35px;
+        gap: 30px;
 
         justify-items: center;
 
         text-align: center;
+
     }
+
 
     .cover {
-        width: 230px;
-        height: 340px;
+
+        width: 220px;
+
+        height: 330px;
+
     }
+
 
     .cover h1 {
+
         font-size: 30px;
+
     }
+
 
     .home-info h1 {
+
         font-size: 43px;
+
     }
+
 
     .home-info p {
+
         margin-left: auto;
+
         margin-right: auto;
+
     }
 
-    #reader {
-        height: calc(100vh - 60px);
-    }
 
     .reader-bar {
+
         height: 55px;
-        padding: 0 8px;
+
+        padding: 0 7px;
+
     }
+
 
     .chapter-name {
-        font-size: 17px;
+
         max-width: 170px;
+
+        font-size: 16px;
+
     }
 
-    .reader-left .nav-button span,
-    .reader-right .nav-button span {
-        display: none;
-    }
 
     .reader-area {
-        padding: 10px 7px;
+
+        padding: 7px;
+
     }
+
 
     #viewer {
+
         width: 100%;
+
     }
+
 
     .bottom-bar {
+
         height: 55px;
+
     }
+
 
     .bottom-bar .nav-button {
-        padding: 8px 12px;
-    }
 
-}
+        padding: 8px 10px;
 
-/* =====================================================
-   REDUÇÃO DE MOVIMENTO
-===================================================== */
-
-@media (prefers-reduced-motion: reduce) {
-
-    *,
-    *::before,
-    *::after {
-        animation-duration: .01ms !important;
-        transition-duration: .01ms !important;
     }
 
 }
@@ -933,15 +1361,49 @@ body.focus-mode .focus-exit {
 <body>
 
 <!-- =====================================================
-     HEADER
+     TELA DE CARREGAMENTO
+===================================================== -->
+
+<div
+    id="loadingScreen">
+
+```
+<div class="loading-book">
+    📖
+</div>
+
+<div class="loading-title">
+    The Book Haven
+</div>
+
+<div class="loading-text">
+    Abrindo seu livro...
+</div>
+
+<div class="loading-bar">
+
+    <div
+        class="loading-bar-inner">
+    </div>
+
+</div>
+```
+
+</div>
+
+<!-- =====================================================
+     TOPO
 ===================================================== -->
 
 <header class="topbar">
 
 ```
 <div class="logo">
+
     The <span>Book Haven</span>
+
 </div>
+
 
 <div class="top-actions">
 
@@ -953,6 +1415,7 @@ body.focus-mode .focus-exit {
         ☰
 
     </button>
+
 
     <button
         class="icon-button"
@@ -976,6 +1439,7 @@ body.focus-mode .focus-exit {
 
 ```
 <div class="home-card">
+
 
     <div class="cover">
 
@@ -1004,13 +1468,16 @@ body.focus-mode .focus-exit {
             Uma nova história espera por você
         </div>
 
+
         <h1>
             Entre nas páginas.
         </h1>
 
+
         <p>
-            Encontre um lugar tranquilo, deixe o mundo
-            do lado de fora e mergulhe nesta história.
+            Encontre um lugar tranquilo,
+            deixe o mundo do lado de fora
+            e mergulhe nesta história.
         </p>
 
 
@@ -1018,17 +1485,23 @@ body.focus-mode .focus-exit {
             id="continueBox"
             class="continue-box">
 
+
             <div class="continue-top">
 
                 <span>
                     Seu progresso
                 </span>
 
-                <span id="homeProgressText">
+
+                <span
+                    id="homeProgressText">
+
                     0%
+
                 </span>
 
             </div>
+
 
             <div class="progress-track">
 
@@ -1059,7 +1532,7 @@ body.focus-mode .focus-exit {
 </section>
 
 <!-- =====================================================
-     READER
+     LEITOR
 ===================================================== -->
 
 <section id="reader">
@@ -1072,7 +1545,9 @@ body.focus-mode .focus-exit {
 
 <div class="reader-bar">
 
+
     <div class="reader-left">
+
 
         <button
             class="icon-button"
@@ -1081,6 +1556,7 @@ body.focus-mode .focus-exit {
             ☰
 
         </button>
+
 
         <div
             id="chapterName"
@@ -1095,14 +1571,16 @@ body.focus-mode .focus-exit {
 
     <div class="reader-right">
 
+
         <button
             class="icon-button"
             onclick="addBookmark()"
-            title="Adicionar marcador">
+            title="Marcador">
 
             🔖
 
         </button>
+
 
         <button
             class="icon-button"
@@ -1112,6 +1590,7 @@ body.focus-mode .focus-exit {
             ◉
 
         </button>
+
 
         <button
             class="icon-button"
@@ -1136,11 +1615,12 @@ body.focus-mode .focus-exit {
 
 <div class="bottom-bar">
 
+
     <button
         class="nav-button"
         onclick="previousPage()">
 
-        ← <span>Anterior</span>
+        ← Anterior
 
     </button>
 
@@ -1158,7 +1638,7 @@ body.focus-mode .focus-exit {
         class="nav-button"
         onclick="nextPage()">
 
-        <span>Próximo</span> →
+        Próximo →
 
     </button>
 
@@ -1168,7 +1648,7 @@ body.focus-mode .focus-exit {
 </section>
 
 <!-- =====================================================
-     PAINEL LATERAL
+     PAINEL
 ===================================================== -->
 
 <div
@@ -1192,6 +1672,7 @@ body.focus-mode .focus-exit {
 
     </div>
 
+
     <button
         class="icon-button"
         onclick="closePanels()">
@@ -1206,8 +1687,6 @@ body.focus-mode .focus-exit {
 <div class="panel-content">
 
 
-    <!-- TOC -->
-
     <div
         id="tocSection"
         class="panel-section">
@@ -1217,13 +1696,19 @@ body.focus-mode .focus-exit {
         </h3>
 
         <div id="tocList">
-            Carregando...
+
+            <p
+                style="color:var(--text-soft);">
+
+                O sumário será carregado
+                em segundo plano.
+
+            </p>
+
         </div>
 
     </div>
 
-
-    <!-- BOOKMARKS -->
 
     <div
         id="bookmarkSection"
@@ -1235,8 +1720,11 @@ body.focus-mode .focus-exit {
 
         <div id="bookmarkList">
 
-            <p style="color:var(--text-soft);font-size:13px;">
+            <p
+                style="color:var(--text-soft);">
+
                 Nenhum marcador ainda.
+
             </p>
 
         </div>
@@ -1244,12 +1732,11 @@ body.focus-mode .focus-exit {
     </div>
 
 
-    <!-- SETTINGS -->
-
     <div
         id="settingsSection"
         class="panel-section"
         style="display:none;">
+
 
         <h3>
             Aparência
@@ -1262,7 +1749,9 @@ body.focus-mode .focus-exit {
                 Tema
             </label>
 
+
             <div class="theme-grid">
+
 
                 <button
                     class="theme-button"
@@ -1273,6 +1762,7 @@ body.focus-mode .focus-exit {
 
                 </button>
 
+
                 <button
                     class="theme-button"
                     data-theme="night"
@@ -1282,6 +1772,7 @@ body.focus-mode .focus-exit {
 
                 </button>
 
+
                 <button
                     class="theme-button"
                     data-theme="cozy"
@@ -1290,6 +1781,7 @@ body.focus-mode .focus-exit {
                     🕯 Aconchegante
 
                 </button>
+
 
                 <button
                     class="theme-button"
@@ -1311,6 +1803,7 @@ body.focus-mode .focus-exit {
                 Tamanho da fonte
             </label>
 
+
             <div class="range-row">
 
                 <input
@@ -1320,6 +1813,7 @@ body.focus-mode .focus-exit {
                     max="145"
                     value="100"
                     oninput="changeFont(this.value)">
+
 
                 <span
                     id="fontValue"
@@ -1340,6 +1834,7 @@ body.focus-mode .focus-exit {
                 Espaçamento
             </label>
 
+
             <div class="range-row">
 
                 <input
@@ -1350,6 +1845,7 @@ body.focus-mode .focus-exit {
                     step=".1"
                     value="1.8"
                     oninput="changeLineHeight(this.value)">
+
 
                 <span
                     id="lineValue"
@@ -1370,6 +1866,7 @@ body.focus-mode .focus-exit {
                 Largura do texto
             </label>
 
+
             <div class="range-row">
 
                 <input
@@ -1380,6 +1877,7 @@ body.focus-mode .focus-exit {
                     step="20"
                     value="760"
                     oninput="changeReaderWidth(this.value)">
+
 
                 <span
                     id="widthValue"
@@ -1396,12 +1894,13 @@ body.focus-mode .focus-exit {
 
         <button
             class="theme-button"
-            style="width:100%;margin-top:10px;"
+            style="width:100%;"
             onclick="resetSettings()">
 
             Restaurar configurações
 
         </button>
+
 
     </div>
 
@@ -1411,7 +1910,7 @@ body.focus-mode .focus-exit {
 </aside>
 
 <!-- =====================================================
-     FOCUS EXIT
+     SAIR DO MODO FOCO
 ===================================================== -->
 
 <button
@@ -1440,9 +1939,11 @@ Salvo
 
 <script>
 
-/* =====================================================
-   CONFIGURAÇÃO
-===================================================== */
+/*
+=========================================================
+ CONFIGURAÇÃO
+=========================================================
+*/
 
 const EPUB_FILE =
     "uma-historia-qualquer-de-uma-pessoa-qualquer.epub";
@@ -1454,12 +1955,12 @@ let rendition = null;
 
 let currentLocation = null;
 
-let currentProgress = 0;
 
-
-/* =====================================================
-   ELEMENTOS
-===================================================== */
+/*
+=========================================================
+ ELEMENTOS
+=========================================================
+*/
 
 const home =
     document.getElementById("home");
@@ -1470,13 +1971,12 @@ const reader =
 const viewer =
     document.getElementById("viewer");
 
-const chapterName =
-    document.getElementById("chapterName");
 
-
-/* =====================================================
-   INICIAR LIVRO
-===================================================== */
+/*
+=========================================================
+ INICIAR
+=========================================================
+*/
 
 function startBook() {
 
@@ -1484,55 +1984,144 @@ function startBook() {
 
     reader.style.display = "flex";
 
-    if (!book) {
 
-        loadBook();
+    /*
+        Se já carregamos o livro,
+        simplesmente voltamos para ele.
+    */
+
+    if (rendition) {
+
+        return;
 
     }
+
+
+    const loading =
+        document.getElementById(
+            "loadingScreen"
+        );
+
+
+    loading.classList.add("active");
+
+
+    /*
+        Espera o EPUB.JS estar disponível.
+    */
+
+    waitForEpubJS();
 
 }
 
 
-/* =====================================================
-   CARREGAR EPUB
-===================================================== */
+/*
+=========================================================
+ ESPERAR EPUB.JS
+=========================================================
+*/
+
+function waitForEpubJS() {
+
+    if (
+        typeof ePub ===
+        "function"
+    ) {
+
+        loadBook();
+
+        return;
+
+    }
+
+
+    setTimeout(
+        waitForEpubJS,
+        50
+    );
+
+}
+
+
+/*
+=========================================================
+ CARREGAR LIVRO
+=========================================================
+*/
 
 function loadBook() {
 
-    book = ePub(EPUB_FILE);
+    /*
+        Criamos o objeto EPUB.
+    */
 
+    book =
+        ePub(EPUB_FILE);
+
+
+    /*
+        Renderizamos imediatamente.
+    */
 
     rendition =
-        book.renderTo("viewer", {
+        book.renderTo(
+            "viewer",
+            {
 
-            width: "100%",
+                width: "100%",
 
-            height: "100%",
+                height: "100%",
 
-            spread: "auto",
+                spread: "auto",
 
-            flow: "paginated"
+                flow: "paginated"
 
-        });
+            }
+        );
 
+
+    /*
+        Configurações básicas
+        antes da primeira página.
+    */
 
     applyReaderSettings();
 
 
     const saved =
-        localStorage.getItem("bookLocation");
+        localStorage.getItem(
+            "bookLocation"
+        );
 
 
-    if (saved) {
+    /*
+        MOSTRA A PÁGINA
+        O MAIS RÁPIDO POSSÍVEL.
+    */
 
-        rendition.display(saved);
+    const displayPromise =
+        saved
+        ? rendition.display(saved)
+        : rendition.display();
 
-    } else {
 
-        rendition.display();
+    displayPromise.then(
+        function() {
 
-    }
+            /*
+                Primeira página pronta.
+                Podemos esconder o loading.
+            */
 
+            hideLoading();
+
+        }
+    );
+
+
+    /*
+        Eventos de navegação.
+    */
 
     rendition.on(
         "relocated",
@@ -1540,34 +2129,92 @@ function loadBook() {
     );
 
 
-    book.loaded.navigation.then(
-        function(navigation) {
+    /*
+        O SUMÁRIO É CARREGADO
+        SEPARADAMENTE.
 
-            createTOC(
-                navigation.toc
-            );
+        Ele não bloqueia
+        a primeira página.
+    */
 
-        }
+    book.loaded.navigation
+        .then(
+            function(navigation) {
+
+                createTOC(
+                    navigation.toc
+                );
+
+            }
+        )
+        .catch(
+            function() {
+
+                /*
+                    Se o EPUB não possuir
+                    navegação adequada,
+                    simplesmente não quebramos
+                    o leitor.
+                */
+
+            }
+        );
+
+}
+
+
+/*
+=========================================================
+ ESCONDER LOADING
+=========================================================
+*/
+
+function hideLoading() {
+
+    const loading =
+        document.getElementById(
+            "loadingScreen"
+        );
+
+
+    loading.classList.remove(
+        "active"
     );
 
 }
 
 
-/* =====================================================
-   LOCALIZAÇÃO
-===================================================== */
+/*
+=========================================================
+ LOCALIZAÇÃO
+=========================================================
+*/
 
-function handleLocation(location) {
+function handleLocation(
+    location
+) {
 
-    currentLocation = location;
+    currentLocation =
+        location;
 
 
-    if (!location || !location.start) {
+    if (
+        !location ||
+        !location.start
+    ) {
+
         return;
+
     }
 
 
-    if (location.start.cfi) {
+    /*
+        Salva posição.
+    */
+
+    if (
+        location.start.cfi
+    ) {
 
         localStorage.setItem(
             "bookLocation",
@@ -1577,74 +2224,93 @@ function handleLocation(location) {
     }
 
 
-    calculateProgress(location);
+    /*
+        Calcula progresso.
+    */
+
+    updateProgress(
+        location
+    );
 
 
-    updateChapter(location);
+    /*
+        Atualiza capítulo
+        somente quando necessário.
+    */
+
+    updateChapter(
+        location
+    );
 
 }
 
 
-/* =====================================================
-   PROGRESSO
-===================================================== */
+/*
+=========================================================
+ PROGRESSO
+=========================================================
+*/
 
-function calculateProgress(location) {
+function updateProgress(
+    location
+) {
+
+    let progress = 0;
+
 
     try {
 
         const displayed =
             location.start.displayed;
 
+
         if (
             displayed &&
             displayed.total
         ) {
 
-            const page =
-                displayed.page;
-
-            const total =
-                displayed.total;
-
-            currentProgress =
+            progress =
                 Math.round(
-                    ((page - 1) / total) * 100
+                    (
+                        (displayed.page - 1) /
+                        displayed.total
+                    ) * 100
                 );
 
         }
 
     } catch (error) {
 
-        currentProgress = 0;
+        progress = 0;
 
     }
 
 
-    if (currentProgress < 0) {
-        currentProgress = 0;
-    }
-
-    if (currentProgress > 100) {
-        currentProgress = 100;
-    }
+    progress =
+        Math.max(
+            0,
+            Math.min(
+                100,
+                progress
+            )
+        );
 
 
     document.getElementById(
         "readerProgress"
     ).style.width =
-        currentProgress + "%";
+        progress + "%";
 
 
     document.getElementById(
         "pageIndicator"
     ).textContent =
-        currentProgress + "%";
+        progress + "%";
 
 
     localStorage.setItem(
         "bookProgress",
-        currentProgress
+        progress
     );
 
 
@@ -1653,13 +2319,15 @@ function calculateProgress(location) {
 }
 
 
-/* =====================================================
-   PROGRESSO DA HOME
-===================================================== */
+/*
+=========================================================
+ HOME PROGRESSO
+=========================================================
+*/
 
 function updateHomeProgress() {
 
-    const saved =
+    const progress =
         parseInt(
             localStorage.getItem(
                 "bookProgress"
@@ -1667,113 +2335,163 @@ function updateHomeProgress() {
         );
 
 
-    if (saved > 0) {
+    if (progress <= 0) {
 
-        document.getElementById(
-            "continueBox"
-        ).classList.add("visible");
-
-
-        document.getElementById(
-            "homeProgress"
-        ).style.width =
-            saved + "%";
-
-
-        document.getElementById(
-            "homeProgressText"
-        ).textContent =
-            saved + "%";
-
-
-        document.getElementById(
-            "startButton"
-        ).textContent =
-            "▶ Continuar lendo";
+        return;
 
     }
+
+
+    document.getElementById(
+        "continueBox"
+    ).classList.add(
+        "visible"
+    );
+
+
+    document.getElementById(
+        "homeProgress"
+    ).style.width =
+        progress + "%";
+
+
+    document.getElementById(
+        "homeProgressText"
+    ).textContent =
+        progress + "%";
+
+
+    document.getElementById(
+        "startButton"
+    ).textContent =
+        "▶ Continuar lendo";
 
 }
 
 
-/* =====================================================
-   CAPÍTULO
-===================================================== */
+/*
+=========================================================
+ CAPÍTULO
+=========================================================
+*/
 
-function updateChapter(location) {
+function updateChapter(
+    location
+) {
 
     if (
         !book ||
         !location ||
         !location.start
     ) {
+
         return;
+
     }
 
 
-    book.loaded.navigation.then(
-        function(navigation) {
+    /*
+        Usamos o spine para evitar
+        procurar o sumário inteiro
+        a cada página.
+    */
 
-            const current =
-                navigation.toc.find(
-                    item =>
-                        location.start.href &&
-                        location.start.href.includes(
-                            item.href.split("#")[0]
-                        )
+    try {
+
+        const href =
+            location.start.href;
+
+
+        if (
+            href
+        ) {
+
+            const clean =
+                href.split("#")[0];
+
+
+            const item =
+                book.spine.get(
+                    clean
                 );
 
 
-            if (current) {
+            if (
+                item &&
+                item.href
+            ) {
 
-                chapterName.textContent =
-                    current.label;
+                const name =
+                    item.href
+                    .split("/")
+                    .pop();
+
+
+                if (name) {
+
+                    document.getElementById(
+                        "chapterName"
+                    ).textContent =
+                        decodeURIComponent(
+                            name
+                        );
+
+                }
 
             }
 
         }
-    );
+
+    } catch (error) {
+
+        /*
+            Não interromper a leitura
+            caso o EPUB tenha uma estrutura
+            diferente.
+        */
+
+    }
 
 }
 
 
-/* =====================================================
-   PRÓXIMA PÁGINA
-===================================================== */
+/*
+=========================================================
+ NAVEGAÇÃO
+=========================================================
+*/
 
 function nextPage() {
 
-    if (!rendition) {
-        return;
+    if (rendition) {
+
+        rendition.next();
+
     }
-
-
-    rendition.next();
 
 }
 
-
-/* =====================================================
-   PÁGINA ANTERIOR
-===================================================== */
 
 function previousPage() {
 
-    if (!rendition) {
-        return;
+    if (rendition) {
+
+        rendition.prev();
+
     }
-
-
-    rendition.prev();
 
 }
 
 
-/* =====================================================
-   SUMÁRIO
-===================================================== */
+/*
+=========================================================
+ SUMÁRIO
+=========================================================
+*/
 
-function createTOC(items) {
+function createTOC(
+    items
+) {
 
     const list =
         document.getElementById(
@@ -1784,8 +2502,55 @@ function createTOC(items) {
     list.innerHTML = "";
 
 
-    items.forEach(
-        function(item) {
+    if (
+        !items ||
+        !items.length
+    ) {
+
+        list.innerHTML = `
+            <p style="color:var(--text-soft);">
+                Este livro não possui um sumário compatível.
+            </p>
+        `;
+
+        return;
+
+    }
+
+
+    /*
+        Criação progressiva.
+
+        Em vez de colocar centenas
+        de elementos de uma vez,
+        adicionamos aos poucos.
+    */
+
+    let index = 0;
+
+
+    function addBatch() {
+
+        const fragment =
+            document.createDocumentFragment();
+
+
+        const end =
+            Math.min(
+                index + 20,
+                items.length
+            );
+
+
+        for (
+            ;
+            index < end;
+            index++
+        ) {
+
+            const item =
+                items[index];
+
 
             const button =
                 document.createElement(
@@ -1812,89 +2577,57 @@ function createTOC(items) {
 
                     }
 
-                    closePanels();
-
-                };
-
-
-            list.appendChild(
-                button
-            );
-
-
-            if (
-                item.subitems &&
-                item.subitems.length
-            ) {
-
-                createSubTOC(
-                    item.subitems,
-                    list
-                );
-
-            }
-
-        }
-    );
-
-}
-
-
-function createSubTOC(items, parent) {
-
-    items.forEach(
-        function(item) {
-
-            const button =
-                document.createElement(
-                    "button"
-                );
-
-
-            button.className =
-                "toc-item";
-
-
-            button.style.paddingLeft =
-                "25px";
-
-
-            button.textContent =
-                item.label;
-
-
-            button.onclick =
-                function() {
-
-                    rendition.display(
-                        item.href
-                    );
 
                     closePanels();
 
                 };
 
 
-            parent.appendChild(
+            fragment.appendChild(
                 button
             );
 
         }
-    );
+
+
+        list.appendChild(
+            fragment
+        );
+
+
+        if (
+            index < items.length
+        ) {
+
+            requestAnimationFrame(
+                addBatch
+            );
+
+        }
+
+    }
+
+
+    addBatch();
 
 }
 
 
-/* =====================================================
-   PAINEL
-===================================================== */
+/*
+=========================================================
+ PAINEL
+=========================================================
+*/
 
-function openPanel(type) {
+function openPanel(
+    type
+) {
 
     const panel =
         document.getElementById(
             "sidePanel"
         );
+
 
     const overlay =
         document.getElementById(
@@ -1902,20 +2635,17 @@ function openPanel(type) {
         );
 
 
-    panel.classList.add("open");
-
-    overlay.classList.add("active");
-
-
     const toc =
         document.getElementById(
             "tocSection"
         );
 
+
     const bookmarks =
         document.getElementById(
             "bookmarkSection"
         );
+
 
     const settings =
         document.getElementById(
@@ -1923,25 +2653,35 @@ function openPanel(type) {
         );
 
 
+    panel.classList.add(
+        "open"
+    );
+
+
+    overlay.classList.add(
+        "active"
+    );
+
+
     toc.style.display =
-        type === "toc"
-        ? "block"
-        : "none";
+        "none";
 
 
     bookmarks.style.display =
-        type === "bookmarks"
-        ? "block"
-        : "none";
+        "none";
 
 
     settings.style.display =
-        type === "settings"
-        ? "block"
-        : "none";
+        "none";
 
 
-    if (type === "toc") {
+    if (
+        type === "toc"
+    ) {
+
+        toc.style.display =
+            "block";
+
 
         document.getElementById(
             "panelTitle"
@@ -1951,24 +2691,37 @@ function openPanel(type) {
     }
 
 
-    if (type === "settings") {
+    if (
+        type === "bookmarks"
+    ) {
 
-        document.getElementById(
-            "panelTitle"
-        ).textContent =
-            "Configurações";
+        bookmarks.style.display =
+            "block";
 
-    }
-
-
-    if (type === "bookmarks") {
 
         document.getElementById(
             "panelTitle"
         ).textContent =
             "Marcadores";
 
+
         renderBookmarks();
+
+    }
+
+
+    if (
+        type === "settings"
+    ) {
+
+        settings.style.display =
+            "block";
+
+
+        document.getElementById(
+            "panelTitle"
+        ).textContent =
+            "Configurações";
 
     }
 
@@ -1978,22 +2731,34 @@ function openPanel(type) {
 function closePanels() {
 
     document
-        .getElementById("sidePanel")
-        .classList.remove("open");
+        .getElementById(
+            "sidePanel"
+        )
+        .classList.remove(
+            "open"
+        );
 
 
     document
-        .getElementById("overlay")
-        .classList.remove("active");
+        .getElementById(
+            "overlay"
+        )
+        .classList.remove(
+            "active"
+        );
 
 }
 
 
-/* =====================================================
-   TEMAS
-===================================================== */
+/*
+=========================================================
+ TEMAS
+=========================================================
+*/
 
-function setTheme(theme) {
+function setTheme(
+    theme
+) {
 
     document.body.classList.remove(
         "theme-night",
@@ -2002,7 +2767,9 @@ function setTheme(theme) {
     );
 
 
-    if (theme !== "paper") {
+    if (
+        theme !== "paper"
+    ) {
 
         document.body.classList.add(
             "theme-" + theme
@@ -2020,12 +2787,7 @@ function setTheme(theme) {
     updateThemeButtons();
 
 
-    applyReaderSettings();
-
-
-    showToast(
-        "Tema alterado"
-    );
+    applyReaderTheme();
 
 }
 
@@ -2039,9 +2801,11 @@ function updateThemeButtons() {
 
 
     document
-        .querySelectorAll(".theme-button")
+        .querySelectorAll(
+            ".theme-button"
+        )
         .forEach(
-            button => {
+            function(button) {
 
                 button.classList.toggle(
                     "active",
@@ -2054,7 +2818,14 @@ function updateThemeButtons() {
 }
 
 
-function loadTheme() {
+function applyReaderTheme() {
+
+    if (!rendition) {
+
+        return;
+
+    }
+
 
     const theme =
         localStorage.getItem(
@@ -2062,46 +2833,76 @@ function loadTheme() {
         ) || "paper";
 
 
-    setThemeWithoutToast(theme);
-
-}
-
-
-function setThemeWithoutToast(theme) {
-
-    document.body.classList.remove(
-        "theme-night",
-        "theme-cozy",
-        "theme-forest"
-    );
+    let background =
+        "#f9f5ed";
 
 
-    if (theme !== "paper") {
+    let color =
+        "#352b22";
 
-        document.body.classList.add(
-            "theme-" + theme
-        );
+
+    if (
+        theme === "night"
+    ) {
+
+        background =
+            "#1d1b18";
+
+        color =
+            "#e8dfd1";
 
     }
 
 
-    updateThemeButtons();
+    if (
+        theme === "cozy"
+    ) {
+
+        background =
+            "#352920";
+
+        color =
+            "#ead9bc";
+
+    }
+
+
+    if (
+        theme === "forest"
+    ) {
+
+        background =
+            "#202b24";
+
+        color =
+            "#e0e5d8";
+
+    }
+
+
+    rendition.themes.override(
+        "color",
+        color
+    );
+
+
+    rendition.themes.override(
+        "background",
+        background
+    );
 
 }
 
 
-/* =====================================================
-   FONTE
-===================================================== */
+/*
+=========================================================
+ FONTE
+=========================================================
+*/
 
-function changeFont(value) {
-
-    document.documentElement.style
-        .setProperty(
-            "--reader-font-size",
-            value + "%"
-        );
-
+function changeFont(
+    value
+) {
 
     document.getElementById(
         "fontValue"
@@ -2115,23 +2916,26 @@ function changeFont(value) {
     );
 
 
-    applyReaderSettings();
+    if (rendition) {
+
+        rendition.themes.fontSize(
+            value + "%"
+        );
+
+    }
 
 }
 
 
-/* =====================================================
-   ESPAÇAMENTO
-===================================================== */
+/*
+=========================================================
+ ESPAÇAMENTO
+=========================================================
+*/
 
-function changeLineHeight(value) {
-
-    document.documentElement.style
-        .setProperty(
-            "--reader-line-height",
-            value
-        );
-
+function changeLineHeight(
+    value
+) {
 
     document.getElementById(
         "lineValue"
@@ -2145,18 +2949,23 @@ function changeLineHeight(value) {
     );
 
 
-    applyReaderSettings();
+    applyReaderStyles();
 
 }
 
 
-/* =====================================================
-   LARGURA
-===================================================== */
+/*
+=========================================================
+ LARGURA
+=========================================================
+*/
 
-function changeReaderWidth(value) {
+function changeReaderWidth(
+    value
+) {
 
-    document.documentElement.style
+    document.documentElement
+        .style
         .setProperty(
             "--reader-width",
             value + "px"
@@ -2177,14 +2986,18 @@ function changeReaderWidth(value) {
 }
 
 
-/* =====================================================
-   APLICAR CONFIGURAÇÕES AO EPUB
-===================================================== */
+/*
+=========================================================
+ ESTILOS DO EPUB
+=========================================================
+*/
 
-function applyReaderSettings() {
+function applyReaderStyles() {
 
     if (!rendition) {
+
         return;
+
     }
 
 
@@ -2200,50 +3013,61 @@ function applyReaderSettings() {
         ) || "1.8";
 
 
-    rendition.themes.default({
+    /*
+        Uma única aplicação de tema.
+    */
 
-        body: {
+    rendition.themes.register(
+        "bookTheme",
+        {
 
-            "font-family":
-                "'Literata', Georgia, serif !important",
+            body: {
 
-            "font-size":
-                font + "% !important",
+                "font-family":
+                    "Georgia, serif !important",
 
-            "line-height":
-                line + " !important",
+                "font-size":
+                    font + "% !important",
 
-            "color":
-                "var(--text) !important",
+                "line-height":
+                    line + " !important",
 
-            "background":
-                "transparent !important",
+                "padding":
+                    "30px 25px !important"
 
-            "padding":
-                "35px 25px !important"
+            },
 
-        },
+            p: {
 
-        "p": {
+                "line-height":
+                    line + " !important"
 
-            "line-height":
-                line + " !important"
+            }
 
         }
+    );
 
-    });
+
+    rendition.themes.select(
+        "bookTheme"
+    );
 
 
     rendition.themes.fontSize(
         font + "%"
     );
 
+
+    applyReaderTheme();
+
 }
 
 
-/* =====================================================
-   CARREGAR CONFIGURAÇÕES
-===================================================== */
+/*
+=========================================================
+ CONFIGURAÇÕES
+=========================================================
+*/
 
 function loadSettings() {
 
@@ -2267,7 +3091,8 @@ function loadSettings() {
 
     document.getElementById(
         "fontRange"
-    ).value = font;
+    ).value =
+        font;
 
 
     document.getElementById(
@@ -2278,7 +3103,8 @@ function loadSettings() {
 
     document.getElementById(
         "lineRange"
-    ).value = line;
+    ).value =
+        line;
 
 
     document.getElementById(
@@ -2289,7 +3115,8 @@ function loadSettings() {
 
     document.getElementById(
         "widthRange"
-    ).value = width;
+    ).value =
+        width;
 
 
     document.getElementById(
@@ -2298,21 +3125,8 @@ function loadSettings() {
         width;
 
 
-    document.documentElement.style
-        .setProperty(
-            "--reader-font-size",
-            font + "%"
-        );
-
-
-    document.documentElement.style
-        .setProperty(
-            "--reader-line-height",
-            line
-        );
-
-
-    document.documentElement.style
+    document.documentElement
+        .style
         .setProperty(
             "--reader-width",
             width + "px"
@@ -2321,9 +3135,37 @@ function loadSettings() {
 }
 
 
-/* =====================================================
-   RESTAURAR CONFIGURAÇÕES
-===================================================== */
+function applyReaderSettings() {
+
+    applyReaderStyles();
+
+}
+
+
+/*
+=========================================================
+ TEMA SALVO
+=========================================================
+*/
+
+function loadTheme() {
+
+    const theme =
+        localStorage.getItem(
+            "readerTheme"
+        ) || "paper";
+
+
+    setTheme(theme);
+
+}
+
+
+/*
+=========================================================
+ RESTAURAR
+=========================================================
+*/
 
 function resetSettings() {
 
@@ -2346,24 +3188,28 @@ function resetSettings() {
 
     loadSettings();
 
-    loadTheme();
+    setTheme("paper");
+
+
+    if (rendition) {
+
+        applyReaderStyles();
+
+    }
 
 
     showToast(
         "Configurações restauradas"
     );
 
-
-    if (rendition) {
-        applyReaderSettings();
-    }
-
 }
 
 
-/* =====================================================
-   MARCADORES
-===================================================== */
+/*
+=========================================================
+ MARCADORES
+=========================================================
+*/
 
 function addBookmark() {
 
@@ -2373,7 +3219,7 @@ function addBookmark() {
     ) {
 
         showToast(
-            "Não foi possível salvar"
+            "Aguarde o livro carregar"
         );
 
         return;
@@ -2393,14 +3239,12 @@ function addBookmark() {
         currentLocation.start.cfi;
 
 
-    const alreadyExists =
+    if (
         bookmarks.some(
-            bookmark =>
-                bookmark.cfi === cfi
-        );
-
-
-    if (alreadyExists) {
+            item =>
+                item.cfi === cfi
+        )
+    ) {
 
         showToast(
             "Este ponto já está marcado"
@@ -2416,19 +3260,24 @@ function addBookmark() {
         cfi: cfi,
 
         title:
-            chapterName.textContent,
+            document.getElementById(
+                "chapterName"
+            ).textContent,
 
         date:
-            new Date().toLocaleDateString(
-                "pt-BR"
-            )
+            new Date()
+                .toLocaleDateString(
+                    "pt-BR"
+                )
 
     });
 
 
     localStorage.setItem(
         "bookmarks",
-        JSON.stringify(bookmarks)
+        JSON.stringify(
+            bookmarks
+        )
     );
 
 
@@ -2439,9 +3288,11 @@ function addBookmark() {
 }
 
 
-/* =====================================================
-   MOSTRAR MARCADORES
-===================================================== */
+/*
+=========================================================
+ MARCADORES
+=========================================================
+*/
 
 function renderBookmarks() {
 
@@ -2462,13 +3313,12 @@ function renderBookmarks() {
     list.innerHTML = "";
 
 
-    if (!bookmarks.length) {
+    if (
+        !bookmarks.length
+    ) {
 
         list.innerHTML = `
-            <p style="
-                color:var(--text-soft);
-                font-size:13px;
-            ">
+            <p style="color:var(--text-soft);">
                 Nenhum marcador ainda.
             </p>
         `;
@@ -2479,20 +3329,10 @@ function renderBookmarks() {
 
 
     bookmarks.forEach(
-        function(bookmark, index) {
-
-            const wrapper =
-                document.createElement(
-                    "div"
-                );
-
-
-            wrapper.style.display =
-                "flex";
-
-            wrapper.style.gap =
-                "5px";
-
+        function(
+            bookmark,
+            index
+        ) {
 
             const button =
                 document.createElement(
@@ -2512,51 +3352,66 @@ function renderBookmarks() {
             button.onclick =
                 function() {
 
-                    rendition.display(
-                        bookmark.cfi
-                    );
+                    if (rendition) {
+
+                        rendition.display(
+                            bookmark.cfi
+                        );
+
+                    }
 
                     closePanels();
 
                 };
 
 
-            const deleteButton =
+            list.appendChild(
+                button
+            );
+
+
+            const remove =
                 document.createElement(
                     "button"
                 );
 
 
-            deleteButton.className =
-                "icon-button";
+            remove.className =
+                "bookmark-item";
 
 
-            deleteButton.textContent =
-                "×";
+            remove.style.color =
+                "#a35a4a";
 
 
-            deleteButton.onclick =
+            remove.textContent =
+                "   Remover";
+
+
+            remove.onclick =
                 function() {
 
-                    deleteBookmark(
-                        index
+                    bookmarks.splice(
+                        index,
+                        1
                     );
+
+
+                    localStorage.setItem(
+                        "bookmarks",
+                        JSON.stringify(
+                            bookmarks
+                        )
+                    );
+
+
+                    renderBookmarks();
 
                 };
 
 
-            wrapper.appendChild(
-                button
-            );
-
-
-            wrapper.appendChild(
-                deleteButton
-            );
-
-
             list.appendChild(
-                wrapper
+                remove
             );
 
         }
@@ -2565,45 +3420,11 @@ function renderBookmarks() {
 }
 
 
-/* =====================================================
-   EXCLUIR MARCADOR
-===================================================== */
-
-function deleteBookmark(index) {
-
-    const bookmarks =
-        JSON.parse(
-            localStorage.getItem(
-                "bookmarks"
-            ) || "[]"
-        );
-
-
-    bookmarks.splice(
-        index,
-        1
-    );
-
-
-    localStorage.setItem(
-        "bookmarks",
-        JSON.stringify(bookmarks)
-    );
-
-
-    renderBookmarks();
-
-
-    showToast(
-        "Marcador removido"
-    );
-
-}
-
-
-/* =====================================================
-   MODO FOCO
-===================================================== */
+/*
+=========================================================
+ MODO FOCO
+=========================================================
+*/
 
 function toggleFocusMode() {
 
@@ -2618,26 +3439,20 @@ function toggleFocusMode() {
         );
 
 
-    if (active) {
-
-        showToast(
-            "Modo foco ativado"
-        );
-
-    } else {
-
-        showToast(
-            "Modo foco desativado"
-        );
-
-    }
+    showToast(
+        active
+        ? "Modo foco ativado"
+        : "Modo foco desativado"
+    );
 
 }
 
 
-/* =====================================================
-   INÍCIO
-===================================================== */
+/*
+=========================================================
+ HOME
+=========================================================
+*/
 
 function goHome() {
 
@@ -2659,14 +3474,18 @@ function goHome() {
 }
 
 
-/* =====================================================
-   TOAST
-===================================================== */
+/*
+=========================================================
+ TOAST
+=========================================================
+*/
 
-let toastTimeout;
+let toastTimer;
 
 
-function showToast(message) {
+function showToast(
+    message
+) {
 
     const toast =
         document.getElementById(
@@ -2684,11 +3503,11 @@ function showToast(message) {
 
 
     clearTimeout(
-        toastTimeout
+        toastTimer
     );
 
 
-    toastTimeout =
+    toastTimer =
         setTimeout(
             function() {
 
@@ -2697,22 +3516,26 @@ function showToast(message) {
                 );
 
             },
-            2200
+            2000
         );
 
 }
 
 
-/* =====================================================
-   TECLADO
-===================================================== */
+/*
+=========================================================
+ TECLADO
+=========================================================
+*/
 
 document.addEventListener(
     "keydown",
     function(event) {
 
         if (!rendition) {
+
             return;
+
         }
 
 
@@ -2720,7 +3543,9 @@ document.addEventListener(
             event.target.tagName ===
             "INPUT"
         ) {
+
             return;
+
         }
 
 
@@ -2757,17 +3582,6 @@ document.addEventListener(
 
         }
 
-    }
-);
-
-
-/* =====================================================
-   ATALHOS
-===================================================== */
-
-document.addEventListener(
-    "keydown",
-    function(event) {
 
         if (
             event.ctrlKey &&
@@ -2784,9 +3598,11 @@ document.addEventListener(
 );
 
 
-/* =====================================================
-   INICIALIZAÇÃO
-===================================================== */
+/*
+=========================================================
+ INICIALIZAÇÃO
+=========================================================
+*/
 
 loadSettings();
 
