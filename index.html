@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
@@ -6,28 +7,32 @@
 
 <title>The Book Haven</title>
 
-<!-- Epub.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/epubjs@0.3.93/dist/epub.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/epubjs/dist/epub.min.js"></script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@400;500;600&family=Literata:opsz,wght@7..72,400;7..72,500;7..72,600&display=swap" rel="stylesheet">
 
 <style>
-/* =========================================================
-   THE BOOK HAVEN — LEITOR
-   ========================================================= */
-
-:root {
-    --bg: #f3eee5;
-    --paper: #fffdf8;
-    --text: #29251f;
-    --muted: #756d60;
-    --accent: #76563c;
-    --accent-dark: #5b402d;
-    --border: #d8cdbb;
-    --shadow: rgba(45, 35, 25, 0.15);
-}
 
 * {
     box-sizing: border-box;
+}
+
+:root {
+    --bg: #eee7da;
+    --surface: #f9f5ed;
+    --surface-2: #e8dece;
+    --text: #352b22;
+    --text-soft: #756a5d;
+    --accent: #9b7040;
+    --accent-light: #c9a878;
+    --border: rgba(70, 50, 30, .13);
+    --shadow: rgba(45, 31, 20, .15);
+
+    --reader-font-size: 100%;
+    --reader-line-height: 1.8;
+    --reader-width: 760px;
 }
 
 html,
@@ -35,823 +40,1670 @@ body {
     margin: 0;
     padding: 0;
     width: 100%;
-    height: 100%;
+    min-height: 100%;
 }
 
 body {
-    background:
-        radial-gradient(circle at top, rgba(255,255,255,.55), transparent 45%),
-        var(--bg);
+    font-family: Inter, sans-serif;
+    background: var(--bg);
     color: var(--text);
-    font-family: Georgia, "Times New Roman", serif;
-    overflow: hidden;
+    transition:
+        background .45s ease,
+        color .45s ease;
 }
 
-/* =========================================================
-   HEADER
-   ========================================================= */
+/* =====================================================
+   TEMAS
+===================================================== */
 
-.header {
-    height: 72px;
-    background: rgba(255, 253, 248, 0.96);
-    border-bottom: 1px solid var(--border);
+body.theme-night {
+    --bg: #12110f;
+    --surface: #1d1b18;
+    --surface-2: #29251f;
+    --text: #e8dfd1;
+    --text-soft: #aaa092;
+    --accent: #c9a66a;
+    --accent-light: #e0c18b;
+    --border: rgba(255,255,255,.09);
+    --shadow: rgba(0,0,0,.4);
+}
+
+body.theme-cozy {
+    --bg: #2a211b;
+    --surface: #352920;
+    --surface-2: #46362a;
+    --text: #ead9bc;
+    --text-soft: #bca98e;
+    --accent: #d0a45e;
+    --accent-light: #e0bd82;
+    --border: rgba(255,255,255,.08);
+    --shadow: rgba(0,0,0,.35);
+}
+
+body.theme-forest {
+    --bg: #17201b;
+    --surface: #202b24;
+    --surface-2: #2c3a31;
+    --text: #e0e5d8;
+    --text-soft: #aab4a6;
+    --accent: #a7ad72;
+    --accent-light: #c5cb91;
+    --border: rgba(255,255,255,.08);
+    --shadow: rgba(0,0,0,.35);
+}
+
+/* =====================================================
+   HEADER
+===================================================== */
+
+.topbar {
+    height: 68px;
+    width: 100%;
+
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 24px;
+
+    padding: 0 28px;
+
+    background: var(--surface);
+
+    border-bottom: 1px solid var(--border);
+
     position: relative;
-    z-index: 20;
-    box-shadow: 0 2px 12px rgba(0,0,0,.05);
+    z-index: 100;
+
+    transition: background .4s ease;
 }
 
 .logo {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
-.logo-symbol {
-    width: 38px;
-    height: 38px;
-    border: 2px solid var(--accent);
-    border-radius: 5px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 20px;
-}
-
-.logo-text {
-    font-size: 22px;
-    font-weight: bold;
+    font-family: "Cormorant Garamond", serif;
+    font-size: 29px;
+    font-weight: 700;
     letter-spacing: .3px;
 }
 
-.logo-subtitle {
-    color: var(--muted);
-    font-size: 12px;
-    margin-top: 2px;
+.logo span {
+    color: var(--accent);
 }
 
-.header-controls {
+.top-actions {
     display: flex;
-    align-items: center;
     gap: 8px;
 }
 
-button {
-    font-family: inherit;
-}
+.icon-button {
+    width: 42px;
+    height: 42px;
 
-.control-button {
-    border: 1px solid var(--border);
-    background: var(--paper);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: none;
+    border-radius: 50%;
+
+    background: transparent;
     color: var(--text);
-    border-radius: 8px;
-    min-width: 40px;
-    height: 40px;
-    padding: 0 12px;
+
+    font-size: 18px;
+
     cursor: pointer;
-    font-size: 16px;
-    transition: .2s;
+
+    transition:
+        background .2s,
+        transform .2s;
 }
 
-.control-button:hover {
-    background: #eee6d8;
+.icon-button:hover {
+    background: var(--surface-2);
     transform: translateY(-1px);
 }
 
-/* =========================================================
-   MAIN
-   ========================================================= */
+/* =====================================================
+   HOME
+===================================================== */
 
-.main {
-    height: calc(100vh - 72px);
+#home {
+    min-height: calc(100vh - 68px);
+
     display: flex;
-    position: relative;
+    align-items: center;
+    justify-content: center;
+
+    padding: 50px 20px;
+
+    animation: fadeIn .7s ease;
 }
 
-/* =========================================================
-   SIDEBAR / TOC
-   ========================================================= */
-
-.sidebar {
-    width: 290px;
-    background: rgba(255, 253, 248, 0.98);
-    border-right: 1px solid var(--border);
-    position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    z-index: 15;
-    transform: translateX(-100%);
-    transition: transform .3s ease;
-    box-shadow: 5px 0 20px rgba(0,0,0,.08);
-    overflow-y: auto;
-}
-
-.sidebar.open {
-    transform: translateX(0);
-}
-
-.sidebar-title {
-    padding: 22px 20px 14px;
-    font-size: 20px;
-    font-weight: bold;
-    border-bottom: 1px solid var(--border);
-}
-
-.toc {
-    padding: 10px;
-}
-
-.toc-item {
-    display: block;
+.home-card {
+    max-width: 1050px;
     width: 100%;
-    text-align: left;
-    border: none;
-    background: transparent;
-    padding: 12px 14px;
+
+    display: grid;
+    grid-template-columns: 330px 1fr;
+    gap: 65px;
+
+    align-items: center;
+}
+
+.cover {
+    width: 330px;
+    height: 490px;
+
     border-radius: 7px;
-    color: var(--text);
-    cursor: pointer;
-    font-family: inherit;
-    font-size: 15px;
-    line-height: 1.4;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 35px;
+
+    text-align: center;
+
+    color: #fff;
+
+    background:
+        linear-gradient(
+            145deg,
+            #493424,
+            #85623e
+        );
+
+    box-shadow:
+        15px 20px 35px var(--shadow);
+
+    position: relative;
+    overflow: hidden;
+
+    animation: coverAppear .8s ease;
 }
 
-.toc-item:hover {
-    background: #eee6d8;
+.cover::before {
+    content: "";
+
+    position: absolute;
+
+    inset: 12px;
+
+    border: 1px solid rgba(255,255,255,.28);
+
+    pointer-events: none;
 }
 
-.toc-item.active {
+.cover-content {
+    position: relative;
+    z-index: 1;
+}
+
+.cover-small {
+    font-family: Inter, sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    font-size: 11px;
+    opacity: .8;
+}
+
+.cover h1 {
+    font-family: "Cormorant Garamond", serif;
+    font-size: 42px;
+    line-height: 1.05;
+    margin: 35px 0;
+}
+
+.cover-author {
+    font-family: "Cormorant Garamond", serif;
+    font-size: 19px;
+}
+
+.home-info {
+    animation: slideRight .8s ease;
+}
+
+.eyebrow {
+    color: var(--accent);
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    font-weight: 600;
+}
+
+.home-info h1 {
+    font-family: "Cormorant Garamond", serif;
+    font-size: 58px;
+    line-height: .98;
+    margin: 12px 0 20px;
+}
+
+.home-info p {
+    color: var(--text-soft);
+    line-height: 1.8;
+    max-width: 580px;
+}
+
+.continue-box {
+    margin-top: 28px;
+
+    padding: 17px 20px;
+
+    background: var(--surface);
+
+    border: 1px solid var(--border);
+
+    border-radius: 12px;
+
+    display: none;
+}
+
+.continue-box.visible {
+    display: block;
+    animation: fadeIn .5s ease;
+}
+
+.continue-top {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 9px;
+
+    font-size: 13px;
+    color: var(--text-soft);
+}
+
+.progress-track {
+    height: 5px;
+
+    background: var(--surface-2);
+
+    border-radius: 20px;
+
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    width: 0%;
+
+    background: var(--accent);
+
+    border-radius: 20px;
+
+    transition: width .4s ease;
+}
+
+.primary-button {
+    margin-top: 25px;
+
+    padding: 15px 25px;
+
+    border: none;
+    border-radius: 9px;
+
     background: var(--accent);
     color: white;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        transform .2s,
+        box-shadow .2s;
 }
 
-/* =========================================================
-   LEITOR
-   ========================================================= */
+.primary-button:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 8px 20px var(--shadow);
+}
+
+/* =====================================================
+   READER
+===================================================== */
+
+#reader {
+    display: none;
+
+    height: calc(100vh - 68px);
+
+    flex-direction: column;
+
+    animation: fadeIn .5s ease;
+}
+
+.reader-bar {
+    height: 58px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 18px;
+
+    background: var(--surface);
+
+    border-bottom: 1px solid var(--border);
+
+    z-index: 10;
+}
+
+.reader-left,
+.reader-right {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.chapter-name {
+    font-family: "Cormorant Garamond", serif;
+    font-size: 20px;
+    font-weight: 600;
+
+    max-width: 400px;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#readerProgress {
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
+    height: 3px;
+
+    width: 0%;
+
+    background: var(--accent);
+
+    transition: width .4s ease;
+}
+
+/* =====================================================
+   EPUB AREA
+===================================================== */
 
 .reader-area {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    position: relative;
-}
+    flex: 1;
 
-.reader {
-    width: min(1000px, calc(100% - 40px));
-    height: calc(100% - 95px);
-    margin-top: 20px;
-    background: var(--paper);
-    border: 1px solid var(--border);
-    border-radius: 5px;
-    box-shadow:
-        0 12px 40px var(--shadow),
-        0 2px 5px rgba(0,0,0,.05);
+    display: flex;
+    justify-content: center;
+
     overflow: hidden;
+
+    padding: 28px 20px;
+
     position: relative;
 }
 
 #viewer {
-    width: 100%;
+    width: var(--reader-width);
+
     height: 100%;
+
+    background: var(--surface);
+
+    box-shadow:
+        0 5px 35px var(--shadow);
+
+    border-radius: 4px;
+
+    overflow: hidden;
+
+    transition:
+        width .4s ease,
+        background .4s ease;
 }
 
-/* =========================================================
-   NAVEGAÇÃO
-   ========================================================= */
+/* =====================================================
+   BOTTOM BAR
+===================================================== */
+
+.bottom-bar {
+    height: 58px;
+
+    background: var(--surface);
+
+    border-top: 1px solid var(--border);
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 20px;
+
+    position: relative;
+}
 
 .nav-button {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 52px;
-    height: 70px;
-    border: 1px solid var(--border);
-    background: rgba(255,253,248,.92);
-    color: var(--accent);
+    border: none;
+
+    background: transparent;
+
+    color: var(--text);
+
+    font-size: 15px;
+
+    padding: 9px 16px;
+
     border-radius: 8px;
+
     cursor: pointer;
-    font-size: 34px;
-    z-index: 10;
-    box-shadow: 0 4px 15px rgba(0,0,0,.08);
-    transition: .2s;
+
+    transition: background .2s;
 }
 
 .nav-button:hover {
-    background: white;
-    transform: translateY(-50%) scale(1.04);
+    background: var(--surface-2);
 }
 
-#prev {
-    left: 15px;
-}
-
-#next {
-    right: 15px;
-}
-
-/* =========================================================
-   BARRA INFERIOR
-   ========================================================= */
-
-.bottom-bar {
-    height: 55px;
-    width: min(1000px, calc(100% - 40px));
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 15px;
-    color: var(--muted);
+.page-indicator {
+    color: var(--text-soft);
     font-size: 13px;
 }
 
-.progress-container {
+/* =====================================================
+   SIDE PANEL
+===================================================== */
+
+.overlay {
+    position: fixed;
+
+    inset: 0;
+
+    background: rgba(0,0,0,.35);
+
+    opacity: 0;
+    pointer-events: none;
+
+    transition: opacity .3s;
+
+    z-index: 190;
+}
+
+.overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.side-panel {
+    position: fixed;
+
+    top: 0;
+    left: 0;
+
+    height: 100vh;
+
+    width: min(380px, 90vw);
+
+    background: var(--surface);
+
+    box-shadow: 10px 0 35px rgba(0,0,0,.25);
+
+    z-index: 200;
+
+    transform: translateX(-105%);
+
+    transition:
+        transform .35s cubic-bezier(.22,.61,.36,1);
+}
+
+.side-panel.open {
+    transform: translateX(0);
+}
+
+.panel-header {
+    height: 70px;
+
+    padding: 0 20px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    border-bottom: 1px solid var(--border);
+}
+
+.panel-title {
+    font-family: "Cormorant Garamond", serif;
+    font-size: 27px;
+    font-weight: 700;
+}
+
+.panel-content {
+    padding: 20px;
+
+    height: calc(100vh - 70px);
+
+    overflow-y: auto;
+}
+
+.panel-section {
+    margin-bottom: 30px;
+}
+
+.panel-section h3 {
+    font-size: 12px;
+
+    text-transform: uppercase;
+
+    letter-spacing: 2px;
+
+    color: var(--text-soft);
+
+    margin-bottom: 12px;
+}
+
+.toc-item,
+.bookmark-item {
+    width: 100%;
+
+    display: block;
+
+    text-align: left;
+
+    border: none;
+
+    background: transparent;
+
+    color: var(--text);
+
+    padding: 12px;
+
+    border-radius: 8px;
+
+    cursor: pointer;
+
+    margin-bottom: 4px;
+}
+
+.toc-item:hover,
+.bookmark-item:hover {
+    background: var(--surface-2);
+}
+
+/* =====================================================
+   SETTINGS
+===================================================== */
+
+.setting {
+    margin-bottom: 20px;
+}
+
+.setting label {
+    display: block;
+
+    margin-bottom: 9px;
+
+    font-size: 14px;
+
+    color: var(--text-soft);
+}
+
+.theme-grid {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 8px;
+}
+
+.theme-button {
+    padding: 12px;
+
+    border: 1px solid var(--border);
+
+    background: var(--surface-2);
+
+    color: var(--text);
+
+    border-radius: 8px;
+
+    cursor: pointer;
+}
+
+.theme-button.active {
+    outline: 2px solid var(--accent);
+}
+
+.range-row {
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+}
+
+.range-row input {
     flex: 1;
-    height: 5px;
-    background: #ddd3c4;
-    border-radius: 10px;
-    overflow: hidden;
 }
 
-.progress {
-    height: 100%;
-    width: 0%;
-    background: var(--accent);
-    transition: width .3s;
+.range-value {
+    width: 45px;
+
+    text-align: right;
+
+    font-size: 13px;
+
+    color: var(--text-soft);
 }
 
-/* =========================================================
-   LOADING
-   ========================================================= */
+/* =====================================================
+   FOCUS MODE
+===================================================== */
 
-.loading {
-    position: absolute;
-    inset: 0;
-    background: rgba(255,253,248,.96);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    gap: 15px;
-    z-index: 50;
+body.focus-mode .topbar,
+body.focus-mode .reader-bar,
+body.focus-mode .bottom-bar {
+    opacity: 0;
+    pointer-events: none;
+
+    transition: opacity .35s;
 }
 
-.loading.hidden {
-    display: none;
+body.focus-mode .reader-area {
+    padding: 0;
 }
 
-.spinner {
-    width: 40px;
-    height: 40px;
-    border: 3px solid #ddd3c4;
-    border-top-color: var(--accent);
-    border-radius: 50%;
-    animation: spin .8s linear infinite;
+body.focus-mode #viewer {
+    width: var(--reader-width);
+
+    border-radius: 0;
+
+    box-shadow: none;
 }
 
-@keyframes spin {
+.focus-exit {
+    position: fixed;
+
+    top: 20px;
+    right: 20px;
+
+    z-index: 150;
+
+    opacity: 0;
+    pointer-events: none;
+
+    border: none;
+
+    background: var(--surface);
+
+    color: var(--text);
+
+    padding: 10px 14px;
+
+    border-radius: 8px;
+
+    box-shadow: 0 5px 20px var(--shadow);
+
+    transition: opacity .3s;
+}
+
+body.focus-mode .focus-exit {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* =====================================================
+   TOAST
+===================================================== */
+
+.toast {
+    position: fixed;
+
+    bottom: 80px;
+    left: 50%;
+
+    transform: translate(-50%, 20px);
+
+    background: #25211d;
+
+    color: white;
+
+    padding: 11px 17px;
+
+    border-radius: 8px;
+
+    font-size: 13px;
+
+    opacity: 0;
+
+    pointer-events: none;
+
+    z-index: 500;
+
+    transition:
+        opacity .3s,
+        transform .3s;
+}
+
+.toast.show {
+    opacity: 1;
+
+    transform:
+        translate(-50%, 0);
+}
+
+/* =====================================================
+   ANIMAÇÕES
+===================================================== */
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
     to {
-        transform: rotate(360deg);
+        opacity: 1;
     }
 }
 
-.loading-text {
-    font-size: 16px;
-}
-
-/* =========================================================
-   ERRO
-   ========================================================= */
-
-.error {
-    display: none;
-    position: absolute;
-    inset: 0;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 30px;
-    background: var(--paper);
-    z-index: 40;
-}
-
-.error.show {
-    display: flex;
-}
-
-.error-box {
-    max-width: 600px;
-}
-
-.error h2 {
-    color: var(--accent-dark);
-}
-
-.error p {
-    color: var(--muted);
-    line-height: 1.6;
-}
-
-/* =========================================================
-   DARK MODE
-   ========================================================= */
-
-body.dark {
-    --bg: #171512;
-    --paper: #211e1a;
-    --text: #e8e0d3;
-    --muted: #aaa092;
-    --accent: #b89469;
-    --accent-dark: #c9a77e;
-    --border: #40382f;
-    --shadow: rgba(0,0,0,.45);
-}
-
-body.dark .header,
-body.dark .sidebar,
-body.dark .nav-button,
-body.dark .control-button {
-    background: #211e1a;
-}
-
-body.dark .toc-item:hover,
-body.dark .control-button:hover {
-    background: #302b25;
-}
-
-body.dark .reader {
-    background: #211e1a;
-}
-
-/* =========================================================
-   RESPONSIVO
-   ========================================================= */
-
-@media (max-width: 700px) {
-
-    .header {
-        height: 62px;
-        padding: 0 12px;
+@keyframes coverAppear {
+    from {
+        opacity: 0;
+        transform: translateY(20px) rotate(-2deg);
     }
 
-    .logo-text {
-        font-size: 18px;
+    to {
+        opacity: 1;
+        transform: translateY(0) rotate(0);
+    }
+}
+
+@keyframes slideRight {
+    from {
+        opacity: 0;
+        transform: translateX(30px);
     }
 
-    .logo-subtitle {
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media (max-width: 800px) {
+
+    .topbar {
+        height: 60px;
+        padding: 0 15px;
+    }
+
+    .logo {
+        font-size: 24px;
+    }
+
+    #home {
+        min-height: calc(100vh - 60px);
+        padding: 30px 18px;
+    }
+
+    .home-card {
+        grid-template-columns: 1fr;
+
+        gap: 35px;
+
+        justify-items: center;
+
+        text-align: center;
+    }
+
+    .cover {
+        width: 230px;
+        height: 340px;
+    }
+
+    .cover h1 {
+        font-size: 30px;
+    }
+
+    .home-info h1 {
+        font-size: 43px;
+    }
+
+    .home-info p {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    #reader {
+        height: calc(100vh - 60px);
+    }
+
+    .reader-bar {
+        height: 55px;
+        padding: 0 8px;
+    }
+
+    .chapter-name {
+        font-size: 17px;
+        max-width: 170px;
+    }
+
+    .reader-left .nav-button span,
+    .reader-right .nav-button span {
         display: none;
     }
 
-    .logo-symbol {
-        width: 34px;
-        height: 34px;
+    .reader-area {
+        padding: 10px 7px;
     }
 
-    .main {
-        height: calc(100vh - 62px);
-    }
-
-    .reader {
-        width: calc(100% - 12px);
-        height: calc(100% - 80px);
-        margin-top: 8px;
-        border-radius: 3px;
+    #viewer {
+        width: 100%;
     }
 
     .bottom-bar {
-        width: calc(100% - 20px);
         height: 55px;
     }
 
-    .nav-button {
-        width: 40px;
-        height: 58px;
-        font-size: 28px;
+    .bottom-bar .nav-button {
+        padding: 8px 12px;
     }
 
-    #prev {
-        left: 5px;
-    }
-
-    #next {
-        right: 5px;
-    }
-
-    .header-controls {
-        gap: 4px;
-    }
-
-    .control-button {
-        min-width: 36px;
-        height: 36px;
-        padding: 0 8px;
-    }
 }
+
+/* =====================================================
+   REDUÇÃO DE MOVIMENTO
+===================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: .01ms !important;
+        transition-duration: .01ms !important;
+    }
+
+}
+
 </style>
+
 </head>
 
 <body>
 
-<!-- =======================================================
+<!-- =====================================================
      HEADER
-     ======================================================= -->
+===================================================== -->
 
-<header class="header">
+<header class="topbar">
 
-    <div class="logo">
+```
+<div class="logo">
+    The <span>Book Haven</span>
+</div>
 
-        <div class="logo-symbol">
-            📖
-        </div>
+<div class="top-actions">
 
-        <div>
-            <div class="logo-text">
-                The Book Haven
-            </div>
+    <button
+        class="icon-button"
+        onclick="openPanel('toc')"
+        title="Sumário">
 
-            <div class="logo-subtitle">
-                Um lugar para histórias
-            </div>
-        </div>
+        ☰
 
-    </div>
+    </button>
 
-    <div class="header-controls">
+    <button
+        class="icon-button"
+        onclick="openPanel('settings')"
+        title="Configurações">
 
-        <button
-            class="control-button"
-            id="menuButton"
-            title="Abrir sumário">
-            ☰
-        </button>
+        ⚙
 
-        <button
-            class="control-button"
-            id="fontMinus"
-            title="Diminuir fonte">
-            A−
-        </button>
+    </button>
 
-        <button
-            class="control-button"
-            id="fontPlus"
-            title="Aumentar fonte">
-            A+
-        </button>
-
-        <button
-            class="control-button"
-            id="themeButton"
-            title="Modo escuro">
-            ☾
-        </button>
-
-    </div>
+</div>
+```
 
 </header>
 
+<!-- =====================================================
+     HOME
+===================================================== -->
 
-<!-- =======================================================
-     MAIN
-     ======================================================= -->
+<section id="home">
 
-<main class="main">
+```
+<div class="home-card">
 
-    <!-- SIDEBAR -->
+    <div class="cover">
 
-    <aside class="sidebar" id="sidebar">
+        <div class="cover-content">
 
-        <div class="sidebar-title">
-            Sumário
-        </div>
-
-        <div class="toc" id="toc">
-            <p style="padding:15px;color:#756d60;">
-                Carregando capítulos...
-            </p>
-        </div>
-
-    </aside>
-
-
-    <!-- READER -->
-
-    <section class="reader-area">
-
-        <div class="reader">
-
-            <div id="viewer"></div>
-
-            <button
-                class="nav-button"
-                id="prev"
-                title="Página anterior">
-                ‹
-            </button>
-
-            <button
-                class="nav-button"
-                id="next"
-                title="Próxima página">
-                ›
-            </button>
-
-        </div>
-
-
-        <div class="bottom-bar">
-
-            <span id="chapterName">
-                Carregando...
-            </span>
-
-            <div class="progress-container">
-                <div
-                    class="progress"
-                    id="progress">
-                </div>
+            <div class="cover-small">
+                The Book Haven
             </div>
 
-            <span id="pageInfo">
-                0%
-            </span>
+            <h1>
+                Uma História Qualquer
+            </h1>
 
-        </div>
+            <div class="cover-author">
+                Uma pessoa qualquer
+            </div>
 
-    </section>
-
-
-    <!-- LOADING -->
-
-    <div class="loading" id="loading">
-
-        <div class="spinner"></div>
-
-        <div class="loading-text">
-            Abrindo seu livro...
         </div>
 
     </div>
 
 
-    <!-- ERROR -->
+    <div class="home-info">
 
-    <div class="error" id="error">
+        <div class="eyebrow">
+            Uma nova história espera por você
+        </div>
 
-        <div class="error-box">
+        <h1>
+            Entre nas páginas.
+        </h1>
 
-            <h2>
-                Não foi possível abrir o livro
-            </h2>
+        <p>
+            Encontre um lugar tranquilo, deixe o mundo
+            do lado de fora e mergulhe nesta história.
+        </p>
 
-            <p id="errorMessage">
-                Verifique se o arquivo EPUB está no repositório.
+
+        <div
+            id="continueBox"
+            class="continue-box">
+
+            <div class="continue-top">
+
+                <span>
+                    Seu progresso
+                </span>
+
+                <span id="homeProgressText">
+                    0%
+                </span>
+
+            </div>
+
+            <div class="progress-track">
+
+                <div
+                    id="homeProgress"
+                    class="progress-fill">
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <button
+            id="startButton"
+            class="primary-button"
+            onclick="startBook()">
+
+            ▶ Começar a ler
+
+        </button>
+
+    </div>
+
+</div>
+```
+
+</section>
+
+<!-- =====================================================
+     READER
+===================================================== -->
+
+<section id="reader">
+
+```
+<div
+    id="readerProgress">
+</div>
+
+
+<div class="reader-bar">
+
+    <div class="reader-left">
+
+        <button
+            class="icon-button"
+            onclick="openPanel('toc')">
+
+            ☰
+
+        </button>
+
+        <div
+            id="chapterName"
+            class="chapter-name">
+
+            The Book Haven
+
+        </div>
+
+    </div>
+
+
+    <div class="reader-right">
+
+        <button
+            class="icon-button"
+            onclick="addBookmark()"
+            title="Adicionar marcador">
+
+            🔖
+
+        </button>
+
+        <button
+            class="icon-button"
+            onclick="toggleFocusMode()"
+            title="Modo foco">
+
+            ◉
+
+        </button>
+
+        <button
+            class="icon-button"
+            onclick="goHome()"
+            title="Início">
+
+            ⌂
+
+        </button>
+
+    </div>
+
+</div>
+
+
+<div class="reader-area">
+
+    <div id="viewer"></div>
+
+</div>
+
+
+<div class="bottom-bar">
+
+    <button
+        class="nav-button"
+        onclick="previousPage()">
+
+        ← <span>Anterior</span>
+
+    </button>
+
+
+    <div
+        id="pageIndicator"
+        class="page-indicator">
+
+        0%
+
+    </div>
+
+
+    <button
+        class="nav-button"
+        onclick="nextPage()">
+
+        <span>Próximo</span> →
+
+    </button>
+
+</div>
+```
+
+</section>
+
+<!-- =====================================================
+     PAINEL LATERAL
+===================================================== -->
+
+<div
+    id="overlay"
+    class="overlay"
+    onclick="closePanels()">
+</div>
+
+<aside
+    id="sidePanel"
+    class="side-panel">
+
+```
+<div class="panel-header">
+
+    <div
+        id="panelTitle"
+        class="panel-title">
+
+        Sumário
+
+    </div>
+
+    <button
+        class="icon-button"
+        onclick="closePanels()">
+
+        ×
+
+    </button>
+
+</div>
+
+
+<div class="panel-content">
+
+
+    <!-- TOC -->
+
+    <div
+        id="tocSection"
+        class="panel-section">
+
+        <h3>
+            Conteúdo
+        </h3>
+
+        <div id="tocList">
+            Carregando...
+        </div>
+
+    </div>
+
+
+    <!-- BOOKMARKS -->
+
+    <div
+        id="bookmarkSection"
+        class="panel-section">
+
+        <h3>
+            Marcadores
+        </h3>
+
+        <div id="bookmarkList">
+
+            <p style="color:var(--text-soft);font-size:13px;">
+                Nenhum marcador ainda.
             </p>
 
         </div>
 
     </div>
 
-</main>
 
+    <!-- SETTINGS -->
+
+    <div
+        id="settingsSection"
+        class="panel-section"
+        style="display:none;">
+
+        <h3>
+            Aparência
+        </h3>
+
+
+        <div class="setting">
+
+            <label>
+                Tema
+            </label>
+
+            <div class="theme-grid">
+
+                <button
+                    class="theme-button"
+                    data-theme="paper"
+                    onclick="setTheme('paper')">
+
+                    ☀ Papel
+
+                </button>
+
+                <button
+                    class="theme-button"
+                    data-theme="night"
+                    onclick="setTheme('night')">
+
+                    🌙 Noite
+
+                </button>
+
+                <button
+                    class="theme-button"
+                    data-theme="cozy"
+                    onclick="setTheme('cozy')">
+
+                    🕯 Aconchegante
+
+                </button>
+
+                <button
+                    class="theme-button"
+                    data-theme="forest"
+                    onclick="setTheme('forest')">
+
+                    🌲 Floresta
+
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <div class="setting">
+
+            <label>
+                Tamanho da fonte
+            </label>
+
+            <div class="range-row">
+
+                <input
+                    id="fontRange"
+                    type="range"
+                    min="75"
+                    max="145"
+                    value="100"
+                    oninput="changeFont(this.value)">
+
+                <span
+                    id="fontValue"
+                    class="range-value">
+
+                    100%
+
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div class="setting">
+
+            <label>
+                Espaçamento
+            </label>
+
+            <div class="range-row">
+
+                <input
+                    id="lineRange"
+                    type="range"
+                    min="1.4"
+                    max="2.3"
+                    step=".1"
+                    value="1.8"
+                    oninput="changeLineHeight(this.value)">
+
+                <span
+                    id="lineValue"
+                    class="range-value">
+
+                    1.8
+
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div class="setting">
+
+            <label>
+                Largura do texto
+            </label>
+
+            <div class="range-row">
+
+                <input
+                    id="widthRange"
+                    type="range"
+                    min="550"
+                    max="950"
+                    step="20"
+                    value="760"
+                    oninput="changeReaderWidth(this.value)">
+
+                <span
+                    id="widthValue"
+                    class="range-value">
+
+                    760
+
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <button
+            class="theme-button"
+            style="width:100%;margin-top:10px;"
+            onclick="resetSettings()">
+
+            Restaurar configurações
+
+        </button>
+
+    </div>
+
+</div>
+```
+
+</aside>
+
+<!-- =====================================================
+     FOCUS EXIT
+===================================================== -->
+
+<button
+ class="focus-exit"
+ onclick="toggleFocusMode()">
+
+```
+Sair do modo foco
+```
+
+</button>
+
+<!-- =====================================================
+     TOAST
+===================================================== -->
+
+<div
+    id="toast"
+    class="toast">
+
+```
+Salvo
+```
+
+</div>
 
 <script>
 
-/* =========================================================
+/* =====================================================
    CONFIGURAÇÃO
-   ========================================================= */
+===================================================== */
 
-const EPUB_URL =
+const EPUB_FILE =
     "uma-historia-qualquer-de-uma-pessoa-qualquer.epub";
 
 
-/* =========================================================
-   VARIÁVEIS
-   ========================================================= */
+let book = null;
 
-let book;
-let rendition;
+let rendition = null;
 
-let fontSize = 100;
+let currentLocation = null;
 
-const viewer = document.getElementById("viewer");
-const loading = document.getElementById("loading");
-const errorBox = document.getElementById("error");
-const errorMessage = document.getElementById("errorMessage");
-
-const sidebar = document.getElementById("sidebar");
-const toc = document.getElementById("toc");
-
-const chapterName = document.getElementById("chapterName");
-const progress = document.getElementById("progress");
-const pageInfo = document.getElementById("pageInfo");
+let currentProgress = 0;
 
 
-/* =========================================================
-   ABRIR EPUB
-   ========================================================= */
+/* =====================================================
+   ELEMENTOS
+===================================================== */
+
+const home =
+    document.getElementById("home");
+
+const reader =
+    document.getElementById("reader");
+
+const viewer =
+    document.getElementById("viewer");
+
+const chapterName =
+    document.getElementById("chapterName");
+
+
+/* =====================================================
+   INICIAR LIVRO
+===================================================== */
+
+function startBook() {
+
+    home.style.display = "none";
+
+    reader.style.display = "flex";
+
+    if (!book) {
+
+        loadBook();
+
+    }
+
+}
+
+
+/* =====================================================
+   CARREGAR EPUB
+===================================================== */
 
 function loadBook() {
 
-    try {
+    book = ePub(EPUB_FILE);
 
-        book = ePub(EPUB_URL);
 
-        rendition = book.renderTo("viewer", {
+    rendition =
+        book.renderTo("viewer", {
 
             width: "100%",
+
             height: "100%",
 
-            flow: "paginated",
+            spread: "auto",
 
-            manager: "default",
-
-            spread: "auto"
+            flow: "paginated"
 
         });
 
 
-        /* =================================================
-           ESTILO DO LIVRO
-           ================================================= */
-
-        rendition.themes.default({
-
-            body: {
-                "font-family":
-                    "Georgia, 'Times New Roman', serif",
-
-                "color":
-                    "#29251f",
-
-                "background":
-                    "#fffdf8",
-
-                "line-height":
-                    "1.7",
-
-                "padding":
-                    "30px 40px !important"
-            },
-
-            "p": {
-                "line-height":
-                    "1.7"
-            },
-
-            "h1": {
-                "font-family":
-                    "Georgia, serif",
-
-                "color":
-                    "#76563c"
-            },
-
-            "h2": {
-                "font-family":
-                    "Georgia, serif",
-
-                "color":
-                    "#76563c"
-            }
-
-        });
+    applyReaderSettings();
 
 
-        /* =================================================
-           TAMANHO DA FONTE
-           ================================================= */
+    const saved =
+        localStorage.getItem("bookLocation");
 
-        rendition.themes.fontSize(
-            fontSize + "%"
+
+    if (saved) {
+
+        rendition.display(saved);
+
+    } else {
+
+        rendition.display();
+
+    }
+
+
+    rendition.on(
+        "relocated",
+        handleLocation
+    );
+
+
+    book.loaded.navigation.then(
+        function(navigation) {
+
+            createTOC(
+                navigation.toc
+            );
+
+        }
+    );
+
+}
+
+
+/* =====================================================
+   LOCALIZAÇÃO
+===================================================== */
+
+function handleLocation(location) {
+
+    currentLocation = location;
+
+
+    if (!location || !location.start) {
+        return;
+    }
+
+
+    if (location.start.cfi) {
+
+        localStorage.setItem(
+            "bookLocation",
+            location.start.cfi
         );
 
-
-        /* =================================================
-           EVENTO DE PÁGINA
-           ================================================= */
-
-        rendition.on(
-            "relocated",
-            updateProgress
-        );
+    }
 
 
-        /* =================================================
-           EXIBIR PRIMEIRA PÁGINA
-           ================================================= */
+    calculateProgress(location);
 
-        rendition.display()
-            .then(() => {
 
-                loading.classList.add("hidden");
+    updateChapter(location);
 
-                updateProgress();
+}
 
-                loadNavigation();
 
-            })
-            .catch(showError);
+/* =====================================================
+   PROGRESSO
+===================================================== */
 
+function calculateProgress(location) {
+
+    try {
+
+        const displayed =
+            location.start.displayed;
+
+        if (
+            displayed &&
+            displayed.total
+        ) {
+
+            const page =
+                displayed.page;
+
+            const total =
+                displayed.total;
+
+            currentProgress =
+                Math.round(
+                    ((page - 1) / total) * 100
+                );
+
+        }
 
     } catch (error) {
 
-        showError(error);
+        currentProgress = 0;
+
+    }
+
+
+    if (currentProgress < 0) {
+        currentProgress = 0;
+    }
+
+    if (currentProgress > 100) {
+        currentProgress = 100;
+    }
+
+
+    document.getElementById(
+        "readerProgress"
+    ).style.width =
+        currentProgress + "%";
+
+
+    document.getElementById(
+        "pageIndicator"
+    ).textContent =
+        currentProgress + "%";
+
+
+    localStorage.setItem(
+        "bookProgress",
+        currentProgress
+    );
+
+
+    updateHomeProgress();
+
+}
+
+
+/* =====================================================
+   PROGRESSO DA HOME
+===================================================== */
+
+function updateHomeProgress() {
+
+    const saved =
+        parseInt(
+            localStorage.getItem(
+                "bookProgress"
+            ) || "0"
+        );
+
+
+    if (saved > 0) {
+
+        document.getElementById(
+            "continueBox"
+        ).classList.add("visible");
+
+
+        document.getElementById(
+            "homeProgress"
+        ).style.width =
+            saved + "%";
+
+
+        document.getElementById(
+            "homeProgressText"
+        ).textContent =
+            saved + "%";
+
+
+        document.getElementById(
+            "startButton"
+        ).textContent =
+            "▶ Continuar lendo";
 
     }
 
 }
 
 
-/* =========================================================
-   SUMÁRIO
-   ========================================================= */
+/* =====================================================
+   CAPÍTULO
+===================================================== */
 
-function loadNavigation() {
-
-    book.loaded.navigation
-        .then(navigation => {
-
-            toc.innerHTML = "";
-
-            if (
-                !navigation ||
-                !navigation.toc ||
-                navigation.toc.length === 0
-            ) {
-
-                toc.innerHTML =
-                    "<p style='padding:15px;color:#756d60'>" +
-                    "O livro não possui sumário." +
-                    "</p>";
-
-                return;
-            }
-
-
-            navigation.toc.forEach((item, index) => {
-
-                const button =
-                    document.createElement("button");
-
-                button.className = "toc-item";
-
-                button.textContent =
-                    item.label.trim();
-
-                button.addEventListener(
-                    "click",
-                    () => {
-
-                        rendition.display(
-                            item.href
-                        );
-
-                        sidebar.classList.remove("open");
-
-                    }
-                );
-
-                toc.appendChild(button);
-
-            });
-
-        })
-        .catch(() => {
-
-            toc.innerHTML =
-                "<p style='padding:15px;color:#756d60'>" +
-                "Não foi possível carregar o sumário." +
-                "</p>";
-
-        });
-
-}
-
-
-/* =========================================================
-   PROGRESSO
-   ========================================================= */
-
-function updateProgress(location) {
-
-    if (!location) {
-
-        try {
-            location =
-                rendition.currentLocation();
-        } catch (e) {
-            return;
-        }
-
-    }
+function updateChapter(location) {
 
     if (
+        !book ||
         !location ||
         !location.start
     ) {
@@ -859,143 +1711,1049 @@ function updateProgress(location) {
     }
 
 
-    /* Percentual */
+    book.loaded.navigation.then(
+        function(navigation) {
 
-    try {
+            const current =
+                navigation.toc.find(
+                    item =>
+                        location.start.href &&
+                        location.start.href.includes(
+                            item.href.split("#")[0]
+                        )
+                );
 
-        const percentage =
-            book.locations.percentageFromCfi(
-                location.start.cfi
+
+            if (current) {
+
+                chapterName.textContent =
+                    current.label;
+
+            }
+
+        }
+    );
+
+}
+
+
+/* =====================================================
+   PRÓXIMA PÁGINA
+===================================================== */
+
+function nextPage() {
+
+    if (!rendition) {
+        return;
+    }
+
+
+    rendition.next();
+
+}
+
+
+/* =====================================================
+   PÁGINA ANTERIOR
+===================================================== */
+
+function previousPage() {
+
+    if (!rendition) {
+        return;
+    }
+
+
+    rendition.prev();
+
+}
+
+
+/* =====================================================
+   SUMÁRIO
+===================================================== */
+
+function createTOC(items) {
+
+    const list =
+        document.getElementById(
+            "tocList"
+        );
+
+
+    list.innerHTML = "";
+
+
+    items.forEach(
+        function(item) {
+
+            const button =
+                document.createElement(
+                    "button"
+                );
+
+
+            button.className =
+                "toc-item";
+
+
+            button.textContent =
+                item.label;
+
+
+            button.onclick =
+                function() {
+
+                    if (rendition) {
+
+                        rendition.display(
+                            item.href
+                        );
+
+                    }
+
+                    closePanels();
+
+                };
+
+
+            list.appendChild(
+                button
             );
 
-        const percent =
-            Math.round(percentage * 100);
 
-        progress.style.width =
-            percent + "%";
+            if (
+                item.subitems &&
+                item.subitems.length
+            ) {
 
-        pageInfo.textContent =
-            percent + "%";
+                createSubTOC(
+                    item.subitems,
+                    list
+                );
 
-    } catch (e) {
+            }
 
-        pageInfo.textContent =
-            "Leitura";
+        }
+    );
+
+}
+
+
+function createSubTOC(items, parent) {
+
+    items.forEach(
+        function(item) {
+
+            const button =
+                document.createElement(
+                    "button"
+                );
+
+
+            button.className =
+                "toc-item";
+
+
+            button.style.paddingLeft =
+                "25px";
+
+
+            button.textContent =
+                item.label;
+
+
+            button.onclick =
+                function() {
+
+                    rendition.display(
+                        item.href
+                    );
+
+                    closePanels();
+
+                };
+
+
+            parent.appendChild(
+                button
+            );
+
+        }
+    );
+
+}
+
+
+/* =====================================================
+   PAINEL
+===================================================== */
+
+function openPanel(type) {
+
+    const panel =
+        document.getElementById(
+            "sidePanel"
+        );
+
+    const overlay =
+        document.getElementById(
+            "overlay"
+        );
+
+
+    panel.classList.add("open");
+
+    overlay.classList.add("active");
+
+
+    const toc =
+        document.getElementById(
+            "tocSection"
+        );
+
+    const bookmarks =
+        document.getElementById(
+            "bookmarkSection"
+        );
+
+    const settings =
+        document.getElementById(
+            "settingsSection"
+        );
+
+
+    toc.style.display =
+        type === "toc"
+        ? "block"
+        : "none";
+
+
+    bookmarks.style.display =
+        type === "bookmarks"
+        ? "block"
+        : "none";
+
+
+    settings.style.display =
+        type === "settings"
+        ? "block"
+        : "none";
+
+
+    if (type === "toc") {
+
+        document.getElementById(
+            "panelTitle"
+        ).textContent =
+            "Sumário";
 
     }
 
 
-    /* Nome do capítulo */
+    if (type === "settings") {
+
+        document.getElementById(
+            "panelTitle"
+        ).textContent =
+            "Configurações";
+
+    }
+
+
+    if (type === "bookmarks") {
+
+        document.getElementById(
+            "panelTitle"
+        ).textContent =
+            "Marcadores";
+
+        renderBookmarks();
+
+    }
+
+}
+
+
+function closePanels() {
+
+    document
+        .getElementById("sidePanel")
+        .classList.remove("open");
+
+
+    document
+        .getElementById("overlay")
+        .classList.remove("active");
+
+}
+
+
+/* =====================================================
+   TEMAS
+===================================================== */
+
+function setTheme(theme) {
+
+    document.body.classList.remove(
+        "theme-night",
+        "theme-cozy",
+        "theme-forest"
+    );
+
+
+    if (theme !== "paper") {
+
+        document.body.classList.add(
+            "theme-" + theme
+        );
+
+    }
+
+
+    localStorage.setItem(
+        "readerTheme",
+        theme
+    );
+
+
+    updateThemeButtons();
+
+
+    applyReaderSettings();
+
+
+    showToast(
+        "Tema alterado"
+    );
+
+}
+
+
+function updateThemeButtons() {
+
+    const theme =
+        localStorage.getItem(
+            "readerTheme"
+        ) || "paper";
+
+
+    document
+        .querySelectorAll(".theme-button")
+        .forEach(
+            button => {
+
+                button.classList.toggle(
+                    "active",
+                    button.dataset.theme === theme
+                );
+
+            }
+        );
+
+}
+
+
+function loadTheme() {
+
+    const theme =
+        localStorage.getItem(
+            "readerTheme"
+        ) || "paper";
+
+
+    setThemeWithoutToast(theme);
+
+}
+
+
+function setThemeWithoutToast(theme) {
+
+    document.body.classList.remove(
+        "theme-night",
+        "theme-cozy",
+        "theme-forest"
+    );
+
+
+    if (theme !== "paper") {
+
+        document.body.classList.add(
+            "theme-" + theme
+        );
+
+    }
+
+
+    updateThemeButtons();
+
+}
+
+
+/* =====================================================
+   FONTE
+===================================================== */
+
+function changeFont(value) {
+
+    document.documentElement.style
+        .setProperty(
+            "--reader-font-size",
+            value + "%"
+        );
+
+
+    document.getElementById(
+        "fontValue"
+    ).textContent =
+        value + "%";
+
+
+    localStorage.setItem(
+        "fontSize",
+        value
+    );
+
+
+    applyReaderSettings();
+
+}
+
+
+/* =====================================================
+   ESPAÇAMENTO
+===================================================== */
+
+function changeLineHeight(value) {
+
+    document.documentElement.style
+        .setProperty(
+            "--reader-line-height",
+            value
+        );
+
+
+    document.getElementById(
+        "lineValue"
+    ).textContent =
+        value;
+
+
+    localStorage.setItem(
+        "lineHeight",
+        value
+    );
+
+
+    applyReaderSettings();
+
+}
+
+
+/* =====================================================
+   LARGURA
+===================================================== */
+
+function changeReaderWidth(value) {
+
+    document.documentElement.style
+        .setProperty(
+            "--reader-width",
+            value + "px"
+        );
+
+
+    document.getElementById(
+        "widthValue"
+    ).textContent =
+        value;
+
+
+    localStorage.setItem(
+        "readerWidth",
+        value
+    );
+
+}
+
+
+/* =====================================================
+   APLICAR CONFIGURAÇÕES AO EPUB
+===================================================== */
+
+function applyReaderSettings() {
+
+    if (!rendition) {
+        return;
+    }
+
+
+    const font =
+        localStorage.getItem(
+            "fontSize"
+        ) || "100";
+
+
+    const line =
+        localStorage.getItem(
+            "lineHeight"
+        ) || "1.8";
+
+
+    rendition.themes.default({
+
+        body: {
+
+            "font-family":
+                "'Literata', Georgia, serif !important",
+
+            "font-size":
+                font + "% !important",
+
+            "line-height":
+                line + " !important",
+
+            "color":
+                "var(--text) !important",
+
+            "background":
+                "transparent !important",
+
+            "padding":
+                "35px 25px !important"
+
+        },
+
+        "p": {
+
+            "line-height":
+                line + " !important"
+
+        }
+
+    });
+
+
+    rendition.themes.fontSize(
+        font + "%"
+    );
+
+}
+
+
+/* =====================================================
+   CARREGAR CONFIGURAÇÕES
+===================================================== */
+
+function loadSettings() {
+
+    const font =
+        localStorage.getItem(
+            "fontSize"
+        ) || "100";
+
+
+    const line =
+        localStorage.getItem(
+            "lineHeight"
+        ) || "1.8";
+
+
+    const width =
+        localStorage.getItem(
+            "readerWidth"
+        ) || "760";
+
+
+    document.getElementById(
+        "fontRange"
+    ).value = font;
+
+
+    document.getElementById(
+        "fontValue"
+    ).textContent =
+        font + "%";
+
+
+    document.getElementById(
+        "lineRange"
+    ).value = line;
+
+
+    document.getElementById(
+        "lineValue"
+    ).textContent =
+        line;
+
+
+    document.getElementById(
+        "widthRange"
+    ).value = width;
+
+
+    document.getElementById(
+        "widthValue"
+    ).textContent =
+        width;
+
+
+    document.documentElement.style
+        .setProperty(
+            "--reader-font-size",
+            font + "%"
+        );
+
+
+    document.documentElement.style
+        .setProperty(
+            "--reader-line-height",
+            line
+        );
+
+
+    document.documentElement.style
+        .setProperty(
+            "--reader-width",
+            width + "px"
+        );
+
+}
+
+
+/* =====================================================
+   RESTAURAR CONFIGURAÇÕES
+===================================================== */
+
+function resetSettings() {
+
+    localStorage.removeItem(
+        "fontSize"
+    );
+
+    localStorage.removeItem(
+        "lineHeight"
+    );
+
+    localStorage.removeItem(
+        "readerWidth"
+    );
+
+    localStorage.removeItem(
+        "readerTheme"
+    );
+
+
+    loadSettings();
+
+    loadTheme();
+
+
+    showToast(
+        "Configurações restauradas"
+    );
+
+
+    if (rendition) {
+        applyReaderSettings();
+    }
+
+}
+
+
+/* =====================================================
+   MARCADORES
+===================================================== */
+
+function addBookmark() {
 
     if (
-        location.start &&
-        location.start.href
+        !currentLocation ||
+        !currentLocation.start
     ) {
 
-        const href =
-            location.start.href;
+        showToast(
+            "Não foi possível salvar"
+        );
 
-        const match =
-            findChapterName(href);
+        return;
 
-        if (match) {
-            chapterName.textContent =
-                match;
+    }
+
+
+    const bookmarks =
+        JSON.parse(
+            localStorage.getItem(
+                "bookmarks"
+            ) || "[]"
+        );
+
+
+    const cfi =
+        currentLocation.start.cfi;
+
+
+    const alreadyExists =
+        bookmarks.some(
+            bookmark =>
+                bookmark.cfi === cfi
+        );
+
+
+    if (alreadyExists) {
+
+        showToast(
+            "Este ponto já está marcado"
+        );
+
+        return;
+
+    }
+
+
+    bookmarks.push({
+
+        cfi: cfi,
+
+        title:
+            chapterName.textContent,
+
+        date:
+            new Date().toLocaleDateString(
+                "pt-BR"
+            )
+
+    });
+
+
+    localStorage.setItem(
+        "bookmarks",
+        JSON.stringify(bookmarks)
+    );
+
+
+    showToast(
+        "🔖 Marcador salvo"
+    );
+
+}
+
+
+/* =====================================================
+   MOSTRAR MARCADORES
+===================================================== */
+
+function renderBookmarks() {
+
+    const list =
+        document.getElementById(
+            "bookmarkList"
+        );
+
+
+    const bookmarks =
+        JSON.parse(
+            localStorage.getItem(
+                "bookmarks"
+            ) || "[]"
+        );
+
+
+    list.innerHTML = "";
+
+
+    if (!bookmarks.length) {
+
+        list.innerHTML = `
+            <p style="
+                color:var(--text-soft);
+                font-size:13px;
+            ">
+                Nenhum marcador ainda.
+            </p>
+        `;
+
+        return;
+
+    }
+
+
+    bookmarks.forEach(
+        function(bookmark, index) {
+
+            const wrapper =
+                document.createElement(
+                    "div"
+                );
+
+
+            wrapper.style.display =
+                "flex";
+
+            wrapper.style.gap =
+                "5px";
+
+
+            const button =
+                document.createElement(
+                    "button"
+                );
+
+
+            button.className =
+                "bookmark-item";
+
+
+            button.textContent =
+                "🔖 " +
+                bookmark.title;
+
+
+            button.onclick =
+                function() {
+
+                    rendition.display(
+                        bookmark.cfi
+                    );
+
+                    closePanels();
+
+                };
+
+
+            const deleteButton =
+                document.createElement(
+                    "button"
+                );
+
+
+            deleteButton.className =
+                "icon-button";
+
+
+            deleteButton.textContent =
+                "×";
+
+
+            deleteButton.onclick =
+                function() {
+
+                    deleteBookmark(
+                        index
+                    );
+
+                };
+
+
+            wrapper.appendChild(
+                button
+            );
+
+
+            wrapper.appendChild(
+                deleteButton
+            );
+
+
+            list.appendChild(
+                wrapper
+            );
+
         }
+    );
+
+}
+
+
+/* =====================================================
+   EXCLUIR MARCADOR
+===================================================== */
+
+function deleteBookmark(index) {
+
+    const bookmarks =
+        JSON.parse(
+            localStorage.getItem(
+                "bookmarks"
+            ) || "[]"
+        );
+
+
+    bookmarks.splice(
+        index,
+        1
+    );
+
+
+    localStorage.setItem(
+        "bookmarks",
+        JSON.stringify(bookmarks)
+    );
+
+
+    renderBookmarks();
+
+
+    showToast(
+        "Marcador removido"
+    );
+
+}
+
+
+/* =====================================================
+   MODO FOCO
+===================================================== */
+
+function toggleFocusMode() {
+
+    document.body.classList.toggle(
+        "focus-mode"
+    );
+
+
+    const active =
+        document.body.classList.contains(
+            "focus-mode"
+        );
+
+
+    if (active) {
+
+        showToast(
+            "Modo foco ativado"
+        );
+
+    } else {
+
+        showToast(
+            "Modo foco desativado"
+        );
 
     }
 
 }
 
 
-/* =========================================================
-   ENCONTRAR NOME DO CAPÍTULO
-   ========================================================= */
+/* =====================================================
+   INÍCIO
+===================================================== */
 
-function findChapterName(href) {
+function goHome() {
 
-    const items =
-        document.querySelectorAll(".toc-item");
+    reader.style.display =
+        "none";
 
-    for (
-        let i = 0;
-        i < items.length;
-        i++
-    ) {
 
-        /*
-         * Não conseguimos garantir correspondência
-         * perfeita em todos os EPUBs.
-         * O título do capítulo continuará sendo
-         * atualizado pela navegação principal.
-         */
+    home.style.display =
+        "flex";
 
-    }
 
-    return null;
+    document.body.classList.remove(
+        "focus-mode"
+    );
+
+
+    updateHomeProgress();
 
 }
 
 
-/* =========================================================
-   NAVEGAÇÃO
-   ========================================================= */
+/* =====================================================
+   TOAST
+===================================================== */
 
-document
-    .getElementById("prev")
-    .addEventListener(
-        "click",
-        () => {
+let toastTimeout;
 
-            if (rendition) {
-                rendition.prev();
-            }
 
-        }
+function showToast(message) {
+
+    const toast =
+        document.getElementById(
+            "toast"
+        );
+
+
+    toast.textContent =
+        message;
+
+
+    toast.classList.add(
+        "show"
     );
 
 
-document
-    .getElementById("next")
-    .addEventListener(
-        "click",
-        () => {
-
-            if (rendition) {
-                rendition.next();
-            }
-
-        }
+    clearTimeout(
+        toastTimeout
     );
 
 
-/* =========================================================
+    toastTimeout =
+        setTimeout(
+            function() {
+
+                toast.classList.remove(
+                    "show"
+                );
+
+            },
+            2200
+        );
+
+}
+
+
+/* =====================================================
    TECLADO
-   ========================================================= */
+===================================================== */
 
 document.addEventListener(
     "keydown",
-    event => {
+    function(event) {
 
-        if (event.key === "ArrowLeft") {
+        if (!rendition) {
+            return;
+        }
 
-            if (rendition) {
-                rendition.prev();
-            }
+
+        if (
+            event.target.tagName ===
+            "INPUT"
+        ) {
+            return;
+        }
+
+
+        if (
+            event.key ===
+            "ArrowRight"
+        ) {
+
+            nextPage();
 
         }
 
-        if (event.key === "ArrowRight") {
 
-            if (rendition) {
-                rendition.next();
-            }
+        if (
+            event.key ===
+            "ArrowLeft"
+        ) {
+
+            previousPage();
 
         }
 
-        if (event.key === "Escape") {
 
-            sidebar.classList.remove("open");
+        if (
+            event.key ===
+            "Escape"
+        ) {
+
+            closePanels();
+
+            document.body.classList.remove(
+                "focus-mode"
+            );
 
         }
 
@@ -1003,219 +2761,38 @@ document.addEventListener(
 );
 
 
-/* =========================================================
-   MENU
-   ========================================================= */
+/* =====================================================
+   ATALHOS
+===================================================== */
 
-document
-    .getElementById("menuButton")
-    .addEventListener(
-        "click",
-        () => {
+document.addEventListener(
+    "keydown",
+    function(event) {
 
-            sidebar.classList.toggle("open");
+        if (
+            event.ctrlKey &&
+            event.key.toLowerCase() === "b"
+        ) {
 
-        }
-    );
+            event.preventDefault();
 
-
-/* =========================================================
-   TAMANHO DA FONTE
-   ========================================================= */
-
-document
-    .getElementById("fontPlus")
-    .addEventListener(
-        "click",
-        () => {
-
-            if (!rendition) return;
-
-            fontSize += 10;
-
-            if (fontSize > 160) {
-                fontSize = 160;
-            }
-
-            rendition.themes.fontSize(
-                fontSize + "%"
-            );
-
-            localStorage.setItem(
-                "bookhaven-font-size",
-                fontSize
-            );
+            addBookmark();
 
         }
-    );
-
-
-document
-    .getElementById("fontMinus")
-    .addEventListener(
-        "click",
-        () => {
-
-            if (!rendition) return;
-
-            fontSize -= 10;
-
-            if (fontSize < 70) {
-                fontSize = 70;
-            }
-
-            rendition.themes.fontSize(
-                fontSize + "%"
-            );
-
-            localStorage.setItem(
-                "bookhaven-font-size",
-                fontSize
-            );
-
-        }
-    );
-
-
-/* =========================================================
-   MODO ESCURO
-   ========================================================= */
-
-document
-    .getElementById("themeButton")
-    .addEventListener(
-        "click",
-        () => {
-
-            document.body.classList.toggle("dark");
-
-            const dark =
-                document.body.classList.contains("dark");
-
-
-            if (rendition) {
-
-                rendition.themes.default({
-
-                    body: {
-
-                        "font-family":
-                            "Georgia, 'Times New Roman', serif",
-
-                        "color":
-                            dark
-                                ? "#e8e0d3"
-                                : "#29251f",
-
-                        "background":
-                            dark
-                                ? "#211e1a"
-                                : "#fffdf8",
-
-                        "line-height":
-                            "1.7",
-
-                        "padding":
-                            "30px 40px !important"
-
-                    },
-
-                    "p": {
-                        "line-height":
-                            "1.7"
-                    },
-
-                    "h1": {
-                        "color":
-                            dark
-                                ? "#c9a77e"
-                                : "#76563c"
-                    },
-
-                    "h2": {
-                        "color":
-                            dark
-                                ? "#c9a77e"
-                                : "#76563c"
-                    }
-
-                });
-
-                rendition.themes.select("default");
-
-            }
-
-
-            localStorage.setItem(
-                "bookhaven-dark",
-                dark
-            );
-
-        }
-    );
-
-
-/* =========================================================
-   CARREGAR PREFERÊNCIAS
-   ========================================================= */
-
-function loadPreferences() {
-
-    const savedFont =
-        localStorage.getItem(
-            "bookhaven-font-size"
-        );
-
-    if (savedFont) {
-
-        fontSize =
-            parseInt(savedFont);
 
     }
+);
 
 
-    const savedDark =
-        localStorage.getItem(
-            "bookhaven-dark"
-        );
+/* =====================================================
+   INICIALIZAÇÃO
+===================================================== */
 
-    if (savedDark === "true") {
+loadSettings();
 
-        document.body.classList.add("dark");
+loadTheme();
 
-    }
-
-}
-
-
-/* =========================================================
-   ERRO
-   ========================================================= */
-
-function showError(error) {
-
-    console.error(error);
-
-    loading.classList.add("hidden");
-
-    errorBox.classList.add("show");
-
-    errorMessage.textContent =
-        "Não foi possível carregar o EPUB. " +
-        "Verifique se o arquivo " +
-        "'" + EPUB_URL + "'" +
-        " está na raiz do repositório e tente novamente.";
-
-}
-
-
-/* =========================================================
-   INICIAR
-   ========================================================= */
-
-loadPreferences();
-
-loadBook();
+updateHomeProgress();
 
 </script>
 
