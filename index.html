@@ -3,52 +3,53 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The Book Haven</title>
+
+<title>Teste EPUB</title>
 
 <style>
-body {
+html, body {
     margin: 0;
-    background: #f4ead8;
-    color: #33271f;
-    font-family: Georgia, serif;
-    text-align: center;
-    padding-top: 100px;
+    width: 100%;
+    height: 100%;
 }
 
-h1 {
-    font-size: 32px;
-}
-
-#status {
-    margin-top: 20px;
-    font-family: Arial, sans-serif;
+#viewer {
+    width: 100%;
+    height: 100%;
 }
 </style>
 </head>
 
 <body>
 
-<h1>📖 The Book Haven</h1>
-
-<div id="status">
-    Carregando Epub.js...
-</div>
+<div id="viewer"></div>
 
 <script src="https://cdn.jsdelivr.net/npm/epubjs/dist/epub.min.js"></script>
 
 <script>
 
-if (typeof ePub === "function") {
+const book = ePub(
+    "uma-historia-qualquer-de-uma-pessoa-qualquer.epub"
+);
 
-    document.getElementById("status").textContent =
-        "✅ Epub.js carregou normalmente!";
+const rendition = book.renderTo("viewer", {
+    width: "100%",
+    height: "100%",
+    spread: "none"
+});
 
-} else {
-
-    document.getElementById("status").textContent =
-        "❌ Epub.js não carregou.";
-
-}
+rendition.display()
+    .then(() => {
+        console.log("EPUB abriu!");
+    })
+    .catch(error => {
+        console.error("Erro ao abrir EPUB:", error);
+        document.body.innerHTML =
+            "<h2 style='font-family:Arial;text-align:center;margin-top:50px'>" +
+            "❌ Erro ao abrir o EPUB<br><br>" +
+            "<small>" + error + "</small>" +
+            "</h2>";
+    });
 
 </script>
 
