@@ -38,7 +38,6 @@ body {
 ========================================================= */
 
 :root {
-
     --bg: #f4efe6;
     --surface: #fffaf1;
     --surface2: #eee5d5;
@@ -53,8 +52,6 @@ body {
 
     --shadow:
         0 10px 30px rgba(60, 40, 20, .10);
-
-    --reader-width: 760px;
 }
 
 /* =========================================================
@@ -62,7 +59,6 @@ body {
 ========================================================= */
 
 body.theme-night {
-
     --bg: #171614;
     --surface: #211f1c;
     --surface2: #2b2824;
@@ -80,7 +76,6 @@ body.theme-night {
 }
 
 body.theme-cozy {
-
     --bg: #efe1d0;
     --surface: #fff4e5;
     --surface2: #ead4bd;
@@ -93,7 +88,6 @@ body.theme-cozy {
 }
 
 body.theme-forest {
-
     --bg: #e7eee8;
     --surface: #f6faf6;
     --surface2: #d9e5da;
@@ -112,8 +106,6 @@ body.theme-forest {
 #app {
     width: 100%;
     height: 100%;
-    display: flex;
-    flex-direction: column;
 }
 
 /* =========================================================
@@ -121,7 +113,6 @@ body.theme-forest {
 ========================================================= */
 
 #home {
-
     position: absolute;
     inset: 0;
 
@@ -147,14 +138,12 @@ body.theme-forest {
 }
 
 #home.hidden {
-
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
 }
 
 .home-card {
-
     width: min(850px, 100%);
 
     background: var(--surface);
@@ -171,37 +160,24 @@ body.theme-forest {
 }
 
 .logo {
-
     font-size: 48px;
     margin-bottom: 5px;
 }
 
 .home-card h1 {
-
     margin: 0;
-
-    font-family: Georgia, serif;
-
     font-size: 34px;
-
-    color: var(--text);
 }
 
 .subtitle {
-
     margin: 10px 0 30px;
-
     color: var(--text2);
-
     font-family: Arial, sans-serif;
 }
 
 .book-card {
-
     display: flex;
-
     align-items: center;
-
     gap: 25px;
 
     text-align: left;
@@ -216,7 +192,6 @@ body.theme-forest {
 }
 
 .book-cover {
-
     width: 120px;
     height: 170px;
 
@@ -231,21 +206,16 @@ body.theme-forest {
 }
 
 .book-info {
-
     flex: 1;
 }
 
 .book-info h2 {
-
     margin: 0 0 8px;
-
     font-size: 23px;
 }
 
 .book-info p {
-
     margin: 5px 0;
-
     color: var(--text2);
 }
 
@@ -254,9 +224,7 @@ body.theme-forest {
 ========================================================= */
 
 button {
-
     border: 0;
-
     cursor: pointer;
 
     font-family: Arial, sans-serif;
@@ -267,14 +235,11 @@ button {
 }
 
 button:active {
-
     transform: scale(.96);
 }
 
 .primary {
-
     background: var(--accent);
-
     color: white;
 
     padding: 13px 22px;
@@ -287,12 +252,10 @@ button:active {
 }
 
 .primary:hover {
-
     background: var(--accent-hover);
 }
 
 .icon-btn {
-
     width: 42px;
     height: 42px;
 
@@ -306,7 +269,6 @@ button:active {
 }
 
 .icon-btn:hover {
-
     background: var(--surface2);
 }
 
@@ -315,9 +277,7 @@ button:active {
 ========================================================= */
 
 #reader {
-
     position: absolute;
-
     inset: 0;
 
     display: flex;
@@ -334,7 +294,6 @@ button:active {
 }
 
 #reader.visible {
-
     opacity: 1;
     visibility: visible;
 }
@@ -344,7 +303,6 @@ button:active {
 ========================================================= */
 
 .topbar {
-
     height: 62px;
 
     flex-shrink: 0;
@@ -366,16 +324,12 @@ button:active {
 
 .top-left,
 .top-right {
-
     display: flex;
-
     align-items: center;
-
     gap: 5px;
 }
 
 .reader-title {
-
     max-width: 350px;
 
     overflow: hidden;
@@ -396,7 +350,6 @@ button:active {
 ========================================================= */
 
 .progress-area {
-
     height: 4px;
 
     background: var(--surface2);
@@ -405,7 +358,6 @@ button:active {
 }
 
 #progress {
-
     width: 0%;
 
     height: 100%;
@@ -416,11 +368,10 @@ button:active {
 }
 
 /* =========================================================
-   LEITOR EPUB
+   ÁREA DO LEITOR
 ========================================================= */
 
 #reader-area {
-
     flex: 1;
 
     position: relative;
@@ -429,7 +380,6 @@ button:active {
 }
 
 #viewer {
-
     width: 100%;
     height: 100%;
 }
@@ -439,7 +389,6 @@ button:active {
 ========================================================= */
 
 #loading {
-
     position: absolute;
 
     inset: 0;
@@ -447,6 +396,7 @@ button:active {
     display: flex;
 
     align-items: center;
+
     justify-content: center;
 
     flex-direction: column;
@@ -459,7 +409,6 @@ button:active {
 }
 
 .spinner {
-
     width: 35px;
     height: 35px;
 
@@ -473,14 +422,12 @@ button:active {
 }
 
 @keyframes spin {
-
     to {
         transform: rotate(360deg);
     }
 }
 
 #loading.hidden {
-
     display: none;
 }
 
@@ -489,7 +436,6 @@ button:active {
 ========================================================= */
 
 .panel {
-
     position: absolute;
 
     top: 0;
@@ -509,31 +455,26 @@ button:active {
 }
 
 #toc-panel {
-
     left: 0;
 
     transform: translateX(-105%);
 }
 
 #toc-panel.open {
-
     transform: translateX(0);
 }
 
 #settings-panel {
-
     right: 0;
 
     transform: translateX(105%);
 }
 
 #settings-panel.open {
-
     transform: translateX(0);
 }
 
 .panel-header {
-
     height: 62px;
 
     display: flex;
@@ -550,7 +491,6 @@ button:active {
 }
 
 .panel-content {
-
     padding: 20px;
 }
 
@@ -559,7 +499,6 @@ button:active {
 ========================================================= */
 
 .toc-item {
-
     display: block;
 
     width: 100%;
@@ -580,7 +519,6 @@ button:active {
 }
 
 .toc-item:hover {
-
     background: var(--surface2);
 }
 
@@ -589,12 +527,10 @@ button:active {
 ========================================================= */
 
 .setting {
-
     margin-bottom: 25px;
 }
 
 .setting label {
-
     display: block;
 
     margin-bottom: 10px;
@@ -607,12 +543,10 @@ button:active {
 }
 
 .setting input[type="range"] {
-
     width: 100%;
 }
 
 .theme-buttons {
-
     display: grid;
 
     grid-template-columns: 1fr 1fr;
@@ -621,7 +555,6 @@ button:active {
 }
 
 .theme-button {
-
     padding: 10px;
 
     border-radius: 10px;
@@ -632,20 +565,17 @@ button:active {
 }
 
 .theme-button.active {
-
     outline: 2px solid var(--accent);
 }
 
 /* =========================================================
-   BOOKMARKS
+   MARCADORES
 ========================================================= */
 
 #bookmark-panel {
-
     position: absolute;
 
     right: 15px;
-
     top: 65px;
 
     width: min(340px, calc(100vw - 30px));
@@ -670,12 +600,10 @@ button:active {
 }
 
 #bookmark-panel.open {
-
     display: block;
 }
 
 .bookmark {
-
     display: flex;
 
     align-items: center;
@@ -702,12 +630,11 @@ button:active {
 }
 
 /* =========================================================
-   FOCO
+   MODO FOCO
 ========================================================= */
 
 body.focus-mode .topbar,
 body.focus-mode .progress-area {
-
     opacity: 0;
 
     pointer-events: none;
@@ -715,58 +642,12 @@ body.focus-mode .progress-area {
     position: absolute;
 
     top: 0;
-
     left: 0;
-
     right: 0;
 }
 
 body.focus-mode #reader-area {
-
     height: 100%;
-}
-
-/* =========================================================
-   RESPONSIVO
-========================================================= */
-
-@media (max-width: 650px) {
-
-    .home-card {
-
-        padding: 25px;
-
-        border-radius: 18px;
-    }
-
-    .home-card h1 {
-
-        font-size: 27px;
-    }
-
-    .book-card {
-
-        flex-direction: column;
-
-        text-align: center;
-    }
-
-    .book-cover {
-
-        width: 110px;
-        height: 155px;
-    }
-
-    .reader-title {
-
-        max-width: 120px;
-    }
-
-    .topbar {
-
-        padding: 0 7px;
-    }
-
 }
 
 /* =========================================================
@@ -774,11 +655,9 @@ body.focus-mode #reader-area {
 ========================================================= */
 
 #toast {
-
     position: fixed;
 
     bottom: 25px;
-
     left: 50%;
 
     transform: translate(-50%, 20px);
@@ -807,14 +686,47 @@ body.focus-mode #reader-area {
 }
 
 #toast.show {
-
     opacity: 1;
 
     transform: translate(-50%, 0);
 }
 
-</style>
+/* =========================================================
+   RESPONSIVO
+========================================================= */
 
+@media (max-width: 650px) {
+
+    .home-card {
+        padding: 25px;
+        border-radius: 18px;
+    }
+
+    .home-card h1 {
+        font-size: 27px;
+    }
+
+    .book-card {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .book-cover {
+        width: 110px;
+        height: 155px;
+    }
+
+    .reader-title {
+        max-width: 120px;
+    }
+
+    .topbar {
+        padding: 0 7px;
+    }
+
+}
+
+</style>
 </head>
 
 <body>
@@ -822,7 +734,7 @@ body.focus-mode #reader-area {
 <div id="app">
 
 <!-- =====================================================
-     HOME
+     PÁGINA INICIAL
 ===================================================== -->
 
 <section id="home">
@@ -876,7 +788,7 @@ body.focus-mode #reader-area {
 
 
 <!-- =====================================================
-     READER
+     LEITOR
 ===================================================== -->
 
 <section id="reader">
@@ -903,9 +815,8 @@ body.focus-mode #reader-area {
 
             <span
                 class="reader-title"
-                id="reader-title"
             >
-                The Book Haven
+                Uma História Qualquer
             </span>
 
         </div>
@@ -951,9 +862,7 @@ body.focus-mode #reader-area {
 
 
     <div class="progress-area">
-
         <div id="progress"></div>
-
     </div>
 
 
@@ -963,7 +872,7 @@ body.focus-mode #reader-area {
 
             <div class="spinner"></div>
 
-            <span>
+            <span id="loading-text">
                 Abrindo seu livro...
             </span>
 
@@ -972,7 +881,9 @@ body.focus-mode #reader-area {
         <div id="viewer"></div>
 
 
-        <!-- TOC -->
+        <!-- =================================================
+             ÍNDICE
+        ================================================= -->
 
         <aside
             class="panel"
@@ -996,13 +907,15 @@ body.focus-mode #reader-area {
                 class="panel-content"
                 id="toc-content"
             >
-                Carregando...
+                Carregando índice...
             </div>
 
         </aside>
 
 
-        <!-- SETTINGS -->
+        <!-- =================================================
+             CONFIGURAÇÕES
+        ================================================= -->
 
         <aside
             class="panel"
@@ -1062,23 +975,6 @@ body.focus-mode #reader-area {
                 <div class="setting">
 
                     <label>
-                        Largura do texto
-                    </label>
-
-                    <input
-                        type="range"
-                        id="reader-width"
-                        min="500"
-                        max="1000"
-                        value="760"
-                    >
-
-                </div>
-
-
-                <div class="setting">
-
-                    <label>
                         Tema
                     </label>
 
@@ -1121,7 +1017,9 @@ body.focus-mode #reader-area {
         </aside>
 
 
-        <!-- BOOKMARKS -->
+        <!-- =================================================
+             MARCADORES
+        ================================================= -->
 
         <div id="bookmark-panel">
 
@@ -1181,6 +1079,9 @@ const viewer =
 const loading =
     document.getElementById("loading");
 
+const loadingText =
+    document.getElementById("loading-text");
+
 const progress =
     document.getElementById("progress");
 
@@ -1213,18 +1114,18 @@ let rendition = null;
 
 let currentLocation = null;
 
-let bookmarks =
-    JSON.parse(
-        localStorage.getItem("bookmarks") || "[]"
-    );
+let bookOpening = false;
+
+let bookmarks = JSON.parse(
+    localStorage.getItem("bookmarks") || "[]"
+);
 
 let savedCfi =
     localStorage.getItem("readingPosition");
 
-let settings =
-    JSON.parse(
-        localStorage.getItem("readerSettings") || "{}"
-    );
+let settings = JSON.parse(
+    localStorage.getItem("readerSettings") || "{}"
+);
 
 
 /* =========================================================
@@ -1247,42 +1148,56 @@ function showToast(message) {
 
 
 /* =========================================================
-   ABRIR EPUB
+   ABRIR LIVRO
 ========================================================= */
 
 async function openBook() {
 
-    if (book) return;
+    if (bookOpening) {
+        return;
+    }
+
+    bookOpening = true;
 
     loading.classList.remove("hidden");
 
+    loadingText.textContent =
+        "Abrindo o EPUB...";
+
     try {
+
+        /*
+         * CRIA O LIVRO
+         */
 
         book = ePub(EPUB_FILE);
 
-        rendition = book.renderTo("viewer", {
 
-            width: "100%",
-            height: "100%",
+        /*
+         * CRIA O LEITOR
+         */
 
-            spread: "none",
+        rendition = book.renderTo(
+            "viewer",
+            {
+                width: "100%",
+                height: "100%",
+                spread: "none",
+                flow: "paginated"
+            }
+        );
 
-            flow: "paginated",
 
-            allowScriptedContent: false
-
-        });
-
-
-        /* =================================================
-           LOCALIZAÇÃO
-        ================================================= */
+        /*
+         * SALVA A POSIÇÃO
+         */
 
         rendition.on(
             "relocated",
             location => {
 
-                currentLocation = location;
+                currentLocation =
+                    location;
 
                 if (
                     location &&
@@ -1297,61 +1212,62 @@ async function openBook() {
 
                 }
 
-                updateProgress(location);
+                updateProgress(
+                    location
+                );
 
             }
         );
 
 
-        /* =================================================
-           CARREGAMENTO
-        ================================================= */
+        /*
+         * ESPERA O EPUB SER PROCESSADO
+         */
+
+        loadingText.textContent =
+            "Processando o livro...";
 
         await book.ready;
 
-        console.log("EPUB carregado.");
+
+        console.log(
+            "EPUB carregado com sucesso."
+        );
+
+
+        /*
+         * ESPERA O SPINE
+         */
+
+        loadingText.textContent =
+            "Preparando capítulos...";
 
         await book.loaded.spine;
 
-        console.log("Spine carregado.");
+
+        console.log(
+            "Spine carregado."
+        );
 
 
-        /* =================================================
-           ESTILO
-        ================================================= */
-
-        rendition.themes.default({
-
-            body: {
-
-                "font-family":
-                    "Georgia, serif !important"
-
-            }
-
-        });
-
+        /*
+         * APLICA CONFIGURAÇÕES
+         */
 
         applyReaderSettings();
 
 
-        /* =================================================
-           TOC
-        ================================================= */
+        /*
+         * ABRE O LIVRO PRIMEIRO.
+         *
+         * IMPORTANTE:
+         * TOC E CAPA NÃO BLOQUEIAM MAIS
+         * A ABERTURA DO LIVRO.
+         */
 
-        await loadTOC();
+        loadingText.textContent =
+            "Abrindo a primeira página...";
 
-
-        /* =================================================
-           CAPA
-        ================================================= */
-
-        loadCover();
-
-
-        /* =================================================
-           ABRIR POSIÇÃO SALVA
-        ================================================= */
 
         if (savedCfi) {
 
@@ -1361,7 +1277,11 @@ async function openBook() {
                     savedCfi
                 );
 
-            } catch {
+            } catch (savedError) {
+
+                console.log(
+                    "Posição salva inválida. Abrindo início."
+                );
 
                 await rendition.display();
 
@@ -1374,37 +1294,74 @@ async function openBook() {
         }
 
 
-        loading.classList.add("hidden");
+        /*
+         * LIVRO ABERTO
+         */
+
+        loading.classList.add(
+            "hidden"
+        );
+
+
+        /*
+         * AGORA CARREGAMOS COISAS
+         * SECUNDÁRIAS SEM BLOQUEAR
+         * O LEITOR.
+         */
+
+        loadTOC();
+
+        loadCover();
+
+        generateLocations();
+
+
+        bookOpening = false;
+
 
     } catch (error) {
 
         console.error(
-            "Erro ao abrir EPUB:",
+            "ERRO AO ABRIR EPUB:",
             error
         );
 
-        loading.innerHTML = `
 
-            <div style="
-                max-width:500px;
-                padding:25px;
-                text-align:center;
-                font-family:Arial;
-            ">
+        loadingText.innerHTML = `
+            <strong style="color:#b33">
+                Não foi possível abrir o livro.
+            </strong>
 
-                <h2>
-                    Não foi possível abrir o livro.
-                </h2>
+            <br><br>
 
-                <p>
-                    ${error}
-                </p>
-
-            </div>
-
+            <small>
+                ${escapeHTML(
+                    error?.message ||
+                    String(error)
+                )}
+            </small>
         `;
 
+
+        bookOpening = false;
+
     }
+
+}
+
+
+/* =========================================================
+   ESCAPAR TEXTO DE ERRO
+========================================================= */
+
+function escapeHTML(text) {
+
+    return String(text)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
 
 }
 
@@ -1417,19 +1374,35 @@ async function loadCover() {
 
     try {
 
-        const url =
+        const cover =
             await book.coverUrl();
 
-        if (url) {
 
-            homeCover.src = url;
+        if (
+            cover &&
+            typeof cover === "string"
+        ) {
+
+            homeCover.src =
+                cover;
+
+            homeCover.style.display =
+                "block";
+
+            return;
 
         }
+
+
+        console.log(
+            "coverUrl não encontrou a capa."
+        );
+
 
     } catch (error) {
 
         console.log(
-            "Capa não disponível:",
+            "Erro ao carregar capa:",
             error
         );
 
@@ -1445,9 +1418,9 @@ async function loadCover() {
 async function loadTOC() {
 
     const container =
-        document.getElementById("toc-content");
-
-    container.innerHTML = "";
+        document.getElementById(
+            "toc-content"
+        );
 
     try {
 
@@ -1457,10 +1430,14 @@ async function loadTOC() {
         const toc =
             navigation.toc || [];
 
+
+        container.innerHTML = "";
+
+
         if (!toc.length) {
 
-            container.textContent =
-                "Índice não disponível.";
+            container.innerHTML =
+                "<p style='color:var(--text2)'>Índice não disponível.</p>";
 
             return;
 
@@ -1470,13 +1447,18 @@ async function loadTOC() {
         toc.forEach(item => {
 
             const button =
-                document.createElement("button");
+                document.createElement(
+                    "button"
+                );
+
 
             button.className =
                 "toc-item";
 
+
             button.textContent =
                 item.label;
+
 
             button.onclick = async () => {
 
@@ -1492,25 +1474,33 @@ async function loadTOC() {
 
                 } catch (error) {
 
-                    console.error(error);
+                    console.error(
+                        "Erro ao abrir capítulo:",
+                        error
+                    );
 
                 }
 
             };
 
-            container.appendChild(button);
+
+            container.appendChild(
+                button
+            );
 
         });
+
 
     } catch (error) {
 
         console.error(
-            "Erro no TOC:",
+            "Erro ao carregar TOC:",
             error
         );
 
-        container.textContent =
-            "Não foi possível carregar o índice.";
+
+        container.innerHTML =
+            "<p style='color:var(--text2)'>Não foi possível carregar o índice.</p>";
 
     }
 
@@ -1518,41 +1508,80 @@ async function loadTOC() {
 
 
 /* =========================================================
-   PROGRESSO
+   LOCALIZAÇÕES / PROGRESSO
 ========================================================= */
 
-async function updateProgress(location) {
-
-    if (
-        !location ||
-        !location.start
-    ) return;
+async function generateLocations() {
 
     try {
 
-        if (
-            !book.locations ||
-            !book.locations.length
-        ) {
+        await book.locations.generate(
+            1000
+        );
 
-            return;
+        console.log(
+            "Localizações geradas."
+        );
+
+
+        if (currentLocation) {
+
+            updateProgress(
+                currentLocation
+            );
 
         }
+
+    } catch (error) {
+
+        console.log(
+            "Não foi possível gerar localizações:",
+            error
+        );
+
+    }
+
+}
+
+
+function updateProgress(location) {
+
+    if (
+        !location ||
+        !location.start ||
+        !book ||
+        !book.locations ||
+        !book.locations.length
+    ) {
+
+        return;
+
+    }
+
+
+    try {
 
         const percentage =
             book.locations.percentageFromCfi(
                 location.start.cfi
             );
 
-        if (!isNaN(percentage)) {
+
+        if (
+            typeof percentage ===
+            "number" &&
+            !isNaN(percentage)
+        ) {
 
             const percent =
                 Math.round(
                     percentage * 100
                 );
 
+
             progress.style.width =
                 percent + "%";
+
 
             homeProgress.textContent =
                 percent + "% lido";
@@ -1562,34 +1591,7 @@ async function updateProgress(location) {
     } catch (error) {
 
         console.log(
-            "Progresso ainda não disponível."
-        );
-
-    }
-
-}
-
-
-/* =========================================================
-   GERAR LOCALIZAÇÕES
-========================================================= */
-
-async function generateLocations() {
-
-    try {
-
-        await book.ready;
-
-        await book.locations.generate(1000);
-
-        console.log(
-            "Localizações geradas."
-        );
-
-    } catch (error) {
-
-        console.log(
-            "Não foi possível gerar localizações:",
+            "Erro no progresso:",
             error
         );
 
@@ -1606,7 +1608,9 @@ function saveBookmarks() {
 
     localStorage.setItem(
         "bookmarks",
-        JSON.stringify(bookmarks)
+        JSON.stringify(
+            bookmarks
+        )
     );
 
 }
@@ -1619,7 +1623,9 @@ function renderBookmarks() {
             "bookmark-list"
         );
 
+
     list.innerHTML = "";
+
 
     if (!bookmarks.length) {
 
@@ -1635,14 +1641,20 @@ function renderBookmarks() {
         (bookmark, index) => {
 
             const item =
-                document.createElement("div");
+                document.createElement(
+                    "div"
+                );
+
 
             item.className =
                 "bookmark";
 
 
             const text =
-                document.createElement("span");
+                document.createElement(
+                    "span"
+                );
+
 
             text.textContent =
                 bookmark.label ||
@@ -1650,58 +1662,78 @@ function renderBookmarks() {
 
 
             const remove =
-                document.createElement("button");
+                document.createElement(
+                    "button"
+                );
+
 
             remove.className =
                 "icon-btn";
+
 
             remove.textContent =
                 "✕";
 
 
-            remove.onclick = event => {
+            remove.onclick =
+                event => {
 
-                event.stopPropagation();
-
-                bookmarks.splice(
-                    index,
-                    1
-                );
-
-                saveBookmarks();
-
-                renderBookmarks();
-
-            };
+                    event.stopPropagation();
 
 
-            item.appendChild(text);
-
-            item.appendChild(remove);
-
-
-            item.onclick = async () => {
-
-                try {
-
-                    await rendition.display(
-                        bookmark.cfi
+                    bookmarks.splice(
+                        index,
+                        1
                     );
 
-                    bookmarkPanel.classList.remove(
-                        "open"
-                    );
 
-                } catch (error) {
+                    saveBookmarks();
 
-                    console.error(error);
+                    renderBookmarks();
 
-                }
-
-            };
+                };
 
 
-            list.appendChild(item);
+            item.appendChild(
+                text
+            );
+
+
+            item.appendChild(
+                remove
+            );
+
+
+            item.onclick =
+                async () => {
+
+                    try {
+
+                        await rendition.display(
+                            bookmark.cfi
+                        );
+
+
+                        bookmarkPanel
+                            .classList
+                            .remove(
+                                "open"
+                            );
+
+                    } catch (error) {
+
+                        console.error(
+                            error
+                        );
+
+                    }
+
+                };
+
+
+            list.appendChild(
+                item
+            );
 
         }
     );
@@ -1713,7 +1745,8 @@ function addBookmark() {
 
     if (
         !currentLocation ||
-        !currentLocation.start
+        !currentLocation.start ||
+        !currentLocation.start.cfi
     ) {
 
         showToast(
@@ -1753,7 +1786,10 @@ function addBookmark() {
 
         label:
             "Página " +
-            (bookmarks.length + 1)
+            (
+                bookmarks.length +
+                1
+            )
 
     });
 
@@ -1761,6 +1797,7 @@ function addBookmark() {
     saveBookmarks();
 
     renderBookmarks();
+
 
     showToast(
         "🔖 Marcador adicionado!"
@@ -1776,28 +1813,25 @@ function addBookmark() {
 function applyReaderSettings() {
 
     const font =
-        settings.fontSize || 100;
+        settings.fontSize ||
+        100;
+
 
     const line =
-        settings.lineHeight || 175;
-
-    const width =
-        settings.readerWidth || 760;
+        settings.lineHeight ||
+        175;
 
 
     document.getElementById(
         "font-size"
-    ).value = font;
+    ).value =
+        font;
 
 
     document.getElementById(
         "line-height"
-    ).value = line;
-
-
-    document.getElementById(
-        "reader-width"
-    ).value = width;
+    ).value =
+        line;
 
 
     document.body.classList.remove(
@@ -1807,14 +1841,19 @@ function applyReaderSettings() {
     );
 
 
+    const theme =
+        settings.theme ||
+        "paper";
+
+
     if (
-        settings.theme &&
-        settings.theme !== "paper"
+        theme !==
+        "paper"
     ) {
 
         document.body.classList.add(
             "theme-" +
-            settings.theme
+            theme
         );
 
     }
@@ -1822,15 +1861,17 @@ function applyReaderSettings() {
 
     document.querySelectorAll(
         ".theme-button"
-    ).forEach(button => {
+    ).forEach(
+        button => {
 
-        button.classList.toggle(
-            "active",
-            button.dataset.theme ===
-            (settings.theme || "paper")
-        );
+            button.classList.toggle(
+                "active",
+                button.dataset.theme ===
+                theme
+            );
 
-    });
+        }
+    );
 
 
     updateEPUBStyles();
@@ -1840,27 +1881,45 @@ function applyReaderSettings() {
 
 function updateEPUBStyles() {
 
-    if (!rendition)
+    if (!rendition) {
         return;
+    }
 
 
     const font =
-        settings.fontSize || 100;
+        settings.fontSize ||
+        100;
+
 
     const line =
-        settings.lineHeight || 175;
+        settings.lineHeight ||
+        175;
 
 
-    rendition.themes.override(
-        "font-size",
-        font + "%"
-    );
+    try {
+
+        rendition.themes.override(
+            "font-size",
+            font + "%"
+        );
 
 
-    rendition.themes.override(
-        "line-height",
-        (line / 100).toString()
-    );
+        rendition.themes.override(
+            "line-height",
+            (
+                line /
+                100
+            ).toString()
+        );
+
+    } catch (error) {
+
+        console.log(
+            "Erro ao aplicar estilo:",
+            error
+        );
+
+    }
 
 }
 
@@ -1876,12 +1935,18 @@ document.getElementById(
     event => {
 
         settings.fontSize =
-            Number(event.target.value);
+            Number(
+                event.target.value
+            );
+
 
         localStorage.setItem(
             "readerSettings",
-            JSON.stringify(settings)
+            JSON.stringify(
+                settings
+            )
         );
+
 
         updateEPUBStyles();
 
@@ -1896,32 +1961,20 @@ document.getElementById(
     event => {
 
         settings.lineHeight =
-            Number(event.target.value);
+            Number(
+                event.target.value
+            );
+
 
         localStorage.setItem(
             "readerSettings",
-            JSON.stringify(settings)
+            JSON.stringify(
+                settings
+            )
         );
+
 
         updateEPUBStyles();
-
-    }
-);
-
-
-document.getElementById(
-    "reader-width"
-).addEventListener(
-    "input",
-    event => {
-
-        settings.readerWidth =
-            Number(event.target.value);
-
-        localStorage.setItem(
-            "readerSettings",
-            JSON.stringify(settings)
-        );
 
     }
 );
@@ -1933,79 +1986,93 @@ document.getElementById(
 
 document.querySelectorAll(
     ".theme-button"
-).forEach(button => {
+).forEach(
+    button => {
 
-    button.onclick = () => {
+        button.onclick =
+            () => {
 
-        const theme =
-            button.dataset.theme;
-
-
-        settings.theme =
-            theme;
+                const theme =
+                    button.dataset.theme;
 
 
-        localStorage.setItem(
-            "readerSettings",
-            JSON.stringify(settings)
-        );
+                settings.theme =
+                    theme;
 
 
-        document.body.classList.remove(
-            "theme-night",
-            "theme-cozy",
-            "theme-forest"
-        );
+                localStorage.setItem(
+                    "readerSettings",
+                    JSON.stringify(
+                        settings
+                    )
+                );
 
 
-        if (theme !== "paper") {
-
-            document.body.classList.add(
-                "theme-" + theme
-            );
-
-        }
+                document.body.classList.remove(
+                    "theme-night",
+                    "theme-cozy",
+                    "theme-forest"
+                );
 
 
-        document.querySelectorAll(
-            ".theme-button"
-        ).forEach(b => {
+                if (
+                    theme !==
+                    "paper"
+                ) {
 
-            b.classList.remove(
-                "active"
-            );
+                    document.body.classList.add(
+                        "theme-" +
+                        theme
+                    );
 
-        });
+                }
 
 
-        button.classList.add(
-            "active"
-        );
+                document.querySelectorAll(
+                    ".theme-button"
+                ).forEach(
+                    b => {
 
-    };
+                        b.classList.remove(
+                            "active"
+                        );
 
-});
+                    }
+                );
+
+
+                button.classList.add(
+                    "active"
+                );
+
+            };
+
+    }
+);
 
 
 /* =========================================================
-   BOTÃO COMEÇAR
+   COMEÇAR A LER
 ========================================================= */
 
 document.getElementById(
     "start-reading"
-).onclick = async () => {
+).onclick =
+    async () => {
 
-    home.classList.add(
-        "hidden"
-    );
+        home.classList.add(
+            "hidden"
+        );
 
-    reader.classList.add(
-        "visible"
-    );
 
-    await openBook();
+        reader.classList.add(
+            "visible"
+        );
 
-};
+
+        await openBook();
+
+    };
 
 
 /* =========================================================
@@ -2014,17 +2081,19 @@ document.getElementById(
 
 document.getElementById(
     "home-btn"
-).onclick = () => {
+).onclick =
+    () => {
 
-    reader.classList.remove(
-        "visible"
-    );
+        reader.classList.remove(
+            "visible"
+        );
 
-    home.classList.remove(
-        "hidden"
-    );
 
-};
+        home.classList.remove(
+            "hidden"
+        );
+
+    };
 
 
 /* =========================================================
@@ -2033,32 +2102,36 @@ document.getElementById(
 
 document.getElementById(
     "toc-btn"
-).onclick = () => {
+).onclick =
+    () => {
 
-    tocPanel.classList.toggle(
-        "open"
-    );
+        tocPanel.classList.toggle(
+            "open"
+        );
 
-    settingsPanel.classList.remove(
-        "open"
-    );
 
-    bookmarkPanel.classList.remove(
-        "open"
-    );
+        settingsPanel.classList.remove(
+            "open"
+        );
 
-};
+
+        bookmarkPanel.classList.remove(
+            "open"
+        );
+
+    };
 
 
 document.getElementById(
     "close-toc"
-).onclick = () => {
+).onclick =
+    () => {
 
-    tocPanel.classList.remove(
-        "open"
-    );
+        tocPanel.classList.remove(
+            "open"
+        );
 
-};
+    };
 
 
 /* =========================================================
@@ -2067,66 +2140,75 @@ document.getElementById(
 
 document.getElementById(
     "settings-btn"
-).onclick = () => {
+).onclick =
+    () => {
 
-    settingsPanel.classList.toggle(
-        "open"
-    );
+        settingsPanel.classList.toggle(
+            "open"
+        );
 
-    tocPanel.classList.remove(
-        "open"
-    );
 
-    bookmarkPanel.classList.remove(
-        "open"
-    );
+        tocPanel.classList.remove(
+            "open"
+        );
 
-};
+
+        bookmarkPanel.classList.remove(
+            "open"
+        );
+
+    };
 
 
 document.getElementById(
     "close-settings"
-).onclick = () => {
+).onclick =
+    () => {
 
-    settingsPanel.classList.remove(
-        "open"
-    );
+        settingsPanel.classList.remove(
+            "open"
+        );
 
-};
+    };
 
 
 /* =========================================================
-   MARCADOR
+   MARCADORES
 ========================================================= */
 
 document.getElementById(
     "bookmark-btn"
-).onclick = () => {
+).onclick =
+    () => {
 
-    addBookmark();
+        addBookmark();
 
-};
+    };
 
 
 document.getElementById(
     "bookmarks-btn"
-).onclick = () => {
+).onclick =
+    () => {
 
-    renderBookmarks();
+        renderBookmarks();
 
-    bookmarkPanel.classList.toggle(
-        "open"
-    );
 
-    tocPanel.classList.remove(
-        "open"
-    );
+        bookmarkPanel.classList.toggle(
+            "open"
+        );
 
-    settingsPanel.classList.remove(
-        "open"
-    );
 
-};
+        tocPanel.classList.remove(
+            "open"
+        );
+
+
+        settingsPanel.classList.remove(
+            "open"
+        );
+
+    };
 
 
 /* =========================================================
@@ -2135,13 +2217,14 @@ document.getElementById(
 
 document.getElementById(
     "focus-btn"
-).onclick = () => {
+).onclick =
+    () => {
 
-    document.body.classList.toggle(
-        "focus-mode"
-    );
+        document.body.classList.toggle(
+            "focus-mode"
+        );
 
-};
+    };
 
 
 /* =========================================================
@@ -2152,14 +2235,19 @@ document.addEventListener(
     "keydown",
     event => {
 
-        if (!rendition)
+        if (!rendition) {
             return;
+        }
 
 
         if (
             event.target.tagName ===
             "INPUT"
-        ) return;
+        ) {
+
+            return;
+
+        }
 
 
         if (
@@ -2184,7 +2272,8 @@ document.addEventListener(
 
         if (
             event.ctrlKey &&
-            event.key.toLowerCase() === "b"
+            event.key.toLowerCase() ===
+            "b"
         ) {
 
             event.preventDefault();
@@ -2203,9 +2292,11 @@ document.addEventListener(
                 "open"
             );
 
+
             settingsPanel.classList.remove(
                 "open"
             );
+
 
             bookmarkPanel.classList.remove(
                 "open"
@@ -2218,7 +2309,7 @@ document.addEventListener(
 
 
 /* =========================================================
-   SWIPE CELULAR
+   SWIPE NO CELULAR
 ========================================================= */
 
 let touchStartX = 0;
@@ -2231,7 +2322,8 @@ document.getElementById(
     event => {
 
         touchStartX =
-            event.changedTouches[0].screenX;
+            event.changedTouches[0]
+                .screenX;
 
     }
 );
@@ -2243,12 +2335,14 @@ document.getElementById(
     "touchend",
     event => {
 
-        if (!rendition)
+        if (!rendition) {
             return;
+        }
 
 
         const touchEndX =
-            event.changedTouches[0].screenX;
+            event.changedTouches[0]
+                .screenX;
 
 
         const difference =
@@ -2257,9 +2351,14 @@ document.getElementById(
 
 
         if (
-            Math.abs(difference) <
-            50
-        ) return;
+            Math.abs(
+                difference
+            ) < 50
+        ) {
+
+            return;
+
+        }
 
 
         if (
