@@ -1,152 +1,131 @@
 <!DOCTYPE html>
-
 <html lang="pt-BR">
-<head>
 
+<head>
 <meta charset="UTF-8">
 
-<meta
-name="viewport"
-content="width=device-width, initial-scale=1.0"
-
->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>The Book Haven</title>
 
-<!--
-    EPUB.JS
-    Carregado de forma assíncrona para não bloquear
-    a renderização inicial da interface.
--->
-
+<!-- Epub.js -->
 <script
-    src="https://cdn.jsdelivr.net/npm/epubjs/dist/epub.min.js"
+    src="https://cdn.jsdelivr.net/npm/epubjs@0.3.93/dist/epub.min.js"
     defer>
 </script>
 
 <style>
 
-* {
-    box-sizing: border-box;
-}
+/* =========================================================
+   VARIÁVEIS
+========================================================= */
 
 :root {
-
     --bg: #eee7da;
-    --surface: #f9f5ed;
-    --surface-2: #e8dece;
+    --surface: #faf6ee;
+    --surface2: #e6dccb;
 
     --text: #352b22;
-    --text-soft: #756a5d;
+    --soft: #786d60;
 
-    --accent: #9b7040;
-    --accent-light: #c9a878;
+    --accent: #9a7040;
+    --accent-light: #c7a473;
 
-    --border: rgba(70, 50, 30, .13);
-    --shadow: rgba(45, 31, 20, .15);
+    --border: rgba(60, 40, 20, .12);
+    --shadow: rgba(40, 25, 10, .16);
 
     --reader-width: 760px;
-
 }
 
 
-/* =====================================================
+/* =========================================================
    TEMAS
-===================================================== */
+========================================================= */
 
 body.theme-night {
-
     --bg: #12110f;
-    --surface: #1d1b18;
-    --surface-2: #29251f;
+    --surface: #1c1a17;
+    --surface2: #29251f;
 
-    --text: #e8dfd1;
-    --text-soft: #aaa092;
+    --text: #e9e0d2;
+    --soft: #aaa092;
 
-    --accent: #c9a66a;
-    --accent-light: #e0c18b;
+    --accent: #c7a36a;
+    --accent-light: #dfbf8b;
 
-    --border: rgba(255,255,255,.09);
-    --shadow: rgba(0,0,0,.4);
-
+    --border: rgba(255,255,255,.08);
+    --shadow: rgba(0,0,0,.45);
 }
 
 
 body.theme-cozy {
-
     --bg: #2a211b;
-    --surface: #352920;
-    --surface-2: #46362a;
+    --surface: #36291f;
+    --surface2: #47362a;
 
-    --text: #ead9bc;
-    --text-soft: #bca98e;
+    --text: #ead9bd;
+    --soft: #bca98d;
 
-    --accent: #d0a45e;
+    --accent: #d0a25c;
     --accent-light: #e0bd82;
 
     --border: rgba(255,255,255,.08);
-    --shadow: rgba(0,0,0,.35);
-
+    --shadow: rgba(0,0,0,.4);
 }
 
 
 body.theme-forest {
-
     --bg: #17201b;
     --surface: #202b24;
-    --surface-2: #2c3a31;
+    --surface2: #2d3b32;
 
-    --text: #e0e5d8;
-    --text-soft: #aab4a6;
+    --text: #e0e6d9;
+    --soft: #aab5a7;
 
-    --accent: #a7ad72;
-    --accent-light: #c5cb91;
+    --accent: #a8af72;
+    --accent-light: #c6cc91;
 
     --border: rgba(255,255,255,.08);
-    --shadow: rgba(0,0,0,.35);
-
+    --shadow: rgba(0,0,0,.4);
 }
 
 
-/* =====================================================
-   BODY
-===================================================== */
+/* =========================================================
+   RESET
+========================================================= */
+
+* {
+    box-sizing: border-box;
+}
 
 html,
 body {
-
     margin: 0;
     padding: 0;
-
     width: 100%;
     min-height: 100%;
-
 }
 
-
 body {
+    background: var(--bg);
+    color: var(--text);
 
     font-family:
         Georgia,
         "Times New Roman",
         serif;
 
-    background: var(--bg);
-    color: var(--text);
-
     transition:
-        background .3s ease,
-        color .3s ease;
-
+        background .25s ease,
+        color .25s ease;
 }
 
 
-/* =====================================================
+/* =========================================================
    TOPO
-===================================================== */
+========================================================= */
 
 .topbar {
-
     height: 68px;
 
     display: flex;
@@ -161,119 +140,74 @@ body {
         1px solid var(--border);
 
     position: relative;
-
     z-index: 100;
-
 }
-
 
 .logo {
-
-    font-family:
-        Georgia,
-        "Times New Roman",
-        serif;
-
     font-size: 28px;
-
     font-weight: bold;
-
 }
-
 
 .logo span {
-
     color: var(--accent);
-
 }
-
 
 .top-actions {
-
     display: flex;
-
     gap: 5px;
-
 }
 
-
 .icon-button {
-
     width: 42px;
     height: 42px;
 
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-
     border: none;
-
     border-radius: 50%;
 
     background: transparent;
-
     color: var(--text);
 
     font-size: 18px;
 
     cursor: pointer;
-
 }
-
 
 .icon-button:hover {
-
-    background: var(--surface-2);
-
+    background: var(--surface2);
 }
 
 
-/* =====================================================
+/* =========================================================
    HOME
-===================================================== */
+========================================================= */
 
 #home {
-
-    min-height:
-        calc(100vh - 68px);
+    min-height: calc(100vh - 68px);
 
     display: flex;
-
     align-items: center;
-
     justify-content: center;
 
     padding: 45px 20px;
-
 }
 
-
 .home-card {
-
+    width: 100%;
     max-width: 1050px;
 
-    width: 100%;
-
     display: grid;
-
-    grid-template-columns:
-        330px 1fr;
+    grid-template-columns: 330px 1fr;
 
     gap: 60px;
 
     align-items: center;
-
 }
 
-
 .cover {
-
     width: 330px;
     height: 490px;
 
     display: flex;
-
     align-items: center;
     justify-content: center;
 
@@ -293,43 +227,29 @@ body {
     border-radius: 7px;
 
     box-shadow:
-        15px 20px 35px
-        var(--shadow);
+        15px 20px 35px var(--shadow);
 
     position: relative;
-
 }
 
-
 .cover::before {
-
     content: "";
 
     position: absolute;
-
     inset: 12px;
 
     border:
         1px solid
         rgba(255,255,255,.28);
-
 }
-
 
 .cover-content {
-
     position: relative;
-
     z-index: 1;
-
 }
 
-
 .cover-small {
-
-    font-family:
-        Arial,
-        sans-serif;
+    font-family: Arial, sans-serif;
 
     text-transform: uppercase;
 
@@ -338,71 +258,49 @@ body {
     font-size: 11px;
 
     opacity: .8;
-
 }
 
-
 .cover h1 {
-
     font-size: 42px;
-
     line-height: 1.05;
 
     margin: 35px 0;
-
 }
-
 
 .cover-author {
-
     font-size: 18px;
-
 }
 
-
 .home-info h1 {
-
     font-size: 58px;
-
     line-height: 1;
 
     margin: 15px 0 20px;
-
 }
 
-
 .eyebrow {
-
     color: var(--accent);
 
     text-transform: uppercase;
 
     letter-spacing: 3px;
 
-    font-family:
-        Arial,
-        sans-serif;
+    font-family: Arial, sans-serif;
 
     font-size: 12px;
 
     font-weight: bold;
-
 }
 
-
 .home-info p {
-
-    color: var(--text-soft);
+    color: var(--soft);
 
     line-height: 1.8;
 
     max-width: 580px;
-
 }
 
-
 .continue-box {
-
     margin-top: 25px;
 
     padding: 16px;
@@ -410,175 +308,123 @@ body {
     background: var(--surface);
 
     border:
-        1px solid
-        var(--border);
+        1px solid var(--border);
 
     border-radius: 10px;
 
     display: none;
-
 }
-
 
 .continue-box.visible {
-
     display: block;
-
 }
 
-
 .continue-top {
-
     display: flex;
-
-    justify-content:
-        space-between;
+    justify-content: space-between;
 
     margin-bottom: 9px;
 
-    font-family:
-        Arial,
-        sans-serif;
+    font-family: Arial, sans-serif;
 
     font-size: 12px;
 
-    color: var(--text-soft);
-
+    color: var(--soft);
 }
 
-
 .progress-track {
-
     height: 5px;
 
-    background:
-        var(--surface-2);
+    background: var(--surface2);
 
     border-radius: 20px;
 
     overflow: hidden;
-
 }
 
-
 .progress-fill {
-
     height: 100%;
 
     width: 0%;
 
-    background:
-        var(--accent);
-
+    background: var(--accent);
 }
 
-
 .primary-button {
-
     margin-top: 25px;
 
     padding: 15px 25px;
 
     border: none;
-
     border-radius: 8px;
 
-    background:
-        var(--accent);
+    background: var(--accent);
 
     color: white;
 
-    font-family:
-        Arial,
-        sans-serif;
+    font-family: Arial, sans-serif;
 
     font-weight: bold;
 
     cursor: pointer;
-
 }
-
 
 .primary-button:hover {
-
     filter: brightness(.92);
-
 }
 
 
-/* =====================================================
+/* =========================================================
    LEITOR
-===================================================== */
+========================================================= */
 
 #reader {
-
     display: none;
 
-    height:
-        calc(100vh - 68px);
+    height: calc(100vh - 68px);
 
     flex-direction: column;
-
 }
 
-
 .reader-bar {
-
     height: 58px;
 
     display: flex;
-
     align-items: center;
-
     justify-content: space-between;
 
     padding: 0 15px;
 
-    background:
-        var(--surface);
+    background: var(--surface);
 
     border-bottom:
-        1px solid
-        var(--border);
+        1px solid var(--border);
 
     position: relative;
 
     z-index: 20;
-
 }
-
 
 .reader-left,
 .reader-right {
-
     display: flex;
-
     align-items: center;
 
     gap: 4px;
-
 }
 
-
 .chapter-name {
-
     max-width: 400px;
 
     white-space: nowrap;
-
     overflow: hidden;
-
     text-overflow: ellipsis;
 
     font-size: 18px;
-
     font-weight: bold;
-
 }
 
-
 #readerProgress {
-
     position: absolute;
 
     top: 0;
@@ -588,20 +434,17 @@ body {
 
     height: 3px;
 
-    background:
-        var(--accent);
+    background: var(--accent);
 
     z-index: 50;
-
 }
 
 
-/* =====================================================
-   ÁREA DO LIVRO
-===================================================== */
+/* =========================================================
+   LIVRO
+========================================================= */
 
 .reader-area {
-
     flex: 1;
 
     display: flex;
@@ -611,59 +454,43 @@ body {
     overflow: hidden;
 
     padding: 20px;
-
 }
 
-
 #viewer {
-
-    width:
-        var(--reader-width);
-
+    width: var(--reader-width);
     height: 100%;
 
-    background:
-        var(--surface);
+    background: var(--surface);
 
     box-shadow:
-        0 5px 35px
-        var(--shadow);
+        0 5px 35px var(--shadow);
 
     border-radius: 4px;
 
     overflow: hidden;
-
 }
 
 
-/* =====================================================
+/* =========================================================
    BARRA INFERIOR
-===================================================== */
+========================================================= */
 
 .bottom-bar {
-
     height: 58px;
 
     display: flex;
-
     align-items: center;
-
     justify-content: center;
 
     gap: 20px;
 
-    background:
-        var(--surface);
+    background: var(--surface);
 
     border-top:
-        1px solid
-        var(--border);
-
+        1px solid var(--border);
 }
 
-
 .nav-button {
-
     border: none;
 
     background: transparent;
@@ -676,191 +503,133 @@ body {
 
     cursor: pointer;
 
-    font-family:
-        Arial,
-        sans-serif;
-
+    font-family: Arial, sans-serif;
 }
-
 
 .nav-button:hover {
-
-    background:
-        var(--surface-2);
-
+    background: var(--surface2);
 }
 
-
 .page-indicator {
-
-    font-family:
-        Arial,
-        sans-serif;
+    font-family: Arial, sans-serif;
 
     font-size: 12px;
 
-    color:
-        var(--text-soft);
-
+    color: var(--soft);
 }
 
 
-/* =====================================================
+/* =========================================================
    LOADING
-===================================================== */
+========================================================= */
 
 #loadingScreen {
-
     position: fixed;
 
     inset: 0;
 
-    background:
-        var(--bg);
+    background: var(--bg);
 
     display: none;
 
     align-items: center;
-
     justify-content: center;
 
     flex-direction: column;
 
     z-index: 1000;
-
 }
-
 
 #loadingScreen.active {
-
     display: flex;
-
 }
-
 
 .loading-book {
+    font-size: 48px;
 
-    font-size: 50px;
-
-    margin-bottom: 20px;
-
+    margin-bottom: 18px;
 }
 
-
 .loading-title {
-
     font-size: 24px;
 
     font-weight: bold;
-
 }
-
 
 .loading-text {
-
     margin-top: 8px;
 
-    color:
-        var(--text-soft);
+    color: var(--soft);
 
-    font-family:
-        Arial,
-        sans-serif;
+    font-family: Arial, sans-serif;
 
     font-size: 13px;
-
 }
 
-
 .loading-bar {
-
     width: 180px;
-
     height: 4px;
 
     margin-top: 25px;
 
-    background:
-        var(--surface-2);
+    background: var(--surface2);
 
     border-radius: 20px;
 
     overflow: hidden;
-
 }
-
 
 .loading-bar-inner {
-
     width: 35%;
-
     height: 100%;
 
-    background:
-        var(--accent);
+    background: var(--accent);
 
     animation:
-        loadingMove 1.1s
+        loadingMove 1s
         infinite ease-in-out;
-
 }
-
 
 @keyframes loadingMove {
 
     0% {
-
-        transform:
-            translateX(-150%);
-
+        transform: translateX(-150%);
     }
 
     100% {
-
-        transform:
-            translateX(500%);
-
+        transform: translateX(500%);
     }
 
 }
 
 
-/* =====================================================
+/* =========================================================
    PAINEL
-===================================================== */
+========================================================= */
 
 .overlay {
-
     position: fixed;
 
     inset: 0;
 
-    background:
-        rgba(0,0,0,.4);
+    background: rgba(0,0,0,.4);
 
     opacity: 0;
 
     pointer-events: none;
 
-    transition:
-        opacity .25s;
+    transition: opacity .2s;
 
     z-index: 190;
-
 }
 
-
 .overlay.active {
-
     opacity: 1;
 
     pointer-events: auto;
-
 }
 
-
 .side-panel {
-
     position: fixed;
 
     top: 0;
@@ -868,88 +637,57 @@ body {
 
     height: 100vh;
 
-    width:
-        min(380px, 90vw);
+    width: min(380px, 90vw);
 
-    background:
-        var(--surface);
+    background: var(--surface);
 
     box-shadow:
-        10px 0 35px
-        rgba(0,0,0,.25);
+        10px 0 35px rgba(0,0,0,.25);
 
     z-index: 200;
 
-    transform:
-        translateX(-105%);
+    transform: translateX(-105%);
 
     transition:
-        transform .3s ease;
-
+        transform .25s ease;
 }
-
 
 .side-panel.open {
-
-    transform:
-        translateX(0);
-
+    transform: translateX(0);
 }
 
-
 .panel-header {
-
     height: 70px;
 
     padding: 0 20px;
 
     display: flex;
-
     align-items: center;
-
-    justify-content:
-        space-between;
+    justify-content: space-between;
 
     border-bottom:
-        1px solid
-        var(--border);
-
+        1px solid var(--border);
 }
-
 
 .panel-title {
-
     font-size: 27px;
-
     font-weight: bold;
-
 }
-
 
 .panel-content {
-
     padding: 20px;
 
-    height:
-        calc(100vh - 70px);
+    height: calc(100vh - 70px);
 
     overflow-y: auto;
-
 }
-
 
 .panel-section {
-
     margin-bottom: 30px;
-
 }
 
-
 .panel-section h3 {
-
-    font-family:
-        Arial,
-        sans-serif;
+    font-family: Arial, sans-serif;
 
     text-transform: uppercase;
 
@@ -957,15 +695,11 @@ body {
 
     font-size: 11px;
 
-    color:
-        var(--text-soft);
-
+    color: var(--soft);
 }
-
 
 .toc-item,
 .bookmark-item {
-
     width: 100%;
 
     display: block;
@@ -976,170 +710,117 @@ body {
 
     background: transparent;
 
-    color:
-        var(--text);
+    color: var(--text);
 
     padding: 11px;
 
     border-radius: 7px;
 
     cursor: pointer;
-
 }
-
 
 .toc-item:hover,
 .bookmark-item:hover {
-
-    background:
-        var(--surface-2);
-
+    background: var(--surface2);
 }
 
 
-/* =====================================================
+/* =========================================================
    CONFIGURAÇÕES
-===================================================== */
+========================================================= */
 
 .setting {
-
     margin-bottom: 22px;
-
 }
 
-
 .setting label {
-
     display: block;
 
     margin-bottom: 8px;
 
-    font-family:
-        Arial,
-        sans-serif;
+    font-family: Arial, sans-serif;
 
     font-size: 13px;
 
-    color:
-        var(--text-soft);
-
+    color: var(--soft);
 }
-
 
 .theme-grid {
-
     display: grid;
 
-    grid-template-columns:
-        1fr 1fr;
+    grid-template-columns: 1fr 1fr;
 
     gap: 7px;
-
 }
 
-
 .theme-button {
-
     padding: 11px;
 
     border:
-        1px solid
-        var(--border);
+        1px solid var(--border);
 
-    background:
-        var(--surface-2);
+    background: var(--surface2);
 
-    color:
-        var(--text);
+    color: var(--text);
 
     border-radius: 7px;
 
     cursor: pointer;
-
 }
-
 
 .theme-button.active {
-
     outline:
-        2px solid
-        var(--accent);
-
+        2px solid var(--accent);
 }
 
-
 .range-row {
-
     display: flex;
 
     align-items: center;
 
     gap: 10px;
-
 }
-
 
 .range-row input {
-
     flex: 1;
-
 }
 
-
 .range-value {
-
     width: 45px;
 
     text-align: right;
 
-    font-family:
-        Arial,
-        sans-serif;
+    font-family: Arial, sans-serif;
 
     font-size: 12px;
 
-    color:
-        var(--text-soft);
-
+    color: var(--soft);
 }
 
 
-/* =====================================================
+/* =========================================================
    MODO FOCO
-===================================================== */
+========================================================= */
 
 body.focus-mode .topbar,
 body.focus-mode .reader-bar,
 body.focus-mode .bottom-bar {
-
     opacity: 0;
 
     pointer-events: none;
-
 }
-
 
 body.focus-mode .reader-area {
-
     padding: 0;
-
 }
 
-
 body.focus-mode #viewer {
-
-    width:
-        var(--reader-width);
-
     border-radius: 0;
 
     box-shadow: none;
-
 }
 
-
 .focus-exit {
-
     position: fixed;
 
     top: 20px;
@@ -1153,47 +834,38 @@ body.focus-mode #viewer {
 
     border: none;
 
-    background:
-        var(--surface);
+    background: var(--surface);
 
-    color:
-        var(--text);
+    color: var(--text);
 
     padding: 10px 14px;
 
     border-radius: 7px;
 
     cursor: pointer;
-
 }
 
-
 body.focus-mode .focus-exit {
-
     opacity: 1;
 
     pointer-events: auto;
-
 }
 
 
-/* =====================================================
+/* =========================================================
    TOAST
-===================================================== */
+========================================================= */
 
 .toast {
-
     position: fixed;
 
     bottom: 75px;
-
     left: 50%;
 
     transform:
         translate(-50%, 15px);
 
-    background:
-        #25211d;
+    background: #25211d;
 
     color: white;
 
@@ -1201,9 +873,7 @@ body.focus-mode .focus-exit {
 
     border-radius: 7px;
 
-    font-family:
-        Arial,
-        sans-serif;
+    font-family: Arial, sans-serif;
 
     font-size: 12px;
 
@@ -1212,58 +882,44 @@ body.focus-mode .focus-exit {
     pointer-events: none;
 
     transition:
-        opacity .25s,
-        transform .25s;
+        opacity .2s,
+        transform .2s;
 
     z-index: 500;
-
 }
 
-
 .toast.show {
-
     opacity: 1;
 
     transform:
         translate(-50%, 0);
-
 }
 
 
-/* =====================================================
+/* =========================================================
    MOBILE
-===================================================== */
+========================================================= */
 
 @media (max-width: 800px) {
 
     .topbar {
-
         height: 60px;
 
         padding: 0 14px;
-
     }
-
 
     .logo {
-
         font-size: 23px;
-
     }
 
-
     #home {
-
         min-height:
             calc(100vh - 60px);
 
         padding: 30px 15px;
-
     }
 
-
     .home-card {
-
         grid-template-columns: 1fr;
 
         gap: 30px;
@@ -1271,243 +927,147 @@ body.focus-mode .focus-exit {
         justify-items: center;
 
         text-align: center;
-
     }
-
 
     .cover {
-
         width: 220px;
-
         height: 330px;
-
     }
-
 
     .cover h1 {
-
         font-size: 30px;
-
     }
-
 
     .home-info h1 {
-
         font-size: 43px;
-
     }
-
 
     .home-info p {
-
         margin-left: auto;
-
         margin-right: auto;
-
     }
 
-
     .reader-bar {
-
         height: 55px;
 
         padding: 0 7px;
-
     }
 
-
     .chapter-name {
-
         max-width: 170px;
 
         font-size: 16px;
-
     }
-
 
     .reader-area {
-
         padding: 7px;
-
     }
-
 
     #viewer {
-
         width: 100%;
-
     }
-
 
     .bottom-bar {
-
         height: 55px;
-
     }
-
 
     .bottom-bar .nav-button {
-
         padding: 8px 10px;
-
     }
-
 }
 
 </style>
-
 </head>
+
 
 <body>
 
-<!-- =====================================================
-     TELA DE CARREGAMENTO
-===================================================== -->
 
-<div
-    id="loadingScreen">
+<!-- =========================================================
+     LOADING
+========================================================= -->
 
-```
-<div class="loading-book">
-    📖
-</div>
+<div id="loadingScreen">
 
-<div class="loading-title">
-    The Book Haven
-</div>
+    <div class="loading-book">
+        📖
+    </div>
 
-<div class="loading-text">
-    Abrindo seu livro...
-</div>
+    <div class="loading-title">
+        The Book Haven
+    </div>
 
-<div class="loading-bar">
+    <div class="loading-text">
+        Abrindo seu livro...
+    </div>
 
-    <div
-        class="loading-bar-inner">
+    <div class="loading-bar">
+
+        <div class="loading-bar-inner"></div>
+
     </div>
 
 </div>
-```
 
-</div>
 
-<!-- =====================================================
+<!-- =========================================================
      TOPO
-===================================================== -->
+========================================================= -->
 
 <header class="topbar">
 
-```
-<div class="logo">
+    <div class="logo">
+        The <span>Book Haven</span>
+    </div>
 
-    The <span>Book Haven</span>
+    <div class="top-actions">
 
-</div>
+        <button
+            class="icon-button"
+            onclick="openPanel('toc')"
+            title="Sumário">
 
+            ☰
 
-<div class="top-actions">
+        </button>
 
-    <button
-        class="icon-button"
-        onclick="openPanel('toc')"
-        title="Sumário">
+        <button
+            class="icon-button"
+            onclick="openPanel('settings')"
+            title="Configurações">
 
-        ☰
+            ⚙
 
-    </button>
-
-
-    <button
-        class="icon-button"
-        onclick="openPanel('settings')"
-        title="Configurações">
-
-        ⚙
-
-    </button>
-
-</div>
-```
-
-</header>
-
-<!-- =====================================================
-     HOME
-===================================================== -->
-
-<section id="home">
-
-```
-<div class="home-card">
-
-
-    <div class="cover">
-
-        <div class="cover-content">
-
-            <div class="cover-small">
-                The Book Haven
-            </div>
-
-            <h1>
-                Uma História Qualquer
-            </h1>
-
-            <div class="cover-author">
-                Uma pessoa qualquer
-            </div>
-
-        </div>
+        </button>
 
     </div>
 
-
-    <div class="home-info">
-
-        <div class="eyebrow">
-            Uma nova história espera por você
-        </div>
+</header>
 
 
-        <h1>
-            Entre nas páginas.
-        </h1>
+<!-- =========================================================
+     HOME
+========================================================= -->
+
+<section id="home">
+
+    <div class="home-card">
 
 
-        <p>
-            Encontre um lugar tranquilo,
-            deixe o mundo do lado de fora
-            e mergulhe nesta história.
-        </p>
+        <div class="cover">
 
+            <div class="cover-content">
 
-        <div
-            id="continueBox"
-            class="continue-box">
+                <div class="cover-small">
+                    The Book Haven
+                </div>
 
+                <h1>
+                    Uma História Qualquer
+                </h1>
 
-            <div class="continue-top">
-
-                <span>
-                    Seu progresso
-                </span>
-
-
-                <span
-                    id="homeProgressText">
-
-                    0%
-
-                </span>
-
-            </div>
-
-
-            <div class="progress-track">
-
-                <div
-                    id="homeProgress"
-                    class="progress-fill">
+                <div class="cover-author">
+                    Uma pessoa qualquer
                 </div>
 
             </div>
@@ -1515,141 +1075,176 @@ body.focus-mode .focus-exit {
         </div>
 
 
-        <button
-            id="startButton"
-            class="primary-button"
-            onclick="startBook()">
+        <div class="home-info">
 
-            ▶ Começar a ler
+            <div class="eyebrow">
+                Uma nova história espera por você
+            </div>
 
-        </button>
+            <h1>
+                Entre nas páginas.
+            </h1>
+
+            <p>
+                Encontre um lugar tranquilo,
+                deixe o mundo do lado de fora
+                e mergulhe nesta história.
+            </p>
+
+
+            <div
+                id="continueBox"
+                class="continue-box">
+
+                <div class="continue-top">
+
+                    <span>
+                        Seu progresso
+                    </span>
+
+                    <span id="homeProgressText">
+                        0%
+                    </span>
+
+                </div>
+
+                <div class="progress-track">
+
+                    <div
+                        id="homeProgress"
+                        class="progress-fill">
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <button
+                id="startButton"
+                class="primary-button"
+                onclick="startBook()">
+
+                ▶ Começar a ler
+
+            </button>
+
+        </div>
 
     </div>
 
-</div>
-```
-
 </section>
 
-<!-- =====================================================
+
+<!-- =========================================================
      LEITOR
-===================================================== -->
+========================================================= -->
 
 <section id="reader">
 
-```
-<div
-    id="readerProgress">
-</div>
+
+    <div id="readerProgress"></div>
 
 
-<div class="reader-bar">
+    <div class="reader-bar">
 
 
-    <div class="reader-left">
+        <div class="reader-left">
+
+            <button
+                class="icon-button"
+                onclick="openPanel('toc')">
+
+                ☰
+
+            </button>
+
+            <div
+                id="chapterName"
+                class="chapter-name">
+
+                The Book Haven
+
+            </div>
+
+        </div>
 
 
-        <button
-            class="icon-button"
-            onclick="openPanel('toc')">
+        <div class="reader-right">
 
-            ☰
+            <button
+                class="icon-button"
+                onclick="addBookmark()"
+                title="Marcador">
 
-        </button>
+                🔖
 
+            </button>
 
-        <div
-            id="chapterName"
-            class="chapter-name">
+            <button
+                class="icon-button"
+                onclick="toggleFocusMode()"
+                title="Modo foco">
 
-            The Book Haven
+                ◉
+
+            </button>
+
+            <button
+                class="icon-button"
+                onclick="goHome()"
+                title="Início">
+
+                ⌂
+
+            </button>
 
         </div>
 
     </div>
 
 
-    <div class="reader-right">
+    <div class="reader-area">
 
-
-        <button
-            class="icon-button"
-            onclick="addBookmark()"
-            title="Marcador">
-
-            🔖
-
-        </button>
-
-
-        <button
-            class="icon-button"
-            onclick="toggleFocusMode()"
-            title="Modo foco">
-
-            ◉
-
-        </button>
-
-
-        <button
-            class="icon-button"
-            onclick="goHome()"
-            title="Início">
-
-            ⌂
-
-        </button>
-
-    </div>
-
-</div>
-
-
-<div class="reader-area">
-
-    <div id="viewer"></div>
-
-</div>
-
-
-<div class="bottom-bar">
-
-
-    <button
-        class="nav-button"
-        onclick="previousPage()">
-
-        ← Anterior
-
-    </button>
-
-
-    <div
-        id="pageIndicator"
-        class="page-indicator">
-
-        0%
+        <div id="viewer"></div>
 
     </div>
 
 
-    <button
-        class="nav-button"
-        onclick="nextPage()">
+    <div class="bottom-bar">
 
-        Próximo →
+        <button
+            class="nav-button"
+            onclick="previousPage()">
 
-    </button>
+            ← Anterior
 
-</div>
-```
+        </button>
+
+        <div
+            id="pageIndicator"
+            class="page-indicator">
+
+            0%
+
+        </div>
+
+        <button
+            class="nav-button"
+            onclick="nextPage()">
+
+            Próximo →
+
+        </button>
+
+    </div>
 
 </section>
 
-<!-- =====================================================
+
+<!-- =========================================================
      PAINEL
-===================================================== -->
+========================================================= -->
 
 <div
     id="overlay"
@@ -1657,293 +1252,269 @@ body.focus-mode .focus-exit {
     onclick="closePanels()">
 </div>
 
+
 <aside
     id="sidePanel"
     class="side-panel">
 
-```
-<div class="panel-header">
 
-    <div
-        id="panelTitle"
-        class="panel-title">
+    <div class="panel-header">
 
-        Sumário
+        <div
+            id="panelTitle"
+            class="panel-title">
 
-    </div>
-
-
-    <button
-        class="icon-button"
-        onclick="closePanels()">
-
-        ×
-
-    </button>
-
-</div>
-
-
-<div class="panel-content">
-
-
-    <div
-        id="tocSection"
-        class="panel-section">
-
-        <h3>
-            Conteúdo
-        </h3>
-
-        <div id="tocList">
-
-            <p
-                style="color:var(--text-soft);">
-
-                O sumário será carregado
-                em segundo plano.
-
-            </p>
+            Sumário
 
         </div>
-
-    </div>
-
-
-    <div
-        id="bookmarkSection"
-        class="panel-section">
-
-        <h3>
-            Marcadores
-        </h3>
-
-        <div id="bookmarkList">
-
-            <p
-                style="color:var(--text-soft);">
-
-                Nenhum marcador ainda.
-
-            </p>
-
-        </div>
-
-    </div>
-
-
-    <div
-        id="settingsSection"
-        class="panel-section"
-        style="display:none;">
-
-
-        <h3>
-            Aparência
-        </h3>
-
-
-        <div class="setting">
-
-            <label>
-                Tema
-            </label>
-
-
-            <div class="theme-grid">
-
-
-                <button
-                    class="theme-button"
-                    data-theme="paper"
-                    onclick="setTheme('paper')">
-
-                    ☀ Papel
-
-                </button>
-
-
-                <button
-                    class="theme-button"
-                    data-theme="night"
-                    onclick="setTheme('night')">
-
-                    🌙 Noite
-
-                </button>
-
-
-                <button
-                    class="theme-button"
-                    data-theme="cozy"
-                    onclick="setTheme('cozy')">
-
-                    🕯 Aconchegante
-
-                </button>
-
-
-                <button
-                    class="theme-button"
-                    data-theme="forest"
-                    onclick="setTheme('forest')">
-
-                    🌲 Floresta
-
-                </button>
-
-            </div>
-
-        </div>
-
-
-        <div class="setting">
-
-            <label>
-                Tamanho da fonte
-            </label>
-
-
-            <div class="range-row">
-
-                <input
-                    id="fontRange"
-                    type="range"
-                    min="75"
-                    max="145"
-                    value="100"
-                    oninput="changeFont(this.value)">
-
-
-                <span
-                    id="fontValue"
-                    class="range-value">
-
-                    100%
-
-                </span>
-
-            </div>
-
-        </div>
-
-
-        <div class="setting">
-
-            <label>
-                Espaçamento
-            </label>
-
-
-            <div class="range-row">
-
-                <input
-                    id="lineRange"
-                    type="range"
-                    min="1.4"
-                    max="2.3"
-                    step=".1"
-                    value="1.8"
-                    oninput="changeLineHeight(this.value)">
-
-
-                <span
-                    id="lineValue"
-                    class="range-value">
-
-                    1.8
-
-                </span>
-
-            </div>
-
-        </div>
-
-
-        <div class="setting">
-
-            <label>
-                Largura do texto
-            </label>
-
-
-            <div class="range-row">
-
-                <input
-                    id="widthRange"
-                    type="range"
-                    min="550"
-                    max="950"
-                    step="20"
-                    value="760"
-                    oninput="changeReaderWidth(this.value)">
-
-
-                <span
-                    id="widthValue"
-                    class="range-value">
-
-                    760
-
-                </span>
-
-            </div>
-
-        </div>
-
 
         <button
-            class="theme-button"
-            style="width:100%;"
-            onclick="resetSettings()">
+            class="icon-button"
+            onclick="closePanels()">
 
-            Restaurar configurações
+            ×
 
         </button>
 
+    </div>
+
+
+    <div class="panel-content">
+
+
+        <div
+            id="tocSection"
+            class="panel-section">
+
+            <h3>
+                Conteúdo
+            </h3>
+
+            <div id="tocList">
+
+                <p style="color:var(--soft);">
+                    Carregando sumário...
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div
+            id="bookmarkSection"
+            class="panel-section">
+
+            <h3>
+                Marcadores
+            </h3>
+
+            <div id="bookmarkList">
+
+                <p style="color:var(--soft);">
+                    Nenhum marcador ainda.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div
+            id="settingsSection"
+            class="panel-section"
+            style="display:none;">
+
+            <h3>
+                Aparência
+            </h3>
+
+
+            <div class="setting">
+
+                <label>
+                    Tema
+                </label>
+
+                <div class="theme-grid">
+
+                    <button
+                        class="theme-button"
+                        data-theme="paper"
+                        onclick="setTheme('paper')">
+
+                        ☀ Papel
+
+                    </button>
+
+                    <button
+                        class="theme-button"
+                        data-theme="night"
+                        onclick="setTheme('night')">
+
+                        🌙 Noite
+
+                    </button>
+
+                    <button
+                        class="theme-button"
+                        data-theme="cozy"
+                        onclick="setTheme('cozy')">
+
+                        🕯 Aconchegante
+
+                    </button>
+
+                    <button
+                        class="theme-button"
+                        data-theme="forest"
+                        onclick="setTheme('forest')">
+
+                        🌲 Floresta
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <div class="setting">
+
+                <label>
+                    Tamanho da fonte
+                </label>
+
+                <div class="range-row">
+
+                    <input
+                        id="fontRange"
+                        type="range"
+                        min="75"
+                        max="145"
+                        value="100"
+                        oninput="changeFont(this.value)">
+
+                    <span
+                        id="fontValue"
+                        class="range-value">
+
+                        100%
+
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="setting">
+
+                <label>
+                    Espaçamento
+                </label>
+
+                <div class="range-row">
+
+                    <input
+                        id="lineRange"
+                        type="range"
+                        min="1.4"
+                        max="2.3"
+                        step=".1"
+                        value="1.8"
+                        oninput="changeLineHeight(this.value)">
+
+                    <span
+                        id="lineValue"
+                        class="range-value">
+
+                        1.8
+
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="setting">
+
+                <label>
+                    Largura do texto
+                </label>
+
+                <div class="range-row">
+
+                    <input
+                        id="widthRange"
+                        type="range"
+                        min="550"
+                        max="950"
+                        step="20"
+                        value="760"
+                        oninput="changeReaderWidth(this.value)">
+
+                    <span
+                        id="widthValue"
+                        class="range-value">
+
+                        760
+
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <button
+                class="theme-button"
+                style="width:100%;"
+                onclick="resetSettings()">
+
+                Restaurar configurações
+
+            </button>
+
+        </div>
 
     </div>
 
-</div>
-```
-
 </aside>
 
-<!-- =====================================================
-     SAIR DO MODO FOCO
-===================================================== -->
+
+<!-- =========================================================
+     MODO FOCO
+========================================================= -->
 
 <button
- class="focus-exit"
- onclick="toggleFocusMode()">
+    class="focus-exit"
+    onclick="toggleFocusMode()">
 
-```
-Sair do modo foco
-```
+    Sair do modo foco
 
 </button>
 
-<!-- =====================================================
+
+<!-- =========================================================
      TOAST
-===================================================== -->
+========================================================= -->
 
 <div
     id="toast"
     class="toast">
 
-```
-Salvo
-```
+    Salvo
 
 </div>
 
+
 <script>
 
-/*
-=========================================================
- CONFIGURAÇÃO
-=========================================================
-*/
+/* =========================================================
+   CONFIGURAÇÃO
+========================================================= */
 
 const EPUB_FILE =
     "uma-historia-qualquer-de-uma-pessoa-qualquer.epub";
@@ -1955,40 +1526,21 @@ let rendition = null;
 
 let currentLocation = null;
 
-
-/*
-=========================================================
- ELEMENTOS
-=========================================================
-*/
-
-const home =
-    document.getElementById("home");
-
-const reader =
-    document.getElementById("reader");
-
-const viewer =
-    document.getElementById("viewer");
+let tocLoaded = false;
 
 
-/*
-=========================================================
- INICIAR
-=========================================================
-*/
+/* =========================================================
+   INICIAR
+========================================================= */
 
 function startBook() {
 
-    home.style.display = "none";
+    document.getElementById("home")
+        .style.display = "none";
 
-    reader.style.display = "flex";
+    document.getElementById("reader")
+        .style.display = "flex";
 
-
-    /*
-        Se já carregamos o livro,
-        simplesmente voltamos para ele.
-    */
 
     if (rendition) {
 
@@ -1997,95 +1549,67 @@ function startBook() {
     }
 
 
-    const loading =
-        document.getElementById(
-            "loadingScreen"
-        );
+    document.getElementById(
+        "loadingScreen"
+    ).classList.add("active");
 
 
-    loading.classList.add("active");
+    waitForEpub();
 
-
-    /*
-        Espera o EPUB.JS estar disponível.
-    */
-
-    waitForEpubJS();
 
 }
 
 
-/*
-=========================================================
- ESPERAR EPUB.JS
-=========================================================
-*/
+/* =========================================================
+   ESPERAR EPUB.JS
+========================================================= */
 
-function waitForEpubJS() {
+function waitForEpub() {
 
-    if (
-        typeof ePub ===
-        "function"
-    ) {
+    if (typeof ePub === "function") {
 
-        loadBook();
+        createReader();
 
         return;
 
     }
 
 
-    setTimeout(
-        waitForEpubJS,
-        50
+    requestAnimationFrame(
+        waitForEpub
     );
 
 }
 
 
-/*
-=========================================================
- CARREGAR LIVRO
-=========================================================
-*/
+/* =========================================================
+   CRIAR LEITOR
+========================================================= */
 
-function loadBook() {
+function createReader() {
 
     /*
-        Criamos o objeto EPUB.
+        IMPORTANTE:
+
+        Aqui não carregamos sumário,
+        temas, configurações ou fontes.
+
+        Apenas abrimos o EPUB.
     */
 
-    book =
-        ePub(EPUB_FILE);
+    book = ePub(EPUB_FILE);
 
-
-    /*
-        Renderizamos imediatamente.
-    */
 
     rendition =
         book.renderTo(
             "viewer",
             {
-
                 width: "100%",
-
                 height: "100%",
-
-                spread: "auto",
-
+                spread: "none",
                 flow: "paginated"
-
             }
         );
-
-
-    /*
-        Configurações básicas
-        antes da primeira página.
-    */
-
-    applyReaderSettings();
 
 
     const saved =
@@ -2095,51 +1619,151 @@ function loadBook() {
 
 
     /*
-        MOSTRA A PÁGINA
-        O MAIS RÁPIDO POSSÍVEL.
+        PRIMEIRO:
+        mostrar o livro.
     */
 
-    const displayPromise =
+    const firstPage =
         saved
         ? rendition.display(saved)
         : rendition.display();
 
 
-    displayPromise.then(
+    firstPage.then(
         function() {
 
             /*
-                Primeira página pronta.
-                Podemos esconder o loading.
+                A primeira página já foi
+                renderizada.
+
+                AGORA sim podemos esconder
+                o carregamento.
             */
 
             hideLoading();
 
+
+            /*
+                Tudo que não é essencial
+                vai depois.
+            */
+
+            requestAnimationFrame(
+                function() {
+
+                    requestIdleCallbackSafe(
+                        finishReaderSetup
+                    );
+
+                }
+            );
+
         }
     );
 
-
-    /*
-        Eventos de navegação.
-    */
 
     rendition.on(
         "relocated",
         handleLocation
     );
 
+}
+
+
+/* =========================================================
+   IDLE CALLBACK
+========================================================= */
+
+function requestIdleCallbackSafe(
+    callback
+) {
+
+    if (
+        "requestIdleCallback"
+        in window
+    ) {
+
+        requestIdleCallback(
+            callback,
+            {
+                timeout: 1500
+            }
+        );
+
+    } else {
+
+        setTimeout(
+            callback,
+            100
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   FINALIZAR CONFIGURAÇÃO
+========================================================= */
+
+function finishReaderSetup() {
 
     /*
-        O SUMÁRIO É CARREGADO
-        SEPARADAMENTE.
-
-        Ele não bloqueia
-        a primeira página.
+        Só agora aplicamos as configurações.
     */
+
+    applyReaderSettings();
+
+
+    /*
+        E só agora começamos a carregar
+        o sumário.
+    */
+
+    loadTOC();
+
+
+    updateHomeProgress();
+
+}
+
+
+/* =========================================================
+   LOADING
+========================================================= */
+
+function hideLoading() {
+
+    const screen =
+        document.getElementById(
+            "loadingScreen"
+        );
+
+    screen.classList.remove(
+        "active"
+    );
+
+}
+
+
+/* =========================================================
+   SUMÁRIO
+========================================================= */
+
+function loadTOC() {
+
+    if (tocLoaded || !book) {
+
+        return;
+
+    }
+
 
     book.loaded.navigation
         .then(
             function(navigation) {
+
+                tocLoaded = true;
 
                 createTOC(
                     navigation.toc
@@ -2150,12 +1774,13 @@ function loadBook() {
         .catch(
             function() {
 
-                /*
-                    Se o EPUB não possuir
-                    navegação adequada,
-                    simplesmente não quebramos
-                    o leitor.
-                */
+                document.getElementById(
+                    "tocList"
+                ).innerHTML = `
+                    <p style="color:var(--soft);">
+                        Sumário indisponível.
+                    </p>
+                `;
 
             }
         );
@@ -2163,32 +1788,79 @@ function loadBook() {
 }
 
 
-/*
-=========================================================
- ESCONDER LOADING
-=========================================================
-*/
+/* =========================================================
+   CRIAR SUMÁRIO
+========================================================= */
 
-function hideLoading() {
+function createTOC(items) {
 
-    const loading =
+    const list =
         document.getElementById(
-            "loadingScreen"
+            "tocList"
         );
 
 
-    loading.classList.remove(
-        "active"
+    list.innerHTML = "";
+
+
+    if (
+        !items ||
+        items.length === 0
+    ) {
+
+        list.innerHTML = `
+            <p style="color:var(--soft);">
+                Este livro não possui sumário.
+            </p>
+        `;
+
+        return;
+
+    }
+
+
+    items.forEach(
+        function(item) {
+
+            const button =
+                document.createElement(
+                    "button"
+                );
+
+
+            button.className =
+                "toc-item";
+
+
+            button.textContent =
+                item.label;
+
+
+            button.onclick =
+                function() {
+
+                    rendition.display(
+                        item.href
+                    );
+
+                    closePanels();
+
+                };
+
+
+            list.appendChild(
+                button
+            );
+
+        }
     );
 
 }
 
 
-/*
-=========================================================
- LOCALIZAÇÃO
-=========================================================
-*/
+/* =========================================================
+   LOCALIZAÇÃO
+========================================================= */
 
 function handleLocation(
     location
@@ -2208,10 +1880,6 @@ function handleLocation(
     }
 
 
-    /*
-        Salva posição.
-    */
-
     if (
         location.start.cfi
     ) {
@@ -2224,19 +1892,10 @@ function handleLocation(
     }
 
 
-    /*
-        Calcula progresso.
-    */
-
     updateProgress(
         location
     );
 
-
-    /*
-        Atualiza capítulo
-        somente quando necessário.
-    */
 
     updateChapter(
         location
@@ -2245,35 +1904,33 @@ function handleLocation(
 }
 
 
-/*
-=========================================================
- PROGRESSO
-=========================================================
-*/
+/* =========================================================
+   PROGRESSO
+========================================================= */
 
 function updateProgress(
     location
 ) {
 
-    let progress = 0;
+    let percentage = 0;
 
 
     try {
 
-        const displayed =
-            location.start.displayed;
-
-
         if (
-            displayed &&
-            displayed.total
+            location.start.displayed &&
+            location.start.displayed.total
         ) {
 
-            progress =
+            percentage =
                 Math.round(
                     (
-                        (displayed.page - 1) /
-                        displayed.total
+                        (
+                            location.start.displayed.page
+                            - 1
+                        )
+                        /
+                        location.start.displayed.total
                     ) * 100
                 );
 
@@ -2281,17 +1938,17 @@ function updateProgress(
 
     } catch (error) {
 
-        progress = 0;
+        percentage = 0;
 
     }
 
 
-    progress =
+    percentage =
         Math.max(
             0,
             Math.min(
                 100,
-                progress
+                percentage
             )
         );
 
@@ -2299,18 +1956,18 @@ function updateProgress(
     document.getElementById(
         "readerProgress"
     ).style.width =
-        progress + "%";
+        percentage + "%";
 
 
     document.getElementById(
         "pageIndicator"
     ).textContent =
-        progress + "%";
+        percentage + "%";
 
 
     localStorage.setItem(
         "bookProgress",
-        progress
+        percentage
     );
 
 
@@ -2319,15 +1976,63 @@ function updateProgress(
 }
 
 
-/*
-=========================================================
- HOME PROGRESSO
-=========================================================
-*/
+/* =========================================================
+   CAPÍTULO
+========================================================= */
+
+function updateChapter(
+    location
+) {
+
+    /*
+        Não procuramos no sumário.
+
+        Isso evita trabalho desnecessário
+        durante a navegação.
+    */
+
+    try {
+
+        if (
+            location.start.href
+        ) {
+
+            let name =
+                location.start.href
+                .split("/")
+                .pop()
+                .split("#")[0];
+
+
+            name =
+                decodeURIComponent(
+                    name
+                );
+
+
+            if (name) {
+
+                document.getElementById(
+                    "chapterName"
+                ).textContent =
+                    name;
+
+            }
+
+        }
+
+    } catch (error) {}
+
+}
+
+
+/* =========================================================
+   PROGRESSO HOME
+========================================================= */
 
 function updateHomeProgress() {
 
-    const progress =
+    const percentage =
         parseInt(
             localStorage.getItem(
                 "bookProgress"
@@ -2335,7 +2040,7 @@ function updateHomeProgress() {
         );
 
 
-    if (progress <= 0) {
+    if (percentage <= 0) {
 
         return;
 
@@ -2352,13 +2057,13 @@ function updateHomeProgress() {
     document.getElementById(
         "homeProgress"
     ).style.width =
-        progress + "%";
+        percentage + "%";
 
 
     document.getElementById(
         "homeProgressText"
     ).textContent =
-        progress + "%";
+        percentage + "%";
 
 
     document.getElementById(
@@ -2369,97 +2074,9 @@ function updateHomeProgress() {
 }
 
 
-/*
-=========================================================
- CAPÍTULO
-=========================================================
-*/
-
-function updateChapter(
-    location
-) {
-
-    if (
-        !book ||
-        !location ||
-        !location.start
-    ) {
-
-        return;
-
-    }
-
-
-    /*
-        Usamos o spine para evitar
-        procurar o sumário inteiro
-        a cada página.
-    */
-
-    try {
-
-        const href =
-            location.start.href;
-
-
-        if (
-            href
-        ) {
-
-            const clean =
-                href.split("#")[0];
-
-
-            const item =
-                book.spine.get(
-                    clean
-                );
-
-
-            if (
-                item &&
-                item.href
-            ) {
-
-                const name =
-                    item.href
-                    .split("/")
-                    .pop();
-
-
-                if (name) {
-
-                    document.getElementById(
-                        "chapterName"
-                    ).textContent =
-                        decodeURIComponent(
-                            name
-                        );
-
-                }
-
-            }
-
-        }
-
-    } catch (error) {
-
-        /*
-            Não interromper a leitura
-            caso o EPUB tenha uma estrutura
-            diferente.
-        */
-
-    }
-
-}
-
-
-/*
-=========================================================
- NAVEGAÇÃO
-=========================================================
-*/
+/* =========================================================
+   NAVEGAÇÃO
+========================================================= */
 
 function nextPage() {
 
@@ -2483,282 +2100,11 @@ function previousPage() {
 }
 
 
-/*
-=========================================================
- SUMÁRIO
-=========================================================
-*/
-
-function createTOC(
-    items
-) {
-
-    const list =
-        document.getElementById(
-            "tocList"
-        );
-
-
-    list.innerHTML = "";
-
-
-    if (
-        !items ||
-        !items.length
-    ) {
-
-        list.innerHTML = `
-            <p style="color:var(--text-soft);">
-                Este livro não possui um sumário compatível.
-            </p>
-        `;
-
-        return;
-
-    }
-
-
-    /*
-        Criação progressiva.
-
-        Em vez de colocar centenas
-        de elementos de uma vez,
-        adicionamos aos poucos.
-    */
-
-    let index = 0;
-
-
-    function addBatch() {
-
-        const fragment =
-            document.createDocumentFragment();
-
-
-        const end =
-            Math.min(
-                index + 20,
-                items.length
-            );
-
-
-        for (
-            ;
-            index < end;
-            index++
-        ) {
-
-            const item =
-                items[index];
-
-
-            const button =
-                document.createElement(
-                    "button"
-                );
-
-
-            button.className =
-                "toc-item";
-
-
-            button.textContent =
-                item.label;
-
-
-            button.onclick =
-                function() {
-
-                    if (rendition) {
-
-                        rendition.display(
-                            item.href
-                        );
-
-                    }
-
-
-                    closePanels();
-
-                };
-
-
-            fragment.appendChild(
-                button
-            );
-
-        }
-
-
-        list.appendChild(
-            fragment
-        );
-
-
-        if (
-            index < items.length
-        ) {
-
-            requestAnimationFrame(
-                addBatch
-            );
-
-        }
-
-    }
-
-
-    addBatch();
-
-}
-
-
-/*
-=========================================================
- PAINEL
-=========================================================
-*/
-
-function openPanel(
-    type
-) {
-
-    const panel =
-        document.getElementById(
-            "sidePanel"
-        );
-
-
-    const overlay =
-        document.getElementById(
-            "overlay"
-        );
-
-
-    const toc =
-        document.getElementById(
-            "tocSection"
-        );
-
-
-    const bookmarks =
-        document.getElementById(
-            "bookmarkSection"
-        );
-
-
-    const settings =
-        document.getElementById(
-            "settingsSection"
-        );
-
-
-    panel.classList.add(
-        "open"
-    );
-
-
-    overlay.classList.add(
-        "active"
-    );
-
-
-    toc.style.display =
-        "none";
-
-
-    bookmarks.style.display =
-        "none";
-
-
-    settings.style.display =
-        "none";
-
-
-    if (
-        type === "toc"
-    ) {
-
-        toc.style.display =
-            "block";
-
-
-        document.getElementById(
-            "panelTitle"
-        ).textContent =
-            "Sumário";
-
-    }
-
-
-    if (
-        type === "bookmarks"
-    ) {
-
-        bookmarks.style.display =
-            "block";
-
-
-        document.getElementById(
-            "panelTitle"
-        ).textContent =
-            "Marcadores";
-
-
-        renderBookmarks();
-
-    }
-
-
-    if (
-        type === "settings"
-    ) {
-
-        settings.style.display =
-            "block";
-
-
-        document.getElementById(
-            "panelTitle"
-        ).textContent =
-            "Configurações";
-
-    }
-
-}
-
-
-function closePanels() {
-
-    document
-        .getElementById(
-            "sidePanel"
-        )
-        .classList.remove(
-            "open"
-        );
-
-
-    document
-        .getElementById(
-            "overlay"
-        )
-        .classList.remove(
-            "active"
-        );
-
-}
-
-
-/*
-=========================================================
- TEMAS
-=========================================================
-*/
-
-function setTheme(
-    theme
-) {
+/* =========================================================
+   TEMAS
+========================================================= */
+
+function setTheme(theme) {
 
     document.body.classList.remove(
         "theme-night",
@@ -2767,9 +2113,7 @@ function setTheme(
     );
 
 
-    if (
-        theme !== "paper"
-    ) {
+    if (theme !== "paper") {
 
         document.body.classList.add(
             "theme-" + theme
@@ -2787,7 +2131,16 @@ function setTheme(
     updateThemeButtons();
 
 
-    applyReaderTheme();
+    /*
+        O tema do EPUB é aplicado
+        SOMENTE depois da abertura.
+    */
+
+    if (rendition) {
+
+        applyBookTheme();
+
+    }
 
 }
 
@@ -2807,10 +2160,16 @@ function updateThemeButtons() {
         .forEach(
             function(button) {
 
-                button.classList.toggle(
-                    "active",
-                    button.dataset.theme === theme
-                );
+                if (
+                    button.dataset.theme
+                ) {
+
+                    button.classList.toggle(
+                        "active",
+                        button.dataset.theme === theme
+                    );
+
+                }
 
             }
         );
@@ -2818,7 +2177,11 @@ function updateThemeButtons() {
 }
 
 
-function applyReaderTheme() {
+/* =========================================================
+   TEMA DO EPUB
+========================================================= */
+
+function applyBookTheme() {
 
     if (!rendition) {
 
@@ -2833,57 +2196,33 @@ function applyReaderTheme() {
         ) || "paper";
 
 
-    let background =
-        "#f9f5ed";
+    let background = "#faf6ee";
+
+    let color = "#352b22";
 
 
-    let color =
-        "#352b22";
+    if (theme === "night") {
 
-
-    if (
-        theme === "night"
-    ) {
-
-        background =
-            "#1d1b18";
-
-        color =
-            "#e8dfd1";
+        background = "#1c1a17";
+        color = "#e9e0d2";
 
     }
 
 
-    if (
-        theme === "cozy"
-    ) {
+    if (theme === "cozy") {
 
-        background =
-            "#352920";
-
-        color =
-            "#ead9bc";
+        background = "#36291f";
+        color = "#ead9bd";
 
     }
 
 
-    if (
-        theme === "forest"
-    ) {
+    if (theme === "forest") {
 
-        background =
-            "#202b24";
-
-        color =
-            "#e0e5d8";
+        background = "#202b24";
+        color = "#e0e6d9";
 
     }
-
-
-    rendition.themes.override(
-        "color",
-        color
-    );
 
 
     rendition.themes.override(
@@ -2891,18 +2230,20 @@ function applyReaderTheme() {
         background
     );
 
+
+    rendition.themes.override(
+        "color",
+        color
+    );
+
 }
 
 
-/*
-=========================================================
- FONTE
-=========================================================
-*/
+/* =========================================================
+   FONTE
+========================================================= */
 
-function changeFont(
-    value
-) {
+function changeFont(value) {
 
     document.getElementById(
         "fontValue"
@@ -2927,11 +2268,9 @@ function changeFont(
 }
 
 
-/*
-=========================================================
- ESPAÇAMENTO
-=========================================================
-*/
+/* =========================================================
+   ESPAÇAMENTO
+========================================================= */
 
 function changeLineHeight(
     value
@@ -2949,16 +2288,14 @@ function changeLineHeight(
     );
 
 
-    applyReaderStyles();
+    applyBookStyles();
 
 }
 
 
-/*
-=========================================================
- LARGURA
-=========================================================
-*/
+/* =========================================================
+   LARGURA
+========================================================= */
 
 function changeReaderWidth(
     value
@@ -2986,13 +2323,11 @@ function changeReaderWidth(
 }
 
 
-/*
-=========================================================
- ESTILOS DO EPUB
-=========================================================
-*/
+/* =========================================================
+   ESTILO DO EPUB
+========================================================= */
 
-function applyReaderStyles() {
+function applyBookStyles() {
 
     if (!rendition) {
 
@@ -3014,7 +2349,8 @@ function applyReaderStyles() {
 
 
     /*
-        Uma única aplicação de tema.
+        Registramos o tema apenas depois
+        que a página já apareceu.
     */
 
     rendition.themes.register(
@@ -3024,7 +2360,7 @@ function applyReaderStyles() {
             body: {
 
                 "font-family":
-                    "Georgia, serif !important",
+                    "Georgia, 'Times New Roman', serif !important",
 
                 "font-size":
                     font + "% !important",
@@ -3058,16 +2394,14 @@ function applyReaderStyles() {
     );
 
 
-    applyReaderTheme();
+    applyBookTheme();
 
 }
 
 
-/*
-=========================================================
- CONFIGURAÇÕES
-=========================================================
-*/
+/* =========================================================
+   CONFIGURAÇÕES
+========================================================= */
 
 function loadSettings() {
 
@@ -3137,79 +2471,14 @@ function loadSettings() {
 
 function applyReaderSettings() {
 
-    applyReaderStyles();
+    applyBookStyles();
 
 }
 
 
-/*
-=========================================================
- TEMA SALVO
-=========================================================
-*/
-
-function loadTheme() {
-
-    const theme =
-        localStorage.getItem(
-            "readerTheme"
-        ) || "paper";
-
-
-    setTheme(theme);
-
-}
-
-
-/*
-=========================================================
- RESTAURAR
-=========================================================
-*/
-
-function resetSettings() {
-
-    localStorage.removeItem(
-        "fontSize"
-    );
-
-    localStorage.removeItem(
-        "lineHeight"
-    );
-
-    localStorage.removeItem(
-        "readerWidth"
-    );
-
-    localStorage.removeItem(
-        "readerTheme"
-    );
-
-
-    loadSettings();
-
-    setTheme("paper");
-
-
-    if (rendition) {
-
-        applyReaderStyles();
-
-    }
-
-
-    showToast(
-        "Configurações restauradas"
-    );
-
-}
-
-
-/*
-=========================================================
- MARCADORES
-=========================================================
-*/
+/* =========================================================
+   MARCADORES
+========================================================= */
 
 function addBookmark() {
 
@@ -3266,9 +2535,9 @@ function addBookmark() {
 
         date:
             new Date()
-                .toLocaleDateString(
-                    "pt-BR"
-                )
+            .toLocaleDateString(
+                "pt-BR"
+            )
 
     });
 
@@ -3288,11 +2557,9 @@ function addBookmark() {
 }
 
 
-/*
-=========================================================
- MARCADORES
-=========================================================
-*/
+/* =========================================================
+   MARCADORES
+========================================================= */
 
 function renderBookmarks() {
 
@@ -3314,11 +2581,11 @@ function renderBookmarks() {
 
 
     if (
-        !bookmarks.length
+        bookmarks.length === 0
     ) {
 
         list.innerHTML = `
-            <p style="color:var(--text-soft);">
+            <p style="color:var(--soft);">
                 Nenhum marcador ainda.
             </p>
         `;
@@ -3329,10 +2596,7 @@ function renderBookmarks() {
 
 
     bookmarks.forEach(
-        function(
-            bookmark,
-            index
-        ) {
+        function(bookmark, index) {
 
             const button =
                 document.createElement(
@@ -3352,13 +2616,9 @@ function renderBookmarks() {
             button.onclick =
                 function() {
 
-                    if (rendition) {
-
-                        rendition.display(
-                            bookmark.cfi
-                        );
-
-                    }
+                    rendition.display(
+                        bookmark.cfi
+                    );
 
                     closePanels();
 
@@ -3385,7 +2645,7 @@ function renderBookmarks() {
 
 
             remove.textContent =
-                "   Remover";
+                "Remover";
 
 
             remove.onclick =
@@ -3420,11 +2680,132 @@ function renderBookmarks() {
 }
 
 
-/*
-=========================================================
- MODO FOCO
-=========================================================
-*/
+/* =========================================================
+   PAINEL
+========================================================= */
+
+function openPanel(type) {
+
+    const panel =
+        document.getElementById(
+            "sidePanel"
+        );
+
+
+    const overlay =
+        document.getElementById(
+            "overlay"
+        );
+
+
+    const toc =
+        document.getElementById(
+            "tocSection"
+        );
+
+
+    const bookmarks =
+        document.getElementById(
+            "bookmarkSection"
+        );
+
+
+    const settings =
+        document.getElementById(
+            "settingsSection"
+        );
+
+
+    panel.classList.add(
+        "open"
+    );
+
+
+    overlay.classList.add(
+        "active"
+    );
+
+
+    toc.style.display =
+        "none";
+
+
+    bookmarks.style.display =
+        "none";
+
+
+    settings.style.display =
+        "none";
+
+
+    if (type === "toc") {
+
+        toc.style.display =
+            "block";
+
+
+        document.getElementById(
+            "panelTitle"
+        ).textContent =
+            "Sumário";
+
+    }
+
+
+    if (type === "bookmarks") {
+
+        bookmarks.style.display =
+            "block";
+
+
+        document.getElementById(
+            "panelTitle"
+        ).textContent =
+            "Marcadores";
+
+
+        renderBookmarks();
+
+    }
+
+
+    if (type === "settings") {
+
+        settings.style.display =
+            "block";
+
+
+        document.getElementById(
+            "panelTitle"
+        ).textContent =
+            "Configurações";
+
+    }
+
+}
+
+
+function closePanels() {
+
+    document.getElementById(
+        "sidePanel"
+    ).classList.remove(
+        "open"
+    );
+
+
+    document.getElementById(
+        "overlay"
+    ).classList.remove(
+        "active"
+    );
+
+}
+
+
+/* =========================================================
+   MODO FOCO
+========================================================= */
 
 function toggleFocusMode() {
 
@@ -3448,19 +2829,21 @@ function toggleFocusMode() {
 }
 
 
-/*
-=========================================================
- HOME
-=========================================================
-*/
+/* =========================================================
+   VOLTAR
+========================================================= */
 
 function goHome() {
 
-    reader.style.display =
+    document.getElementById(
+        "reader"
+    ).style.display =
         "none";
 
 
-    home.style.display =
+    document.getElementById(
+        "home"
+    ).style.display =
         "flex";
 
 
@@ -3474,18 +2857,14 @@ function goHome() {
 }
 
 
-/*
-=========================================================
- TOAST
-=========================================================
-*/
+/* =========================================================
+   TOAST
+========================================================= */
 
 let toastTimer;
 
 
-function showToast(
-    message
-) {
+function showToast(message) {
 
     const toast =
         document.getElementById(
@@ -3522,20 +2901,58 @@ function showToast(
 }
 
 
-/*
-=========================================================
- TECLADO
-=========================================================
-*/
+/* =========================================================
+   RESTAURAR
+========================================================= */
+
+function resetSettings() {
+
+    localStorage.removeItem(
+        "fontSize"
+    );
+
+    localStorage.removeItem(
+        "lineHeight"
+    );
+
+    localStorage.removeItem(
+        "readerWidth"
+    );
+
+    localStorage.removeItem(
+        "readerTheme"
+    );
+
+
+    loadSettings();
+
+    setTheme("paper");
+
+
+    if (rendition) {
+
+        applyBookStyles();
+
+    }
+
+
+    showToast(
+        "Configurações restauradas"
+    );
+
+}
+
+
+/* =========================================================
+   TECLADO
+========================================================= */
 
 document.addEventListener(
     "keydown",
     function(event) {
 
         if (!rendition) {
-
             return;
-
         }
 
 
@@ -3598,15 +3015,23 @@ document.addEventListener(
 );
 
 
-/*
-=========================================================
- INICIALIZAÇÃO
-=========================================================
-*/
+/* =========================================================
+   INICIALIZAÇÃO
+========================================================= */
 
 loadSettings();
 
-loadTheme();
+
+const savedTheme =
+    localStorage.getItem(
+        "readerTheme"
+    ) || "paper";
+
+
+setTheme(
+    savedTheme
+);
+
 
 updateHomeProgress();
 
