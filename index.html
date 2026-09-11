@@ -1,68 +1,2183 @@
 ```html
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Teste EPUB</title>
+<title>The Book Haven</title>
+
+<style>
+
+/* =========================================================
+   RESET
+========================================================= */
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+}
+
+body {
+    font-family: Georgia, "Times New Roman", serif;
+    background: #f4efe6;
+    color: #302820;
+    overflow: hidden;
+}
+
+/* =========================================================
+   VARIÁVEIS
+========================================================= */
+
+:root {
+
+    --bg: #f4efe6;
+    --surface: #fffaf1;
+    --surface2: #eee5d5;
+
+    --text: #302820;
+    --text2: #75695c;
+
+    --accent: #8b6848;
+    --accent-hover: #725237;
+
+    --border: rgba(80, 60, 40, .14);
+
+    --shadow:
+        0 10px 30px rgba(60, 40, 20, .10);
+
+    --reader-width: 760px;
+    --font-size: 18px;
+    --line-height: 1.75;
+}
+
+/* =========================================================
+   TEMAS
+========================================================= */
+
+body.theme-night {
+
+    --bg: #171614;
+    --surface: #211f1c;
+    --surface2: #2b2824;
+
+    --text: #e9e0d4;
+    --text2: #a99e91;
+
+    --accent: #c49a68;
+    --accent-hover: #d5aa76;
+
+    --border: rgba(255,255,255,.10);
+
+    --shadow:
+        0 10px 30px rgba(0,0,0,.35);
+}
+
+body.theme-cozy {
+
+    --bg: #efe1d0;
+    --surface: #fff4e5;
+    --surface2: #ead4bd;
+
+    --text: #4a3426;
+    --text2: #856b58;
+
+    --accent: #a96845;
+    --accent-hover: #8d5337;
+}
+
+body.theme-forest {
+
+    --bg: #e7eee8;
+    --surface: #f6faf6;
+    --surface2: #d9e5da;
+
+    --text: #28352b;
+    --text2: #647266;
+
+    --accent: #52735a;
+    --accent-hover: #3d5c45;
+}
+
+/* =========================================================
+   APP
+========================================================= */
+
+#app {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+/* =========================================================
+   HOME
+========================================================= */
+
+#home {
+
+    position: absolute;
+    inset: 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 25px;
+
+    background:
+        radial-gradient(
+            circle at top,
+            rgba(255,255,255,.5),
+            transparent 55%
+        ),
+        var(--bg);
+
+    z-index: 50;
+
+    transition:
+        opacity .25s ease,
+        visibility .25s ease;
+}
+
+#home.hidden {
+
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.home-card {
+
+    width: min(850px, 100%);
+
+    background: var(--surface);
+
+    border: 1px solid var(--border);
+
+    border-radius: 25px;
+
+    padding: 45px;
+
+    box-shadow: var(--shadow);
+
+    text-align: center;
+}
+
+.logo {
+
+    font-size: 48px;
+    margin-bottom: 5px;
+}
+
+.home-card h1 {
+
+    margin: 0;
+
+    font-family: Georgia, serif;
+
+    font-size: 34px;
+
+    color: var(--text);
+}
+
+.subtitle {
+
+    margin: 10px 0 30px;
+
+    color: var(--text2);
+
+    font-family: Arial, sans-serif;
+}
+
+.book-card {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 25px;
+
+    text-align: left;
+
+    background: var(--surface2);
+
+    border-radius: 18px;
+
+    padding: 20px;
+
+    margin-top: 20px;
+}
+
+.book-cover {
+
+    width: 120px;
+    height: 170px;
+
+    object-fit: cover;
+
+    border-radius: 8px;
+
+    background: #ddd;
+
+    box-shadow:
+        0 8px 20px rgba(0,0,0,.18);
+}
+
+.book-info {
+
+    flex: 1;
+}
+
+.book-info h2 {
+
+    margin: 0 0 8px;
+
+    font-size: 23px;
+}
+
+.book-info p {
+
+    margin: 5px 0;
+
+    color: var(--text2);
+}
+
+/* =========================================================
+   BOTÕES
+========================================================= */
+
+button {
+
+    border: 0;
+
+    cursor: pointer;
+
+    font-family: Arial, sans-serif;
+
+    transition:
+        transform .15s ease,
+        background .15s ease;
+}
+
+button:active {
+
+    transform: scale(.96);
+}
+
+.primary {
+
+    background: var(--accent);
+
+    color: white;
+
+    padding: 13px 22px;
+
+    border-radius: 12px;
+
+    font-weight: bold;
+
+    margin-top: 12px;
+}
+
+.primary:hover {
+
+    background: var(--accent-hover);
+}
+
+.icon-btn {
+
+    width: 42px;
+    height: 42px;
+
+    border-radius: 12px;
+
+    background: transparent;
+
+    color: var(--text);
+
+    font-size: 19px;
+}
+
+.icon-btn:hover {
+
+    background: var(--surface2);
+}
+
+/* =========================================================
+   LEITOR
+========================================================= */
+
+#reader {
+
+    position: absolute;
+
+    inset: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    background: var(--bg);
+
+    opacity: 0;
+    visibility: hidden;
+
+    transition:
+        opacity .25s ease,
+        visibility .25s ease;
+}
+
+#reader.visible {
+
+    opacity: 1;
+    visibility: visible;
+}
+
+/* =========================================================
+   TOPBAR
+========================================================= */
+
+.topbar {
+
+    height: 62px;
+
+    flex-shrink: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    padding: 0 15px;
+
+    background: var(--surface);
+
+    border-bottom: 1px solid var(--border);
+
+    z-index: 10;
+}
+
+.top-left,
+.top-right {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 5px;
+}
+
+.reader-title {
+
+    max-width: 350px;
+
+    overflow: hidden;
+
+    white-space: nowrap;
+
+    text-overflow: ellipsis;
+
+    font-family: Arial, sans-serif;
+
+    font-size: 14px;
+
+    color: var(--text2);
+}
+
+/* =========================================================
+   PROGRESSO
+========================================================= */
+
+.progress-area {
+
+    height: 4px;
+
+    background: var(--surface2);
+
+    flex-shrink: 0;
+}
+
+#progress {
+
+    width: 0%;
+
+    height: 100%;
+
+    background: var(--accent);
+
+    transition: width .25s ease;
+}
+
+/* =========================================================
+   LEITOR EPUB
+========================================================= */
+
+#reader-area {
+
+    flex: 1;
+
+    position: relative;
+
+    overflow: hidden;
+}
+
+#viewer {
+
+    width: 100%;
+    height: 100%;
+}
+
+/* =========================================================
+   LOADING
+========================================================= */
+
+#loading {
+
+    position: absolute;
+
+    inset: 0;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    flex-direction: column;
+
+    gap: 15px;
+
+    background: var(--bg);
+
+    z-index: 5;
+}
+
+.spinner {
+
+    width: 35px;
+    height: 35px;
+
+    border-radius: 50%;
+
+    border: 3px solid var(--surface2);
+
+    border-top-color: var(--accent);
+
+    animation: spin .8s linear infinite;
+}
+
+@keyframes spin {
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+#loading.hidden {
+
+    display: none;
+}
+
+/* =========================================================
+   PAINÉIS
+========================================================= */
+
+.panel {
+
+    position: absolute;
+
+    top: 0;
+    bottom: 0;
+
+    width: min(330px, 85vw);
+
+    background: var(--surface);
+
+    box-shadow: var(--shadow);
+
+    z-index: 20;
+
+    overflow-y: auto;
+
+    transition: transform .25s ease;
+}
+
+#toc-panel {
+
+    left: 0;
+
+    transform: translateX(-105%);
+}
+
+#toc-panel.open {
+
+    transform: translateX(0);
+}
+
+#settings-panel {
+
+    right: 0;
+
+    transform: translateX(105%);
+}
+
+#settings-panel.open {
+
+    transform: translateX(0);
+}
+
+.panel-header {
+
+    height: 62px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    padding: 0 15px;
+
+    border-bottom: 1px solid var(--border);
+
+    font-family: Arial, sans-serif;
+}
+
+.panel-content {
+
+    padding: 20px;
+}
+
+/* =========================================================
+   TOC
+========================================================= */
+
+.toc-item {
+
+    display: block;
+
+    width: 100%;
+
+    text-align: left;
+
+    padding: 13px;
+
+    margin-bottom: 5px;
+
+    border-radius: 10px;
+
+    background: transparent;
+
+    color: var(--text);
+
+    font-family: Arial, sans-serif;
+}
+
+.toc-item:hover {
+
+    background: var(--surface2);
+}
+
+/* =========================================================
+   CONFIGURAÇÕES
+========================================================= */
+
+.setting {
+
+    margin-bottom: 25px;
+}
+
+.setting label {
+
+    display: block;
+
+    margin-bottom: 10px;
+
+    font-family: Arial, sans-serif;
+
+    font-size: 14px;
+
+    color: var(--text2);
+}
+
+.setting input[type="range"] {
+
+    width: 100%;
+}
+
+.theme-buttons {
+
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 8px;
+}
+
+.theme-button {
+
+    padding: 10px;
+
+    border-radius: 10px;
+
+    background: var(--surface2);
+
+    color: var(--text);
+}
+
+.theme-button.active {
+
+    outline: 2px solid var(--accent);
+}
+
+/* =========================================================
+   BOOKMARKS
+========================================================= */
+
+#bookmark-panel {
+
+    position: absolute;
+
+    right: 15px;
+
+    top: 65px;
+
+    width: min(340px, calc(100vw - 30px));
+
+    max-height: 70vh;
+
+    overflow-y: auto;
+
+    background: var(--surface);
+
+    border: 1px solid var(--border);
+
+    border-radius: 16px;
+
+    box-shadow: var(--shadow);
+
+    padding: 15px;
+
+    z-index: 30;
+
+    display: none;
+}
+
+#bookmark-panel.open {
+
+    display: block;
+}
+
+.bookmark {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 10px;
+
+    padding: 10px;
+
+    border-radius: 10px;
+
+    margin-bottom: 5px;
+
+    background: var(--surface2);
+
+    color: var(--text);
+
+    cursor: pointer;
+
+    font-family: Arial, sans-serif;
+
+    font-size: 13px;
+}
+
+/* =========================================================
+   FOCO
+========================================================= */
+
+body.focus-mode .topbar,
+body.focus-mode .progress-area {
+
+    opacity: 0;
+
+    pointer-events: none;
+
+    position: absolute;
+
+    top: 0;
+
+    left: 0;
+
+    right: 0;
+}
+
+body.focus-mode #reader-area {
+
+    height: 100%;
+}
+
+/* =========================================================
+   RESPONSIVO
+========================================================= */
+
+@media (max-width: 650px) {
+
+    .home-card {
+
+        padding: 25px;
+
+        border-radius: 18px;
+    }
+
+    .home-card h1 {
+
+        font-size: 27px;
+    }
+
+    .book-card {
+
+        flex-direction: column;
+
+        text-align: center;
+    }
+
+    .book-cover {
+
+        width: 110px;
+        height: 155px;
+    }
+
+    .reader-title {
+
+        max-width: 120px;
+    }
+
+    .topbar {
+
+        padding: 0 7px;
+    }
+
+}
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+#toast {
+
+    position: fixed;
+
+    bottom: 25px;
+
+    left: 50%;
+
+    transform: translate(-50%, 20px);
+
+    background: var(--surface);
+
+    color: var(--text);
+
+    border: 1px solid var(--border);
+
+    padding: 12px 18px;
+
+    border-radius: 12px;
+
+    box-shadow: var(--shadow);
+
+    font-family: Arial, sans-serif;
+
+    opacity: 0;
+
+    pointer-events: none;
+
+    transition: .25s ease;
+
+    z-index: 100;
+}
+
+#toast.show {
+
+    opacity: 1;
+
+    transform: translate(-50%, 0);
+}
+
+</style>
+
 </head>
 
 <body>
 
-<h1 id="status">Carregando...</h1>
+<div id="app">
+
+<!-- =====================================================
+     HOME
+===================================================== -->
+
+<section id="home">
+
+    <div class="home-card">
+
+        <div class="logo">📖</div>
+
+        <h1>The Book Haven</h1>
+
+        <p class="subtitle">
+            Seu cantinho para ler.
+        </p>
+
+        <div class="book-card">
+
+            <img
+                id="home-cover"
+                class="book-cover"
+                alt="Capa do livro"
+            >
+
+            <div class="book-info">
+
+                <h2>
+                    Uma História Qualquer de Uma Pessoa qualquer
+                </h2>
+
+                <p>
+                    Miguel Cara de patels
+                </p>
+
+                <p id="home-progress">
+                    Ainda não iniciado
+                </p>
+
+                <button
+                    class="primary"
+                    id="start-reading"
+                >
+                    📖 Começar a ler
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     READER
+===================================================== -->
+
+<section id="reader">
+
+    <header class="topbar">
+
+        <div class="top-left">
+
+            <button
+                class="icon-btn"
+                id="home-btn"
+                title="Página inicial"
+            >
+                🏠
+            </button>
+
+            <button
+                class="icon-btn"
+                id="toc-btn"
+                title="Índice"
+            >
+                ☰
+            </button>
+
+            <span
+                class="reader-title"
+                id="reader-title"
+            >
+                The Book Haven
+            </span>
+
+        </div>
+
+
+        <div class="top-right">
+
+            <button
+                class="icon-btn"
+                id="bookmark-btn"
+                title="Adicionar marcador"
+            >
+                🔖
+            </button>
+
+            <button
+                class="icon-btn"
+                id="bookmarks-btn"
+                title="Marcadores"
+            >
+                📑
+            </button>
+
+            <button
+                class="icon-btn"
+                id="focus-btn"
+                title="Modo foco"
+            >
+                🎯
+            </button>
+
+            <button
+                class="icon-btn"
+                id="settings-btn"
+                title="Configurações"
+            >
+                ⚙️
+            </button>
+
+        </div>
+
+    </header>
+
+
+    <div class="progress-area">
+
+        <div id="progress"></div>
+
+    </div>
+
+
+    <main id="reader-area">
+
+        <div id="loading">
+
+            <div class="spinner"></div>
+
+            <span>
+                Abrindo seu livro...
+            </span>
+
+        </div>
+
+        <div id="viewer"></div>
+
+
+        <!-- TOC -->
+
+        <aside
+            class="panel"
+            id="toc-panel"
+        >
+
+            <div class="panel-header">
+
+                <strong>Índice</strong>
+
+                <button
+                    class="icon-btn"
+                    id="close-toc"
+                >
+                    ✕
+                </button>
+
+            </div>
+
+            <div
+                class="panel-content"
+                id="toc-content"
+            >
+                Carregando...
+            </div>
+
+        </aside>
+
+
+        <!-- SETTINGS -->
+
+        <aside
+            class="panel"
+            id="settings-panel"
+        >
+
+            <div class="panel-header">
+
+                <strong>Configurações</strong>
+
+                <button
+                    class="icon-btn"
+                    id="close-settings"
+                >
+                    ✕
+                </button>
+
+            </div>
+
+
+            <div class="panel-content">
+
+                <div class="setting">
+
+                    <label>
+                        Tamanho da fonte
+                    </label>
+
+                    <input
+                        type="range"
+                        id="font-size"
+                        min="80"
+                        max="150"
+                        value="100"
+                    >
+
+                </div>
+
+
+                <div class="setting">
+
+                    <label>
+                        Espaçamento das linhas
+                    </label>
+
+                    <input
+                        type="range"
+                        id="line-height"
+                        min="120"
+                        max="220"
+                        value="175"
+                    >
+
+                </div>
+
+
+                <div class="setting">
+
+                    <label>
+                        Largura do texto
+                    </label>
+
+                    <input
+                        type="range"
+                        id="reader-width"
+                        min="500"
+                        max="1000"
+                        value="760"
+                    >
+
+                </div>
+
+
+                <div class="setting">
+
+                    <label>
+                        Tema
+                    </label>
+
+                    <div class="theme-buttons">
+
+                        <button
+                            class="theme-button active"
+                            data-theme="paper"
+                        >
+                            📜 Papel
+                        </button>
+
+                        <button
+                            class="theme-button"
+                            data-theme="night"
+                        >
+                            🌙 Noite
+                        </button>
+
+                        <button
+                            class="theme-button"
+                            data-theme="cozy"
+                        >
+                            ☕ Aconchegante
+                        </button>
+
+                        <button
+                            class="theme-button"
+                            data-theme="forest"
+                        >
+                            🌲 Floresta
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </aside>
+
+
+        <!-- BOOKMARKS -->
+
+        <div id="bookmark-panel">
+
+            <strong>
+                🔖 Marcadores
+            </strong>
+
+            <div
+                id="bookmark-list"
+                style="margin-top:12px"
+            ></div>
+
+        </div>
+
+    </main>
+
+</section>
+
+</div>
+
+
+<div id="toast"></div>
+
+
+<!-- =====================================================
+     BIBLIOTECAS
+===================================================== -->
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/epubjs@0.3.93/dist/epub.min.js"></script>
 
+
 <script>
 
-document.getElementById("status").innerText =
-    "Bibliotecas carregadas. Abrindo EPUB...";
+/* =========================================================
+   CONFIGURAÇÃO
+========================================================= */
 
-console.log("JSZip:", typeof JSZip);
-console.log("Epub.js:", typeof ePub);
+const EPUB_FILE =
+    "./uma-historia-qualquer-de-uma-pessoa-qualquer.epub";
 
-const book = ePub(
-    "./uma-historia-qualquer-de-uma-pessoa-qualquer.epub"
+
+/* =========================================================
+   ELEMENTOS
+========================================================= */
+
+const home =
+    document.getElementById("home");
+
+const reader =
+    document.getElementById("reader");
+
+const viewer =
+    document.getElementById("viewer");
+
+const loading =
+    document.getElementById("loading");
+
+const progress =
+    document.getElementById("progress");
+
+const homeProgress =
+    document.getElementById("home-progress");
+
+const homeCover =
+    document.getElementById("home-cover");
+
+const tocPanel =
+    document.getElementById("toc-panel");
+
+const settingsPanel =
+    document.getElementById("settings-panel");
+
+const bookmarkPanel =
+    document.getElementById("bookmark-panel");
+
+const toast =
+    document.getElementById("toast");
+
+
+/* =========================================================
+   ESTADO
+========================================================= */
+
+let book = null;
+
+let rendition = null;
+
+let currentLocation = null;
+
+let bookmarks =
+    JSON.parse(
+        localStorage.getItem("bookmarks") || "[]"
+    );
+
+let savedCfi =
+    localStorage.getItem("readingPosition");
+
+let settings =
+    JSON.parse(
+        localStorage.getItem("readerSettings") || "{}"
+    );
+
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+function showToast(message) {
+
+    toast.textContent = message;
+
+    toast.classList.add("show");
+
+    setTimeout(() => {
+
+        toast.classList.remove("show");
+
+    }, 2200);
+}
+
+
+/* =========================================================
+   ABRIR EPUB
+========================================================= */
+
+async function openBook() {
+
+    if (book) return;
+
+    loading.classList.remove("hidden");
+
+    try {
+
+        book = ePub(EPUB_FILE);
+
+        rendition = book.renderTo("viewer", {
+
+            width: "100%",
+            height: "100%",
+
+            spread: "none",
+
+            flow: "paginated",
+
+            allowScriptedContent: false
+
+        });
+
+
+        /* =================================================
+           EVENTO DE LOCALIZAÇÃO
+        ================================================= */
+
+        rendition.on(
+            "relocated",
+            location => {
+
+                currentLocation = location;
+
+                if (
+                    location &&
+                    location.start &&
+                    location.start.cfi
+                ) {
+
+                    localStorage.setItem(
+                        "readingPosition",
+                        location.start.cfi
+                    );
+
+                }
+
+                updateProgress(location);
+
+            }
+        );
+
+
+        /* =================================================
+           CARREGAMENTO
+        ================================================= */
+
+        await book.ready;
+
+        console.log("EPUB carregado.");
+
+        await book.loaded.spine;
+
+        console.log("Spine carregado.");
+
+
+        /* =================================================
+           ESTILO DO EPUB
+        ================================================= */
+
+        rendition.themes.default({
+
+            body: {
+
+                "font-family":
+                    "Georgia, serif !important",
+
+                "color":
+                    "inherit !important"
+
+            }
+
+        });
+
+
+        applyReaderSettings();
+
+
+        /* =================================================
+           TOC
+        ================================================= */
+
+        await loadTOC();
+
+
+        /* =================================================
+           CAPA
+        ================================================= */
+
+        loadCover();
+
+
+        /* =================================================
+           MOSTRAR LIVRO
+        ================================================= */
+
+        if (savedCfi) {
+
+            try {
+
+                await rendition.display(savedCfi);
+
+            } catch {
+
+                await rendition.display();
+
+            }
+
+        } else {
+
+            await rendition.display();
+
+        }
+
+
+        loading.classList.add("hidden");
+
+    } catch (error) {
+
+        console.error(error);
+
+        loading.innerHTML = `
+
+            <div style="
+                max-width:500px;
+                padding:25px;
+                text-align:center;
+                font-family:Arial;
+            ">
+
+                <h2>
+                    Não foi possível abrir o livro.
+                </h2>
+
+                <p>
+                    ${error}
+                </p>
+
+            </div>
+        `;
+
+    }
+
+}
+
+
+/* =========================================================
+   CAPA
+========================================================= */
+
+async function loadCover() {
+
+    try {
+
+        const url =
+            await book.coverUrl();
+
+        if (url) {
+
+            homeCover.src = url;
+
+        }
+
+    } catch (error) {
+
+        console.log(
+            "Capa não disponível:",
+            error
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   TOC
+========================================================= */
+
+async function loadTOC() {
+
+    const container =
+        document.getElementById("toc-content");
+
+    container.innerHTML = "";
+
+    try {
+
+        const navigation =
+            await book.loaded.navigation;
+
+        const toc =
+            navigation.toc || [];
+
+        if (!toc.length) {
+
+            container.textContent =
+                "Índice não disponível.";
+
+            return;
+        }
+
+
+        toc.forEach(item => {
+
+            const button =
+                document.createElement("button");
+
+            button.className =
+                "toc-item";
+
+            button.textContent =
+                item.label;
+
+            button.onclick = async () => {
+
+                try {
+
+                    await rendition.display(
+                        item.href
+                    );
+
+                    tocPanel.classList.remove("open");
+
+                } catch (error) {
+
+                    console.error(error);
+
+                }
+
+            };
+
+            container.appendChild(button);
+
+        });
+
+    } catch (error) {
+
+        console.error(
+            "Erro no TOC:",
+            error
+        );
+
+        container.textContent =
+            "Não foi possível carregar o índice.";
+
+    }
+
+}
+
+
+/* =========================================================
+   PROGRESSO
+========================================================= */
+
+async function updateProgress(location) {
+
+    if (!location || !location.start)
+        return;
+
+    try {
+
+        const percentage =
+            book.locations.percentageFromCfi(
+                location.start.cfi
+            );
+
+        if (!isNaN(percentage)) {
+
+            const percent =
+                Math.round(
+                    percentage * 100
+                );
+
+            progress.style.width =
+                percent + "%";
+
+            homeProgress.textContent =
+                percent + "% lido";
+
+        }
+
+    } catch {
+
+        /* Ignora erros de progresso */
+
+    }
+}
+
+
+/* =========================================================
+   GERAR LOCALIZAÇÕES
+========================================================= */
+
+
+        await new Promise(resolve => {
+
+            const check = setInterval(() => {
+
+                if (book) {
+
+                    clearInterval(check);
+
+                    resolve();
+
+                }
+
+            }, 100);
+
+        });
+
+    } catch {}
+
+}
+
+
+/* =========================================================
+   MARCADORES
+========================================================= */
+
+function saveBookmarks() {
+
+    localStorage.setItem(
+        "bookmarks",
+        JSON.stringify(bookmarks)
+    );
+
+}
+
+
+function renderBookmarks() {
+
+    const list =
+        document.getElementById("bookmark-list");
+
+    list.innerHTML = "";
+
+    if (!bookmarks.length) {
+
+        list.innerHTML =
+            "<p style='color:var(--text2)'>Nenhum marcador.</p>";
+
+        return;
+
+    }
+
+
+    bookmarks.forEach((bookmark, index) => {
+
+        const item =
+            document.createElement("div");
+
+        item.className =
+            "bookmark";
+
+        const text =
+            document.createElement("span");
+
+        text.textContent =
+            bookmark.label ||
+            "Página marcada";
+
+
+        const remove =
+            document.createElement("button");
+
+        remove.className =
+            "icon-btn";
+
+        remove.textContent =
+            "✕";
+
+        remove.onclick = event => {
+
+            event.stopPropagation();
+
+            bookmarks.splice(index, 1);
+
+            saveBookmarks();
+
+            renderBookmarks();
+
+        };
+
+
+        item.appendChild(text);
+
+        item.appendChild(remove);
+
+
+        item.onclick = async () => {
+
+            try {
+
+                await rendition.display(
+                    bookmark.cfi
+                );
+
+                bookmarkPanel.classList.remove(
+                    "open"
+                );
+
+            } catch (error) {
+
+                console.error(error);
+
+            }
+
+        };
+
+
+        list.appendChild(item);
+
+    });
+
+}
+
+
+function addBookmark() {
+
+    if (
+        !currentLocation ||
+        !currentLocation.start
+    ) {
+
+        showToast(
+            "A página ainda não foi identificada."
+        );
+
+        return;
+
+    }
+
+
+    const cfi =
+        currentLocation.start.cfi;
+
+
+    const exists =
+        bookmarks.some(
+            bookmark =>
+                bookmark.cfi === cfi
+        );
+
+
+    if (exists) {
+
+        showToast(
+            "Esta página já está marcada."
+        );
+
+        return;
+
+    }
+
+
+    bookmarks.push({
+
+        cfi: cfi,
+
+        label:
+            "Página " +
+            (bookmarks.length + 1)
+
+    });
+
+
+    saveBookmarks();
+
+    renderBookmarks();
+
+    showToast(
+        "🔖 Marcador adicionado!"
+    );
+
+}
+
+
+/* =========================================================
+   CONFIGURAÇÕES
+========================================================= */
+
+function applyReaderSettings() {
+
+    const font =
+        settings.fontSize || 100;
+
+    const line =
+        settings.lineHeight || 175;
+
+
+    document.getElementById(
+        "font-size"
+    ).value = font;
+
+
+    document.getElementById(
+        "line-height"
+    ).value = line;
+
+
+    document.getElementById(
+        "reader-width"
+    ).value =
+        settings.readerWidth || 760;
+
+
+    document.body.classList.remove(
+        "theme-night",
+        "theme-cozy",
+        "theme-forest"
+    );
+
+
+    if (
+        settings.theme &&
+        settings.theme !== "paper"
+    ) {
+
+        document.body.classList.add(
+            "theme-" +
+            settings.theme
+        );
+
+    }
+
+
+    updateEPUBStyles();
+
+}
+
+
+function updateEPUBStyles() {
+
+    if (!rendition)
+        return;
+
+
+    const font =
+        settings.fontSize || 100;
+
+    const line =
+        settings.lineHeight || 175;
+
+    const width =
+        settings.readerWidth || 760;
+
+
+    rendition.themes.override(
+        "font-size",
+        font + "%"
+    );
+
+    rendition.themes.override(
+        "line-height",
+        (line / 100).toString()
+    );
+
+    rendition.themes.override(
+        "max-width",
+        width + "px"
+    );
+
+}
+
+
+/* =========================================================
+   CONTROLES DE CONFIGURAÇÃO
+========================================================= */
+
+document.getElementById(
+    "font-size"
+).addEventListener(
+    "input",
+    event => {
+
+        settings.fontSize =
+            Number(event.target.value);
+
+        localStorage.setItem(
+            "readerSettings",
+            JSON.stringify(settings)
+        );
+
+        updateEPUBStyles();
+
+    }
 );
 
-console.log("Book criado:", book);
 
-book.ready.then(() => {
+document.getElementById(
+    "line-height"
+).addEventListener(
+    "input",
+    event => {
 
-    console.log("EPUB CARREGOU!");
+        settings.lineHeight =
+            Number(event.target.value);
 
-    document.getElementById("status").innerText =
-        "✅ EPUB CARREGOU!";
+        localStorage.setItem(
+            "readerSettings",
+            JSON.stringify(settings)
+        );
 
-}).catch(error => {
+        updateEPUBStyles();
 
-    console.error("ERRO:", error);
+    }
+);
 
-    document.getElementById("status").innerText =
-        "❌ ERRO: " + error;
+
+document.getElementById(
+    "reader-width"
+).addEventListener(
+    "input",
+    event => {
+
+        settings.readerWidth =
+            Number(event.target.value);
+
+        localStorage.setItem(
+            "readerSettings",
+            JSON.stringify(settings)
+        );
+
+        updateEPUBStyles();
+
+    }
+);
+
+
+/* =========================================================
+   TEMAS
+========================================================= */
+
+document.querySelectorAll(
+    ".theme-button"
+).forEach(button => {
+
+    button.onclick = () => {
+
+        const theme =
+            button.dataset.theme;
+
+        settings.theme =
+            theme;
+
+        localStorage.setItem(
+            "readerSettings",
+            JSON.stringify(settings)
+        );
+
+
+        document.body.classList.remove(
+            "theme-night",
+            "theme-cozy",
+            "theme-forest"
+        );
+
+
+        if (theme !== "paper") {
+
+            document.body.classList.add(
+                "theme-" + theme
+            );
+
+        }
+
+
+        document.querySelectorAll(
+            ".theme-button"
+        ).forEach(b => {
+
+            b.classList.remove("active");
+
+        });
+
+
+        button.classList.add("active");
+
+    };
 
 });
 
-setTimeout(() => {
 
-    if (
-        document.getElementById("status").innerText !==
-        "✅ EPUB CARREGOU!"
-    ) {
+/* =========================================================
+   BOTÕES
+========================================================= */
 
-        document.getElementById("status").innerText =
-            "⚠️ Ainda travado depois de 10 segundos.";
+document.getElementById(
+    "start-reading"
+).onclick = async () => {
 
-        console.log(
-            "O carregamento do EPUB não terminou."
-        );
+    home.classList.add("hidden");
+
+    reader.classList.add("visible");
+
+    await openBook();
+
+};
+
+
+document.getElementById(
+    "home-btn"
+).onclick = () => {
+
+    reader.classList.remove("visible");
+
+    home.classList.remove("hidden");
+
+};
+
+
+document.getElementById(
+    "toc-btn"
+).onclick = () => {
+
+    tocPanel.classList.toggle("open");
+
+    settingsPanel.classList.remove("open");
+
+    bookmarkPanel.classList.remove("open");
+
+};
+
+
+document.getElementById(
+    "close-toc"
+).onclick = () => {
+
+    tocPanel.classList.remove("open");
+
+};
+
+
+document.getElementById(
+    "settings-btn"
+).onclick = () => {
+
+    settingsPanel.classList.toggle("open");
+
+    tocPanel.classList.remove("open");
+
+    bookmarkPanel.classList.remove("open");
+
+};
+
+
+document.getElementById(
+    "close-settings"
+).onclick = () => {
+
+    settingsPanel.classList.remove("open");
+
+};
+
+
+document.getElementById(
+    "bookmark-btn"
+).onclick = () => {
+
+    addBookmark();
+
+};
+
+
+document.getElementById(
+    "bookmarks-btn"
+).onclick = () => {
+
+    renderBookmarks();
+
+    bookmarkPanel.classList.toggle("open");
+
+    tocPanel.classList.remove("open");
+
+    settingsPanel.classList.remove("open");
+
+};
+
+
+document.getElementById(
+    "focus-btn"
+).onclick = () => {
+
+    document.body.classList.toggle(
+        "focus-mode"
+    );
+
+};
+
+
+/* =========================================================
+   TECLADO
+========================================================= */
+
+document.addEventListener(
+    "keydown",
+    event => {
+
+        if (!rendition)
+            return;
+
+
+        if (
+            event.target.tagName ===
+            "INPUT"
+        )
+            return;
+
+
+        if (event.key === "ArrowRight") {
+
+            rendition.next();
+
+        }
+
+
+        if (event.key === "ArrowLeft") {
+
+            rendition.prev();
+
+        }
+
+
+        if (
+            event.ctrlKey &&
+            event.key.toLowerCase() === "b"
+        ) {
+
+            event.preventDefault();
+
+            addBookmark();
+
+        }
+
+
+        if (event.key === "Escape") {
+
+            tocPanel.classList.remove(
+                "open"
+            );
+
+            settingsPanel.classList.remove(
+                "open"
+            );
+
+            bookmarkPanel.classList.remove(
+                "open"
+            );
+
+        }
+
     }
+);
 
-}, 10000);
+
+/* =========================================================
+   SWIPE NO CELULAR
+========================================================= */
+
+let touchStartX = 0;
+
+document.getElementById(
+    "reader-area"
+).addEventListener(
+    "touchstart",
+    event => {
+
+        touchStartX =
+            event.changedTouches[0].screenX;
+
+    }
+);
+
+
+document.getElementById(
+    "reader-area"
+).addEventListener(
+    "touchend",
+    event => {
+
+        if (!rendition)
+            return;
+
+
+        const touchEndX =
+            event.changedTouches[0].screenX;
+
+        const difference =
+            touchEndX - touchStartX;
+
+
+        if (Math.abs(difference) < 50)
+            return;
+
+
+        if (difference < 0) {
+
+            rendition.next();
+
+        } else {
+
+            rendition.prev();
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   INICIALIZAÇÃO
+========================================================= */
+
+applyReaderSettings();
+
+renderBookmarks();
 
 </script>
 
