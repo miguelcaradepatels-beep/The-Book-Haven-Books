@@ -1,57 +1,68 @@
 ```html
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Teste EPUB</title>
 </head>
 
 <body>
 
-<h1 id="status">Iniciando...</h1>
+<h1 id="status">Carregando...</h1>
 
-<script src="https://cdn.jsdelivr.net/npm/epubjs/dist/epub.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/epubjs@0.3.93/dist/epub.min.js"></script>
 
 <script>
 
 document.getElementById("status").innerText =
-    "Epub.js carregado. Tentando abrir EPUB...";
+    "Bibliotecas carregadas. Abrindo EPUB...";
 
+console.log("JSZip:", typeof JSZip);
 console.log("Epub.js:", typeof ePub);
 
 const book = ePub(
     "./uma-historia-qualquer-de-uma-pessoa-qualquer.epub"
 );
 
-document.getElementById("status").innerText =
-    "EPUB enviado para o Epub.js...";
-
-console.log("Objeto book criado:", book);
-
-setTimeout(() => {
-
-    document.getElementById("status").innerText =
-        "⚠️ O EPUB não terminou de carregar após 10 segundos.";
-
-    console.log("TIMEOUT: book.ready não terminou.");
-
-}, 10000);
+console.log("Book criado:", book);
 
 book.ready.then(() => {
+
+    console.log("EPUB CARREGOU!");
 
     document.getElementById("status").innerText =
         "✅ EPUB CARREGOU!";
 
-    console.log("EPUB CARREGOU!");
-
 }).catch(error => {
+
+    console.error("ERRO:", error);
 
     document.getElementById("status").innerText =
         "❌ ERRO: " + error;
 
-    console.error("ERRO:", error);
-
 });
+
+setTimeout(() => {
+
+    if (
+        document.getElementById("status").innerText !==
+        "✅ EPUB CARREGOU!"
+    ) {
+
+        document.getElementById("status").innerText =
+            "⚠️ Ainda travado depois de 10 segundos.";
+
+        console.log(
+            "O carregamento do EPUB não terminou."
+        );
+    }
+
+}, 10000);
 
 </script>
 
