@@ -1,99 +1,12 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
 <meta charset="UTF-8">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>The Book Haven</title>
 
-<!-- Epub.js -->
-<script
-    src="https://cdn.jsdelivr.net/npm/epubjs@0.3.93/dist/epub.min.js"
-    defer>
-</script>
-
 <style>
-
-/* =========================================================
-   VARIÁVEIS
-========================================================= */
-
-:root {
-    --bg: #eee7da;
-    --surface: #faf6ee;
-    --surface2: #e6dccb;
-
-    --text: #352b22;
-    --soft: #786d60;
-
-    --accent: #9a7040;
-    --accent-light: #c7a473;
-
-    --border: rgba(60, 40, 20, .12);
-    --shadow: rgba(40, 25, 10, .16);
-
-    --reader-width: 760px;
-}
-
-
-/* =========================================================
-   TEMAS
-========================================================= */
-
-body.theme-night {
-    --bg: #12110f;
-    --surface: #1c1a17;
-    --surface2: #29251f;
-
-    --text: #e9e0d2;
-    --soft: #aaa092;
-
-    --accent: #c7a36a;
-    --accent-light: #dfbf8b;
-
-    --border: rgba(255,255,255,.08);
-    --shadow: rgba(0,0,0,.45);
-}
-
-
-body.theme-cozy {
-    --bg: #2a211b;
-    --surface: #36291f;
-    --surface2: #47362a;
-
-    --text: #ead9bd;
-    --soft: #bca98d;
-
-    --accent: #d0a25c;
-    --accent-light: #e0bd82;
-
-    --border: rgba(255,255,255,.08);
-    --shadow: rgba(0,0,0,.4);
-}
-
-
-body.theme-forest {
-    --bg: #17201b;
-    --surface: #202b24;
-    --surface2: #2d3b32;
-
-    --text: #e0e6d9;
-    --soft: #aab5a7;
-
-    --accent: #a8af72;
-    --accent-light: #c6cc91;
-
-    --border: rgba(255,255,255,.08);
-    --shadow: rgba(0,0,0,.4);
-}
-
-
-/* =========================================================
-   RESET
-========================================================= */
-
 * {
     box-sizing: border-box;
 }
@@ -103,1987 +16,446 @@ body {
     margin: 0;
     padding: 0;
     width: 100%;
-    min-height: 100%;
+    height: 100%;
 }
 
 body {
-    background: var(--bg);
-    color: var(--text);
-
-    font-family:
-        Georgia,
-        "Times New Roman",
-        serif;
-
-    transition:
-        background .25s ease,
-        color .25s ease;
+    font-family: Georgia, "Times New Roman", serif;
+    background: #f4ead8;
+    color: #33271f;
+    overflow: hidden;
+    transition: background .2s, color .2s;
 }
 
+/* =========================
+   CABEÇALHO
+========================= */
 
-/* =========================================================
-   TOPO
-========================================================= */
-
-.topbar {
-    height: 68px;
-
+header {
+    height: 58px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-
-    padding: 0 28px;
-
-    background: var(--surface);
-
-    border-bottom:
-        1px solid var(--border);
-
+    padding: 0 18px;
+    background: rgba(255,255,255,.55);
+    border-bottom: 1px solid rgba(0,0,0,.08);
+    backdrop-filter: blur(8px);
     position: relative;
-    z-index: 100;
+    z-index: 10;
 }
 
 .logo {
-    font-size: 28px;
+    font-size: 20px;
     font-weight: bold;
 }
 
-.logo span {
-    color: var(--accent);
-}
-
-.top-actions {
+.buttons {
     display: flex;
-    gap: 5px;
-}
-
-.icon-button {
-    width: 42px;
-    height: 42px;
-
-    border: none;
-    border-radius: 50%;
-
-    background: transparent;
-    color: var(--text);
-
-    font-size: 18px;
-
-    cursor: pointer;
-}
-
-.icon-button:hover {
-    background: var(--surface2);
-}
-
-
-/* =========================================================
-   HOME
-========================================================= */
-
-#home {
-    min-height: calc(100vh - 68px);
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    padding: 45px 20px;
-}
-
-.home-card {
-    width: 100%;
-    max-width: 1050px;
-
-    display: grid;
-    grid-template-columns: 330px 1fr;
-
-    gap: 60px;
-
-    align-items: center;
-}
-
-.cover {
-    width: 330px;
-    height: 490px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    padding: 35px;
-
-    text-align: center;
-
-    color: white;
-
-    background:
-        linear-gradient(
-            145deg,
-            #493424,
-            #85623e
-        );
-
-    border-radius: 7px;
-
-    box-shadow:
-        15px 20px 35px var(--shadow);
-
-    position: relative;
-}
-
-.cover::before {
-    content: "";
-
-    position: absolute;
-    inset: 12px;
-
-    border:
-        1px solid
-        rgba(255,255,255,.28);
-}
-
-.cover-content {
-    position: relative;
-    z-index: 1;
-}
-
-.cover-small {
-    font-family: Arial, sans-serif;
-
-    text-transform: uppercase;
-
-    letter-spacing: 4px;
-
-    font-size: 11px;
-
-    opacity: .8;
-}
-
-.cover h1 {
-    font-size: 42px;
-    line-height: 1.05;
-
-    margin: 35px 0;
-}
-
-.cover-author {
-    font-size: 18px;
-}
-
-.home-info h1 {
-    font-size: 58px;
-    line-height: 1;
-
-    margin: 15px 0 20px;
-}
-
-.eyebrow {
-    color: var(--accent);
-
-    text-transform: uppercase;
-
-    letter-spacing: 3px;
-
-    font-family: Arial, sans-serif;
-
-    font-size: 12px;
-
-    font-weight: bold;
-}
-
-.home-info p {
-    color: var(--soft);
-
-    line-height: 1.8;
-
-    max-width: 580px;
-}
-
-.continue-box {
-    margin-top: 25px;
-
-    padding: 16px;
-
-    background: var(--surface);
-
-    border:
-        1px solid var(--border);
-
-    border-radius: 10px;
-
-    display: none;
-}
-
-.continue-box.visible {
-    display: block;
-}
-
-.continue-top {
-    display: flex;
-    justify-content: space-between;
-
-    margin-bottom: 9px;
-
-    font-family: Arial, sans-serif;
-
-    font-size: 12px;
-
-    color: var(--soft);
-}
-
-.progress-track {
-    height: 5px;
-
-    background: var(--surface2);
-
-    border-radius: 20px;
-
-    overflow: hidden;
-}
-
-.progress-fill {
-    height: 100%;
-
-    width: 0%;
-
-    background: var(--accent);
-}
-
-.primary-button {
-    margin-top: 25px;
-
-    padding: 15px 25px;
-
-    border: none;
-    border-radius: 8px;
-
-    background: var(--accent);
-
-    color: white;
-
-    font-family: Arial, sans-serif;
-
-    font-weight: bold;
-
-    cursor: pointer;
-}
-
-.primary-button:hover {
-    filter: brightness(.92);
-}
-
-
-/* =========================================================
-   LEITOR
-========================================================= */
-
-#reader {
-    display: none;
-
-    height: calc(100vh - 68px);
-
-    flex-direction: column;
-}
-
-.reader-bar {
-    height: 58px;
-
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    padding: 0 15px;
-
-    background: var(--surface);
-
-    border-bottom:
-        1px solid var(--border);
-
-    position: relative;
-
-    z-index: 20;
-}
-
-.reader-left,
-.reader-right {
-    display: flex;
-    align-items: center;
-
-    gap: 4px;
-}
-
-.chapter-name {
-    max-width: 400px;
-
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-
-    font-size: 18px;
-    font-weight: bold;
-}
-
-#readerProgress {
-    position: absolute;
-
-    top: 0;
-    left: 0;
-
-    width: 0%;
-
-    height: 3px;
-
-    background: var(--accent);
-
-    z-index: 50;
-}
-
-
-/* =========================================================
-   LIVRO
-========================================================= */
-
-.reader-area {
-    flex: 1;
-
-    display: flex;
-
-    justify-content: center;
-
-    overflow: hidden;
-
-    padding: 20px;
-}
-
-#viewer {
-    width: var(--reader-width);
-    height: 100%;
-
-    background: var(--surface);
-
-    box-shadow:
-        0 5px 35px var(--shadow);
-
-    border-radius: 4px;
-
-    overflow: hidden;
-}
-
-
-/* =========================================================
-   BARRA INFERIOR
-========================================================= */
-
-.bottom-bar {
-    height: 58px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    gap: 20px;
-
-    background: var(--surface);
-
-    border-top:
-        1px solid var(--border);
-}
-
-.nav-button {
-    border: none;
-
-    background: transparent;
-
-    color: var(--text);
-
-    padding: 9px 15px;
-
-    border-radius: 7px;
-
-    cursor: pointer;
-
-    font-family: Arial, sans-serif;
-}
-
-.nav-button:hover {
-    background: var(--surface2);
-}
-
-.page-indicator {
-    font-family: Arial, sans-serif;
-
-    font-size: 12px;
-
-    color: var(--soft);
-}
-
-
-/* =========================================================
-   LOADING
-========================================================= */
-
-#loadingScreen {
-    position: fixed;
-
-    inset: 0;
-
-    background: var(--bg);
-
-    display: none;
-
-    align-items: center;
-    justify-content: center;
-
-    flex-direction: column;
-
-    z-index: 1000;
-}
-
-#loadingScreen.active {
-    display: flex;
-}
-
-.loading-book {
-    font-size: 48px;
-
-    margin-bottom: 18px;
-}
-
-.loading-title {
-    font-size: 24px;
-
-    font-weight: bold;
-}
-
-.loading-text {
-    margin-top: 8px;
-
-    color: var(--soft);
-
-    font-family: Arial, sans-serif;
-
-    font-size: 13px;
-}
-
-.loading-bar {
-    width: 180px;
-    height: 4px;
-
-    margin-top: 25px;
-
-    background: var(--surface2);
-
-    border-radius: 20px;
-
-    overflow: hidden;
-}
-
-.loading-bar-inner {
-    width: 35%;
-    height: 100%;
-
-    background: var(--accent);
-
-    animation:
-        loadingMove 1s
-        infinite ease-in-out;
-}
-
-@keyframes loadingMove {
-
-    0% {
-        transform: translateX(-150%);
-    }
-
-    100% {
-        transform: translateX(500%);
-    }
-
-}
-
-
-/* =========================================================
-   PAINEL
-========================================================= */
-
-.overlay {
-    position: fixed;
-
-    inset: 0;
-
-    background: rgba(0,0,0,.4);
-
-    opacity: 0;
-
-    pointer-events: none;
-
-    transition: opacity .2s;
-
-    z-index: 190;
-}
-
-.overlay.active {
-    opacity: 1;
-
-    pointer-events: auto;
-}
-
-.side-panel {
-    position: fixed;
-
-    top: 0;
-    left: 0;
-
-    height: 100vh;
-
-    width: min(380px, 90vw);
-
-    background: var(--surface);
-
-    box-shadow:
-        10px 0 35px rgba(0,0,0,.25);
-
-    z-index: 200;
-
-    transform: translateX(-105%);
-
-    transition:
-        transform .25s ease;
-}
-
-.side-panel.open {
-    transform: translateX(0);
-}
-
-.panel-header {
-    height: 70px;
-
-    padding: 0 20px;
-
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    border-bottom:
-        1px solid var(--border);
-}
-
-.panel-title {
-    font-size: 27px;
-    font-weight: bold;
-}
-
-.panel-content {
-    padding: 20px;
-
-    height: calc(100vh - 70px);
-
-    overflow-y: auto;
-}
-
-.panel-section {
-    margin-bottom: 30px;
-}
-
-.panel-section h3 {
-    font-family: Arial, sans-serif;
-
-    text-transform: uppercase;
-
-    letter-spacing: 2px;
-
-    font-size: 11px;
-
-    color: var(--soft);
-}
-
-.toc-item,
-.bookmark-item {
-    width: 100%;
-
-    display: block;
-
-    text-align: left;
-
-    border: none;
-
-    background: transparent;
-
-    color: var(--text);
-
-    padding: 11px;
-
-    border-radius: 7px;
-
-    cursor: pointer;
-}
-
-.toc-item:hover,
-.bookmark-item:hover {
-    background: var(--surface2);
-}
-
-
-/* =========================================================
-   CONFIGURAÇÕES
-========================================================= */
-
-.setting {
-    margin-bottom: 22px;
-}
-
-.setting label {
-    display: block;
-
-    margin-bottom: 8px;
-
-    font-family: Arial, sans-serif;
-
-    font-size: 13px;
-
-    color: var(--soft);
-}
-
-.theme-grid {
-    display: grid;
-
-    grid-template-columns: 1fr 1fr;
-
     gap: 7px;
 }
 
-.theme-button {
-    padding: 11px;
-
-    border:
-        1px solid var(--border);
-
-    background: var(--surface2);
-
-    color: var(--text);
-
-    border-radius: 7px;
-
-    cursor: pointer;
-}
-
-.theme-button.active {
-    outline:
-        2px solid var(--accent);
-}
-
-.range-row {
-    display: flex;
-
-    align-items: center;
-
-    gap: 10px;
-}
-
-.range-row input {
-    flex: 1;
-}
-
-.range-value {
-    width: 45px;
-
-    text-align: right;
-
-    font-family: Arial, sans-serif;
-
-    font-size: 12px;
-
-    color: var(--soft);
-}
-
-
-/* =========================================================
-   MODO FOCO
-========================================================= */
-
-body.focus-mode .topbar,
-body.focus-mode .reader-bar,
-body.focus-mode .bottom-bar {
-    opacity: 0;
-
-    pointer-events: none;
-}
-
-body.focus-mode .reader-area {
-    padding: 0;
-}
-
-body.focus-mode #viewer {
-    border-radius: 0;
-
-    box-shadow: none;
-}
-
-.focus-exit {
-    position: fixed;
-
-    top: 20px;
-    right: 20px;
-
-    z-index: 150;
-
-    opacity: 0;
-
-    pointer-events: none;
-
+button {
     border: none;
-
-    background: var(--surface);
-
-    color: var(--text);
-
-    padding: 10px 14px;
-
-    border-radius: 7px;
-
+    background: rgba(0,0,0,.07);
+    color: inherit;
+    border-radius: 8px;
+    padding: 8px 11px;
     cursor: pointer;
+    font-size: 14px;
 }
 
-body.focus-mode .focus-exit {
-    opacity: 1;
-
-    pointer-events: auto;
+button:hover {
+    background: rgba(0,0,0,.13);
 }
 
+/* =========================
+   PROGRESSO
+========================= */
 
-/* =========================================================
-   TOAST
-========================================================= */
+.progress-area {
+    height: 4px;
+    background: rgba(0,0,0,.08);
+}
 
-.toast {
+#progress {
+    width: 0%;
+    height: 100%;
+    background: #9b6b43;
+}
+
+/* =========================
+   LEITOR
+========================= */
+
+#viewer {
+    width: 100%;
+    height: calc(100% - 62px);
+}
+
+/* =========================
+   PAINEL
+========================= */
+
+.panel {
     position: fixed;
-
-    bottom: 75px;
-    left: 50%;
-
-    transform:
-        translate(-50%, 15px);
-
-    background: #25211d;
-
-    color: white;
-
-    padding: 10px 16px;
-
-    border-radius: 7px;
-
-    font-family: Arial, sans-serif;
-
-    font-size: 12px;
-
-    opacity: 0;
-
-    pointer-events: none;
-
-    transition:
-        opacity .2s,
-        transform .2s;
-
-    z-index: 500;
+    top: 0;
+    right: -290px;
+    width: 290px;
+    height: 100%;
+    background: #f8f0e3;
+    box-shadow: -5px 0 20px rgba(0,0,0,.15);
+    padding: 20px;
+    z-index: 20;
+    transition: right .2s;
+    overflow-y: auto;
 }
 
-.toast.show {
-    opacity: 1;
-
-    transform:
-        translate(-50%, 0);
+.panel.open {
+    right: 0;
 }
 
+.panel h2 {
+    margin-top: 0;
+}
 
-/* =========================================================
+.option {
+    margin: 18px 0;
+}
+
+.option label {
+    display: block;
+    margin-bottom: 7px;
+    font-size: 14px;
+}
+
+input[type="range"] {
+    width: 100%;
+}
+
+/* =========================
+   MODO FOCO
+========================= */
+
+body.focus header {
+    display: none;
+}
+
+body.focus #viewer {
+    height: 100%;
+}
+
+/* =========================
+   TEMA ESCURO
+========================= */
+
+body.dark {
+    background: #171513;
+    color: #eee4d8;
+}
+
+body.dark header {
+    background: rgba(30,28,26,.9);
+    border-color: rgba(255,255,255,.08);
+}
+
+body.dark .panel {
+    background: #24211e;
+}
+
+/* =========================
    MOBILE
-========================================================= */
+========================= */
 
-@media (max-width: 800px) {
+@media (max-width: 600px) {
 
-    .topbar {
-        height: 60px;
-
-        padding: 0 14px;
+    header {
+        height: 52px;
+        padding: 0 10px;
     }
 
     .logo {
-        font-size: 23px;
-    }
-
-    #home {
-        min-height:
-            calc(100vh - 60px);
-
-        padding: 30px 15px;
-    }
-
-    .home-card {
-        grid-template-columns: 1fr;
-
-        gap: 30px;
-
-        justify-items: center;
-
-        text-align: center;
-    }
-
-    .cover {
-        width: 220px;
-        height: 330px;
-    }
-
-    .cover h1 {
-        font-size: 30px;
-    }
-
-    .home-info h1 {
-        font-size: 43px;
-    }
-
-    .home-info p {
-        margin-left: auto;
-        margin-right: auto;
-    }
-
-    .reader-bar {
-        height: 55px;
-
-        padding: 0 7px;
-    }
-
-    .chapter-name {
-        max-width: 170px;
-
         font-size: 16px;
     }
 
-    .reader-area {
-        padding: 7px;
+    button {
+        padding: 7px 8px;
+        font-size: 13px;
     }
 
     #viewer {
-        width: 100%;
-    }
-
-    .bottom-bar {
-        height: 55px;
-    }
-
-    .bottom-bar .nav-button {
-        padding: 8px 10px;
+        height: calc(100% - 56px);
     }
 }
-
 </style>
 </head>
 
-
 <body>
 
-
-<!-- =========================================================
-     LOADING
-========================================================= -->
-
-<div id="loadingScreen">
-
-    <div class="loading-book">
-        📖
-    </div>
-
-    <div class="loading-title">
-        The Book Haven
-    </div>
-
-    <div class="loading-text">
-        Abrindo seu livro...
-    </div>
-
-    <div class="loading-bar">
-
-        <div class="loading-bar-inner"></div>
-
-    </div>
-
-</div>
-
-
-<!-- =========================================================
-     TOPO
-========================================================= -->
-
-<header class="topbar">
+<header>
 
     <div class="logo">
-        The <span>Book Haven</span>
+        📖 The Book Haven
     </div>
 
-    <div class="top-actions">
-
-        <button
-            class="icon-button"
-            onclick="openPanel('toc')"
-            title="Sumário">
-
-            ☰
-
-        </button>
-
-        <button
-            class="icon-button"
-            onclick="openPanel('settings')"
-            title="Configurações">
-
-            ⚙
-
-        </button>
-
+    <div class="buttons">
+        <button onclick="previousPage()">←</button>
+        <button onclick="nextPage()">→</button>
+        <button onclick="bookmark()">🔖</button>
+        <button onclick="toggleFocus()">⛶</button>
+        <button onclick="openSettings()">⚙️</button>
     </div>
 
 </header>
 
-
-<!-- =========================================================
-     HOME
-========================================================= -->
-
-<section id="home">
-
-    <div class="home-card">
-
-
-        <div class="cover">
-
-            <div class="cover-content">
-
-                <div class="cover-small">
-                    The Book Haven
-                </div>
-
-                <h1>
-                    Uma História Qualquer
-                </h1>
-
-                <div class="cover-author">
-                    Uma pessoa qualquer
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <div class="home-info">
-
-            <div class="eyebrow">
-                Uma nova história espera por você
-            </div>
-
-            <h1>
-                Entre nas páginas.
-            </h1>
-
-            <p>
-                Encontre um lugar tranquilo,
-                deixe o mundo do lado de fora
-                e mergulhe nesta história.
-            </p>
-
-
-            <div
-                id="continueBox"
-                class="continue-box">
-
-                <div class="continue-top">
-
-                    <span>
-                        Seu progresso
-                    </span>
-
-                    <span id="homeProgressText">
-                        0%
-                    </span>
-
-                </div>
-
-                <div class="progress-track">
-
-                    <div
-                        id="homeProgress"
-                        class="progress-fill">
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            <button
-                id="startButton"
-                class="primary-button"
-                onclick="startBook()">
-
-                ▶ Começar a ler
-
-            </button>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- =========================================================
-     LEITOR
-========================================================= -->
-
-<section id="reader">
-
-
-    <div id="readerProgress"></div>
-
-
-    <div class="reader-bar">
-
-
-        <div class="reader-left">
-
-            <button
-                class="icon-button"
-                onclick="openPanel('toc')">
-
-                ☰
-
-            </button>
-
-            <div
-                id="chapterName"
-                class="chapter-name">
-
-                The Book Haven
-
-            </div>
-
-        </div>
-
-
-        <div class="reader-right">
-
-            <button
-                class="icon-button"
-                onclick="addBookmark()"
-                title="Marcador">
-
-                🔖
-
-            </button>
-
-            <button
-                class="icon-button"
-                onclick="toggleFocusMode()"
-                title="Modo foco">
-
-                ◉
-
-            </button>
-
-            <button
-                class="icon-button"
-                onclick="goHome()"
-                title="Início">
-
-                ⌂
-
-            </button>
-
-        </div>
-
-    </div>
-
-
-    <div class="reader-area">
-
-        <div id="viewer"></div>
-
-    </div>
-
-
-    <div class="bottom-bar">
-
-        <button
-            class="nav-button"
-            onclick="previousPage()">
-
-            ← Anterior
-
-        </button>
-
-        <div
-            id="pageIndicator"
-            class="page-indicator">
-
-            0%
-
-        </div>
-
-        <button
-            class="nav-button"
-            onclick="nextPage()">
-
-            Próximo →
-
-        </button>
-
-    </div>
-
-</section>
-
-
-<!-- =========================================================
-     PAINEL
-========================================================= -->
-
-<div
-    id="overlay"
-    class="overlay"
-    onclick="closePanels()">
+<div class="progress-area">
+    <div id="progress"></div>
 </div>
 
+<div id="viewer"></div>
 
-<aside
-    id="sidePanel"
-    class="side-panel">
+<!-- PAINEL DE CONFIGURAÇÕES -->
 
+<div id="settings" class="panel">
 
-    <div class="panel-header">
+    <button onclick="closeSettings()">✕ Fechar</button>
 
-        <div
-            id="panelTitle"
-            class="panel-title">
+    <h2>Configurações</h2>
 
-            Sumário
+    <div class="option">
+        <label>Tamanho da fonte</label>
 
-        </div>
+        <input
+            id="fontSize"
+            type="range"
+            min="80"
+            max="160"
+            value="100"
+            oninput="changeFontSize(this.value)"
+        >
+    </div>
 
-        <button
-            class="icon-button"
-            onclick="closePanels()">
+    <div class="option">
+        <label>Espaçamento</label>
 
-            ×
+        <input
+            id="lineHeight"
+            type="range"
+            min="1"
+            max="2"
+            step="0.1"
+            value="1.5"
+            oninput="changeLineHeight(this.value)"
+        >
+    </div>
 
+    <div class="option">
+
+        <button onclick="toggleTheme()">
+            🌓 Alternar tema
         </button>
 
     </div>
 
-
-    <div class="panel-content">
-
-
-        <div
-            id="tocSection"
-            class="panel-section">
-
-            <h3>
-                Conteúdo
-            </h3>
-
-            <div id="tocList">
-
-                <p style="color:var(--soft);">
-                    Carregando sumário...
-                </p>
-
-            </div>
-
-        </div>
-
-
-        <div
-            id="bookmarkSection"
-            class="panel-section">
-
-            <h3>
-                Marcadores
-            </h3>
-
-            <div id="bookmarkList">
-
-                <p style="color:var(--soft);">
-                    Nenhum marcador ainda.
-                </p>
-
-            </div>
-
-        </div>
-
-
-        <div
-            id="settingsSection"
-            class="panel-section"
-            style="display:none;">
-
-            <h3>
-                Aparência
-            </h3>
-
-
-            <div class="setting">
-
-                <label>
-                    Tema
-                </label>
-
-                <div class="theme-grid">
-
-                    <button
-                        class="theme-button"
-                        data-theme="paper"
-                        onclick="setTheme('paper')">
-
-                        ☀ Papel
-
-                    </button>
-
-                    <button
-                        class="theme-button"
-                        data-theme="night"
-                        onclick="setTheme('night')">
-
-                        🌙 Noite
-
-                    </button>
-
-                    <button
-                        class="theme-button"
-                        data-theme="cozy"
-                        onclick="setTheme('cozy')">
-
-                        🕯 Aconchegante
-
-                    </button>
-
-                    <button
-                        class="theme-button"
-                        data-theme="forest"
-                        onclick="setTheme('forest')">
-
-                        🌲 Floresta
-
-                    </button>
-
-                </div>
-
-            </div>
-
-
-            <div class="setting">
-
-                <label>
-                    Tamanho da fonte
-                </label>
-
-                <div class="range-row">
-
-                    <input
-                        id="fontRange"
-                        type="range"
-                        min="75"
-                        max="145"
-                        value="100"
-                        oninput="changeFont(this.value)">
-
-                    <span
-                        id="fontValue"
-                        class="range-value">
-
-                        100%
-
-                    </span>
-
-                </div>
-
-            </div>
-
-
-            <div class="setting">
-
-                <label>
-                    Espaçamento
-                </label>
-
-                <div class="range-row">
-
-                    <input
-                        id="lineRange"
-                        type="range"
-                        min="1.4"
-                        max="2.3"
-                        step=".1"
-                        value="1.8"
-                        oninput="changeLineHeight(this.value)">
-
-                    <span
-                        id="lineValue"
-                        class="range-value">
-
-                        1.8
-
-                    </span>
-
-                </div>
-
-            </div>
-
-
-            <div class="setting">
-
-                <label>
-                    Largura do texto
-                </label>
-
-                <div class="range-row">
-
-                    <input
-                        id="widthRange"
-                        type="range"
-                        min="550"
-                        max="950"
-                        step="20"
-                        value="760"
-                        oninput="changeReaderWidth(this.value)">
-
-                    <span
-                        id="widthValue"
-                        class="range-value">
-
-                        760
-
-                    </span>
-
-                </div>
-
-            </div>
-
-
-            <button
-                class="theme-button"
-                style="width:100%;"
-                onclick="resetSettings()">
-
-                Restaurar configurações
-
-            </button>
-
-        </div>
+    <div class="option">
+
+        <button onclick="goToBookmark()">
+            🔖 Ir para marcador
+        </button>
 
     </div>
-
-</aside>
-
-
-<!-- =========================================================
-     MODO FOCO
-========================================================= -->
-
-<button
-    class="focus-exit"
-    onclick="toggleFocusMode()">
-
-    Sair do modo foco
-
-</button>
-
-
-<!-- =========================================================
-     TOAST
-========================================================= -->
-
-<div
-    id="toast"
-    class="toast">
-
-    Salvo
 
 </div>
 
+<!-- Epub.js -->
+
+<script src="https://cdn.jsdelivr.net/npm/epubjs/dist/epub.min.js"></script>
 
 <script>
 
-/* =========================================================
+/* =========================================
    CONFIGURAÇÃO
-========================================================= */
+========================================= */
 
 const EPUB_FILE =
     "uma-historia-qualquer-de-uma-pessoa-qualquer.epub";
 
+const STORAGE_POSITION =
+    "bookhaven_position";
 
-let book = null;
+const STORAGE_BOOKMARK =
+    "bookhaven_bookmark";
 
-let rendition = null;
+const STORAGE_THEME =
+    "bookhaven_theme";
+
+const STORAGE_FONT =
+    "bookhaven_font";
+
+const STORAGE_LINE =
+    "bookhaven_line";
+
+
+/* =========================================
+   VARIÁVEIS
+========================================= */
+
+let book;
+let rendition;
 
 let currentLocation = null;
+let savedBookmark = localStorage.getItem(STORAGE_BOOKMARK);
 
-let tocLoaded = false;
 
-
-/* =========================================================
-   INICIAR
-========================================================= */
+/* =========================================
+   INICIAR LIVRO
+========================================= */
 
 function startBook() {
 
-    document.getElementById("home")
-        .style.display = "none";
-
-    document.getElementById("reader")
-        .style.display = "flex";
-
-
-    if (rendition) {
-
-        return;
-
-    }
-
-
-    document.getElementById(
-        "loadingScreen"
-    ).classList.add("active");
-
-
-    waitForEpub();
-
-
-}
-
-
-/* =========================================================
-   ESPERAR EPUB.JS
-========================================================= */
-
-function waitForEpub() {
-
-    if (typeof ePub === "function") {
-
-        createReader();
-
-        return;
-
-    }
-
-
-    requestAnimationFrame(
-        waitForEpub
-    );
-
-}
-
-
-/* =========================================================
-   CRIAR LEITOR
-========================================================= */
-
-function createReader() {
-
-    /*
-        IMPORTANTE:
-
-        Aqui não carregamos sumário,
-        temas, configurações ou fontes.
-
-        Apenas abrimos o EPUB.
-    */
-
     book = ePub(EPUB_FILE);
 
+    rendition = book.renderTo("viewer", {
 
-    rendition =
-        book.renderTo(
-            "viewer",
-            {
-                width: "100%",
-                height: "100%",
-                spread: "none",
-                flow: "paginated"
-            }
-        );
+        width: "100%",
+        height: "100%",
 
+        spread: "none",
 
-    const saved =
-        localStorage.getItem(
-            "bookLocation"
-        );
+        flow: "paginated",
+
+        allowScriptedContent: false
+
+    });
 
 
-    /*
-        PRIMEIRO:
-        mostrar o livro.
-    */
+    /* posição salva */
 
-    const firstPage =
-        saved
-        ? rendition.display(saved)
-        : rendition.display();
+    const savedPosition =
+        localStorage.getItem(STORAGE_POSITION);
 
 
-    firstPage.then(
-        function() {
+    /* abre o livro */
 
-            /*
-                A primeira página já foi
-                renderizada.
+    rendition.display(
+        savedPosition || undefined
+    ).then(() => {
 
-                AGORA sim podemos esconder
-                o carregamento.
-            */
+        console.log("Livro carregado.");
 
-            hideLoading();
+        applySavedSettings();
+
+        updateProgress();
+
+    });
 
 
-            /*
-                Tudo que não é essencial
-                vai depois.
-            */
+    /* quando muda de página */
 
-            requestAnimationFrame(
-                function() {
+    rendition.on("relocated", location => {
 
-                    requestIdleCallbackSafe(
-                        finishReaderSetup
-                    );
+        currentLocation = location;
 
-                }
-            );
+        savePosition(location);
+
+        updateProgress();
+
+    });
+
+
+    /* teclado */
+
+    document.addEventListener("keydown", event => {
+
+        if (event.key === "ArrowRight") {
+
+            nextPage();
 
         }
-    );
 
+        if (event.key === "ArrowLeft") {
 
-    rendition.on(
-        "relocated",
-        handleLocation
-    );
-
-}
-
-
-/* =========================================================
-   IDLE CALLBACK
-========================================================= */
-
-function requestIdleCallbackSafe(
-    callback
-) {
-
-    if (
-        "requestIdleCallback"
-        in window
-    ) {
-
-        requestIdleCallback(
-            callback,
-            {
-                timeout: 1500
-            }
-        );
-
-    } else {
-
-        setTimeout(
-            callback,
-            100
-        );
-
-    }
-
-}
-
-
-/* =========================================================
-   FINALIZAR CONFIGURAÇÃO
-========================================================= */
-
-function finishReaderSetup() {
-
-    /*
-        Só agora aplicamos as configurações.
-    */
-
-    applyReaderSettings();
-
-
-    /*
-        E só agora começamos a carregar
-        o sumário.
-    */
-
-    loadTOC();
-
-
-    updateHomeProgress();
-
-}
-
-
-/* =========================================================
-   LOADING
-========================================================= */
-
-function hideLoading() {
-
-    const screen =
-        document.getElementById(
-            "loadingScreen"
-        );
-
-    screen.classList.remove(
-        "active"
-    );
-
-}
-
-
-/* =========================================================
-   SUMÁRIO
-========================================================= */
-
-function loadTOC() {
-
-    if (tocLoaded || !book) {
-
-        return;
-
-    }
-
-
-    book.loaded.navigation
-        .then(
-            function(navigation) {
-
-                tocLoaded = true;
-
-                createTOC(
-                    navigation.toc
-                );
-
-            }
-        )
-        .catch(
-            function() {
-
-                document.getElementById(
-                    "tocList"
-                ).innerHTML = `
-                    <p style="color:var(--soft);">
-                        Sumário indisponível.
-                    </p>
-                `;
-
-            }
-        );
-
-}
-
-
-/* =========================================================
-   CRIAR SUMÁRIO
-========================================================= */
-
-function createTOC(items) {
-
-    const list =
-        document.getElementById(
-            "tocList"
-        );
-
-
-    list.innerHTML = "";
-
-
-    if (
-        !items ||
-        items.length === 0
-    ) {
-
-        list.innerHTML = `
-            <p style="color:var(--soft);">
-                Este livro não possui sumário.
-            </p>
-        `;
-
-        return;
-
-    }
-
-
-    items.forEach(
-        function(item) {
-
-            const button =
-                document.createElement(
-                    "button"
-                );
-
-
-            button.className =
-                "toc-item";
-
-
-            button.textContent =
-                item.label;
-
-
-            button.onclick =
-                function() {
-
-                    rendition.display(
-                        item.href
-                    );
-
-                    closePanels();
-
-                };
-
-
-            list.appendChild(
-                button
-            );
+            previousPage();
 
         }
-    );
+
+        if (event.key === "Escape") {
+
+            closeSettings();
+
+        }
+
+    });
 
 }
 
 
-/* =========================================================
-   LOCALIZAÇÃO
-========================================================= */
+/* =========================================
+   SALVAR POSIÇÃO
+========================================= */
 
-function handleLocation(
-    location
-) {
+function savePosition(location) {
 
-    currentLocation =
-        location;
-
-
-    if (
-        !location ||
-        !location.start
-    ) {
-
+    if (!location || !location.start) {
         return;
-
     }
 
-
-    if (
-        location.start.cfi
-    ) {
+    if (location.start.cfi) {
 
         localStorage.setItem(
-            "bookLocation",
+            STORAGE_POSITION,
             location.start.cfi
         );
 
     }
 
-
-    updateProgress(
-        location
-    );
-
-
-    updateChapter(
-        location
-    );
-
 }
 
 
-/* =========================================================
+/* =========================================
    PROGRESSO
-========================================================= */
+========================================= */
 
-function updateProgress(
-    location
-) {
+function updateProgress() {
 
-    let percentage = 0;
+    if (
+        !currentLocation ||
+        !currentLocation.start
+    ) {
 
-
-    try {
-
-        if (
-            location.start.displayed &&
-            location.start.displayed.total
-        ) {
-
-            percentage =
-                Math.round(
-                    (
-                        (
-                            location.start.displayed.page
-                            - 1
-                        )
-                        /
-                        location.start.displayed.total
-                    ) * 100
-                );
-
-        }
-
-    } catch (error) {
-
-        percentage = 0;
+        return;
 
     }
 
+    let percentage =
+        currentLocation.start.percentage;
+
+    if (typeof percentage !== "number") {
+        return;
+    }
 
     percentage =
         Math.max(
             0,
             Math.min(
                 100,
-                percentage
+                percentage * 100
             )
         );
 
-
-    document.getElementById(
-        "readerProgress"
-    ).style.width =
-        percentage + "%";
-
-
-    document.getElementById(
-        "pageIndicator"
-    ).textContent =
-        percentage + "%";
-
-
-    localStorage.setItem(
-        "bookProgress",
-        percentage
-    );
-
-
-    updateHomeProgress();
+    document.getElementById("progress")
+        .style.width = percentage + "%";
 
 }
 
 
-/* =========================================================
-   CAPÍTULO
-========================================================= */
-
-function updateChapter(
-    location
-) {
-
-    /*
-        Não procuramos no sumário.
-
-        Isso evita trabalho desnecessário
-        durante a navegação.
-    */
-
-    try {
-
-        if (
-            location.start.href
-        ) {
-
-            let name =
-                location.start.href
-                .split("/")
-                .pop()
-                .split("#")[0];
-
-
-            name =
-                decodeURIComponent(
-                    name
-                );
-
-
-            if (name) {
-
-                document.getElementById(
-                    "chapterName"
-                ).textContent =
-                    name;
-
-            }
-
-        }
-
-    } catch (error) {}
-
-}
-
-
-/* =========================================================
-   PROGRESSO HOME
-========================================================= */
-
-function updateHomeProgress() {
-
-    const percentage =
-        parseInt(
-            localStorage.getItem(
-                "bookProgress"
-            ) || "0"
-        );
-
-
-    if (percentage <= 0) {
-
-        return;
-
-    }
-
-
-    document.getElementById(
-        "continueBox"
-    ).classList.add(
-        "visible"
-    );
-
-
-    document.getElementById(
-        "homeProgress"
-    ).style.width =
-        percentage + "%";
-
-
-    document.getElementById(
-        "homeProgressText"
-    ).textContent =
-        percentage + "%";
-
-
-    document.getElementById(
-        "startButton"
-    ).textContent =
-        "▶ Continuar lendo";
-
-}
-
-
-/* =========================================================
+/* =========================================
    NAVEGAÇÃO
-========================================================= */
+========================================= */
 
 function nextPage() {
 
     if (rendition) {
-
         rendition.next();
-
     }
 
 }
@@ -2092,948 +464,263 @@ function nextPage() {
 function previousPage() {
 
     if (rendition) {
-
         rendition.prev();
-
     }
 
 }
 
 
-/* =========================================================
-   TEMAS
-========================================================= */
-
-function setTheme(theme) {
-
-    document.body.classList.remove(
-        "theme-night",
-        "theme-cozy",
-        "theme-forest"
-    );
-
-
-    if (theme !== "paper") {
-
-        document.body.classList.add(
-            "theme-" + theme
-        );
-
-    }
-
-
-    localStorage.setItem(
-        "readerTheme",
-        theme
-    );
-
-
-    updateThemeButtons();
-
-
-    /*
-        O tema do EPUB é aplicado
-        SOMENTE depois da abertura.
-    */
-
-    if (rendition) {
-
-        applyBookTheme();
-
-    }
-
-}
-
-
-function updateThemeButtons() {
-
-    const theme =
-        localStorage.getItem(
-            "readerTheme"
-        ) || "paper";
-
-
-    document
-        .querySelectorAll(
-            ".theme-button"
-        )
-        .forEach(
-            function(button) {
-
-                if (
-                    button.dataset.theme
-                ) {
-
-                    button.classList.toggle(
-                        "active",
-                        button.dataset.theme === theme
-                    );
-
-                }
-
-            }
-        );
-
-}
-
-
-/* =========================================================
-   TEMA DO EPUB
-========================================================= */
-
-function applyBookTheme() {
-
-    if (!rendition) {
-
-        return;
-
-    }
-
-
-    const theme =
-        localStorage.getItem(
-            "readerTheme"
-        ) || "paper";
-
-
-    let background = "#faf6ee";
-
-    let color = "#352b22";
-
-
-    if (theme === "night") {
-
-        background = "#1c1a17";
-        color = "#e9e0d2";
-
-    }
-
-
-    if (theme === "cozy") {
-
-        background = "#36291f";
-        color = "#ead9bd";
-
-    }
-
-
-    if (theme === "forest") {
-
-        background = "#202b24";
-        color = "#e0e6d9";
-
-    }
-
-
-    rendition.themes.override(
-        "background",
-        background
-    );
-
-
-    rendition.themes.override(
-        "color",
-        color
-    );
-
-}
-
-
-/* =========================================================
-   FONTE
-========================================================= */
-
-function changeFont(value) {
-
-    document.getElementById(
-        "fontValue"
-    ).textContent =
-        value + "%";
-
-
-    localStorage.setItem(
-        "fontSize",
-        value
-    );
-
-
-    if (rendition) {
-
-        rendition.themes.fontSize(
-            value + "%"
-        );
-
-    }
-
-}
-
-
-/* =========================================================
-   ESPAÇAMENTO
-========================================================= */
-
-function changeLineHeight(
-    value
-) {
-
-    document.getElementById(
-        "lineValue"
-    ).textContent =
-        value;
-
-
-    localStorage.setItem(
-        "lineHeight",
-        value
-    );
-
-
-    applyBookStyles();
-
-}
-
-
-/* =========================================================
-   LARGURA
-========================================================= */
-
-function changeReaderWidth(
-    value
-) {
-
-    document.documentElement
-        .style
-        .setProperty(
-            "--reader-width",
-            value + "px"
-        );
-
-
-    document.getElementById(
-        "widthValue"
-    ).textContent =
-        value;
-
-
-    localStorage.setItem(
-        "readerWidth",
-        value
-    );
-
-}
-
-
-/* =========================================================
-   ESTILO DO EPUB
-========================================================= */
-
-function applyBookStyles() {
-
-    if (!rendition) {
-
-        return;
-
-    }
-
-
-    const font =
-        localStorage.getItem(
-            "fontSize"
-        ) || "100";
-
-
-    const line =
-        localStorage.getItem(
-            "lineHeight"
-        ) || "1.8";
-
-
-    /*
-        Registramos o tema apenas depois
-        que a página já apareceu.
-    */
-
-    rendition.themes.register(
-        "bookTheme",
-        {
-
-            body: {
-
-                "font-family":
-                    "Georgia, 'Times New Roman', serif !important",
-
-                "font-size":
-                    font + "% !important",
-
-                "line-height":
-                    line + " !important",
-
-                "padding":
-                    "30px 25px !important"
-
-            },
-
-            p: {
-
-                "line-height":
-                    line + " !important"
-
-            }
-
-        }
-    );
-
-
-    rendition.themes.select(
-        "bookTheme"
-    );
-
-
-    rendition.themes.fontSize(
-        font + "%"
-    );
-
-
-    applyBookTheme();
-
-}
-
-
-/* =========================================================
-   CONFIGURAÇÕES
-========================================================= */
-
-function loadSettings() {
-
-    const font =
-        localStorage.getItem(
-            "fontSize"
-        ) || "100";
-
-
-    const line =
-        localStorage.getItem(
-            "lineHeight"
-        ) || "1.8";
-
-
-    const width =
-        localStorage.getItem(
-            "readerWidth"
-        ) || "760";
-
-
-    document.getElementById(
-        "fontRange"
-    ).value =
-        font;
-
-
-    document.getElementById(
-        "fontValue"
-    ).textContent =
-        font + "%";
-
-
-    document.getElementById(
-        "lineRange"
-    ).value =
-        line;
-
-
-    document.getElementById(
-        "lineValue"
-    ).textContent =
-        line;
-
-
-    document.getElementById(
-        "widthRange"
-    ).value =
-        width;
-
-
-    document.getElementById(
-        "widthValue"
-    ).textContent =
-        width;
-
-
-    document.documentElement
-        .style
-        .setProperty(
-            "--reader-width",
-            width + "px"
-        );
-
-}
-
-
-function applyReaderSettings() {
-
-    applyBookStyles();
-
-}
-
-
-/* =========================================================
-   MARCADORES
-========================================================= */
-
-function addBookmark() {
+/* =========================================
+   MARCADOR
+========================================= */
+
+function bookmark() {
 
     if (
         !currentLocation ||
         !currentLocation.start
     ) {
 
-        showToast(
-            "Aguarde o livro carregar"
-        );
+        alert("Não foi possível criar o marcador.");
 
         return;
 
     }
-
-
-    const bookmarks =
-        JSON.parse(
-            localStorage.getItem(
-                "bookmarks"
-            ) || "[]"
-        );
-
 
     const cfi =
         currentLocation.start.cfi;
 
+    localStorage.setItem(
+        STORAGE_BOOKMARK,
+        cfi
+    );
 
-    if (
-        bookmarks.some(
-            item =>
-                item.cfi === cfi
-        )
-    ) {
+    savedBookmark = cfi;
 
-        showToast(
-            "Este ponto já está marcado"
-        );
+    alert("🔖 Marcador salvo!");
+
+}
+
+
+function goToBookmark() {
+
+    const bookmarkPosition =
+        localStorage.getItem(STORAGE_BOOKMARK);
+
+    if (!bookmarkPosition) {
+
+        alert("Você ainda não criou um marcador.");
 
         return;
 
     }
 
+    rendition.display(bookmarkPosition);
 
-    bookmarks.push({
+    closeSettings();
 
-        cfi: cfi,
+}
 
-        title:
-            document.getElementById(
-                "chapterName"
-            ).textContent,
 
-        date:
-            new Date()
-            .toLocaleDateString(
-                "pt-BR"
-            )
+/* =========================================
+   MODO FOCO
+========================================= */
 
-    });
+function toggleFocus() {
 
+    document.body.classList.toggle("focus");
+
+}
+
+
+/* =========================================
+   CONFIGURAÇÕES
+========================================= */
+
+function openSettings() {
+
+    document
+        .getElementById("settings")
+        .classList.add("open");
+
+}
+
+
+function closeSettings() {
+
+    document
+        .getElementById("settings")
+        .classList.remove("open");
+
+}
+
+
+/* =========================================
+   TAMANHO DA FONTE
+========================================= */
+
+function changeFontSize(value) {
+
+    if (!rendition) {
+        return;
+    }
+
+    rendition.themes.fontSize(
+        value + "%"
+    );
 
     localStorage.setItem(
-        "bookmarks",
-        JSON.stringify(
-            bookmarks
-        )
-    );
-
-
-    showToast(
-        "🔖 Marcador salvo"
+        STORAGE_FONT,
+        value
     );
 
 }
 
 
-/* =========================================================
-   MARCADORES
-========================================================= */
+/* =========================================
+   ESPAÇAMENTO
+========================================= */
 
-function renderBookmarks() {
+function changeLineHeight(value) {
 
-    const list =
-        document.getElementById(
-            "bookmarkList"
-        );
-
-
-    const bookmarks =
-        JSON.parse(
-            localStorage.getItem(
-                "bookmarks"
-            ) || "[]"
-        );
-
-
-    list.innerHTML = "";
-
-
-    if (
-        bookmarks.length === 0
-    ) {
-
-        list.innerHTML = `
-            <p style="color:var(--soft);">
-                Nenhum marcador ainda.
-            </p>
-        `;
-
+    if (!rendition) {
         return;
-
     }
 
+    rendition.themes.override(
+        "line-height",
+        value
+    );
 
-    bookmarks.forEach(
-        function(bookmark, index) {
-
-            const button =
-                document.createElement(
-                    "button"
-                );
-
-
-            button.className =
-                "bookmark-item";
-
-
-            button.textContent =
-                "🔖 " +
-                bookmark.title;
-
-
-            button.onclick =
-                function() {
-
-                    rendition.display(
-                        bookmark.cfi
-                    );
-
-                    closePanels();
-
-                };
-
-
-            list.appendChild(
-                button
-            );
-
-
-            const remove =
-                document.createElement(
-                    "button"
-                );
-
-
-            remove.className =
-                "bookmark-item";
-
-
-            remove.style.color =
-                "#a35a4a";
-
-
-            remove.textContent =
-                "Remover";
-
-
-            remove.onclick =
-                function() {
-
-                    bookmarks.splice(
-                        index,
-                        1
-                    );
-
-
-                    localStorage.setItem(
-                        "bookmarks",
-                        JSON.stringify(
-                            bookmarks
-                        )
-                    );
-
-
-                    renderBookmarks();
-
-                };
-
-
-            list.appendChild(
-                remove
-            );
-
-        }
+    localStorage.setItem(
+        STORAGE_LINE,
+        value
     );
 
 }
 
 
-/* =========================================================
-   PAINEL
-========================================================= */
+/* =========================================
+   TEMA
+========================================= */
 
-function openPanel(type) {
+function toggleTheme() {
 
-    const panel =
-        document.getElementById(
-            "sidePanel"
-        );
+    document.body.classList.toggle("dark");
 
+    const dark =
+        document.body.classList.contains("dark");
 
-    const overlay =
-        document.getElementById(
-            "overlay"
-        );
-
-
-    const toc =
-        document.getElementById(
-            "tocSection"
-        );
-
-
-    const bookmarks =
-        document.getElementById(
-            "bookmarkSection"
-        );
-
-
-    const settings =
-        document.getElementById(
-            "settingsSection"
-        );
-
-
-    panel.classList.add(
-        "open"
+    localStorage.setItem(
+        STORAGE_THEME,
+        dark ? "dark" : "light"
     );
-
-
-    overlay.classList.add(
-        "active"
-    );
-
-
-    toc.style.display =
-        "none";
-
-
-    bookmarks.style.display =
-        "none";
-
-
-    settings.style.display =
-        "none";
-
-
-    if (type === "toc") {
-
-        toc.style.display =
-            "block";
-
-
-        document.getElementById(
-            "panelTitle"
-        ).textContent =
-            "Sumário";
-
-    }
-
-
-    if (type === "bookmarks") {
-
-        bookmarks.style.display =
-            "block";
-
-
-        document.getElementById(
-            "panelTitle"
-        ).textContent =
-            "Marcadores";
-
-
-        renderBookmarks();
-
-    }
-
-
-    if (type === "settings") {
-
-        settings.style.display =
-            "block";
-
-
-        document.getElementById(
-            "panelTitle"
-        ).textContent =
-            "Configurações";
-
-    }
-
-}
-
-
-function closePanels() {
-
-    document.getElementById(
-        "sidePanel"
-    ).classList.remove(
-        "open"
-    );
-
-
-    document.getElementById(
-        "overlay"
-    ).classList.remove(
-        "active"
-    );
-
-}
-
-
-/* =========================================================
-   MODO FOCO
-========================================================= */
-
-function toggleFocusMode() {
-
-    document.body.classList.toggle(
-        "focus-mode"
-    );
-
-
-    const active =
-        document.body.classList.contains(
-            "focus-mode"
-        );
-
-
-    showToast(
-        active
-        ? "Modo foco ativado"
-        : "Modo foco desativado"
-    );
-
-}
-
-
-/* =========================================================
-   VOLTAR
-========================================================= */
-
-function goHome() {
-
-    document.getElementById(
-        "reader"
-    ).style.display =
-        "none";
-
-
-    document.getElementById(
-        "home"
-    ).style.display =
-        "flex";
-
-
-    document.body.classList.remove(
-        "focus-mode"
-    );
-
-
-    updateHomeProgress();
-
-}
-
-
-/* =========================================================
-   TOAST
-========================================================= */
-
-let toastTimer;
-
-
-function showToast(message) {
-
-    const toast =
-        document.getElementById(
-            "toast"
-        );
-
-
-    toast.textContent =
-        message;
-
-
-    toast.classList.add(
-        "show"
-    );
-
-
-    clearTimeout(
-        toastTimer
-    );
-
-
-    toastTimer =
-        setTimeout(
-            function() {
-
-                toast.classList.remove(
-                    "show"
-                );
-
-            },
-            2000
-        );
-
-}
-
-
-/* =========================================================
-   RESTAURAR
-========================================================= */
-
-function resetSettings() {
-
-    localStorage.removeItem(
-        "fontSize"
-    );
-
-    localStorage.removeItem(
-        "lineHeight"
-    );
-
-    localStorage.removeItem(
-        "readerWidth"
-    );
-
-    localStorage.removeItem(
-        "readerTheme"
-    );
-
-
-    loadSettings();
-
-    setTheme("paper");
 
 
     if (rendition) {
 
-        applyBookStyles();
+        if (dark) {
 
-    }
+            rendition.themes.override(
+                "background",
+                "#171513"
+            );
 
+            rendition.themes.override(
+                "color",
+                "#eee4d8"
+            );
 
-    showToast(
-        "Configurações restauradas"
-    );
+        } else {
 
-}
+            rendition.themes.override(
+                "background",
+                "#f4ead8"
+            );
 
-
-/* =========================================================
-   TECLADO
-========================================================= */
-
-document.addEventListener(
-    "keydown",
-    function(event) {
-
-        if (!rendition) {
-            return;
-        }
-
-
-        if (
-            event.target.tagName ===
-            "INPUT"
-        ) {
-
-            return;
-
-        }
-
-
-        if (
-            event.key ===
-            "ArrowRight"
-        ) {
-
-            nextPage();
-
-        }
-
-
-        if (
-            event.key ===
-            "ArrowLeft"
-        ) {
-
-            previousPage();
-
-        }
-
-
-        if (
-            event.key ===
-            "Escape"
-        ) {
-
-            closePanels();
-
-            document.body.classList.remove(
-                "focus-mode"
+            rendition.themes.override(
+                "color",
+                "#33271f"
             );
 
         }
 
+    }
 
-        if (
-            event.ctrlKey &&
-            event.key.toLowerCase() === "b"
-        ) {
+}
 
-            event.preventDefault();
 
-            addBookmark();
+/* =========================================
+   RESTAURAR CONFIGURAÇÕES
+========================================= */
 
-        }
+function applySavedSettings() {
+
+    const theme =
+        localStorage.getItem(STORAGE_THEME);
+
+    const font =
+        localStorage.getItem(STORAGE_FONT);
+
+    const line =
+        localStorage.getItem(STORAGE_LINE);
+
+
+    /* tema */
+
+    if (theme === "dark") {
+
+        document.body.classList.add("dark");
+
+        rendition.themes.override(
+            "background",
+            "#171513"
+        );
+
+        rendition.themes.override(
+            "color",
+            "#eee4d8"
+        );
 
     }
-);
 
 
-/* =========================================================
-   INICIALIZAÇÃO
-========================================================= */
+    /* fonte */
 
-loadSettings();
+    if (font) {
 
+        document.getElementById("fontSize")
+            .value = font;
 
-const savedTheme =
-    localStorage.getItem(
-        "readerTheme"
-    ) || "paper";
+        rendition.themes.fontSize(
+            font + "%"
+        );
 
-
-setTheme(
-    savedTheme
-);
+    }
 
 
-updateHomeProgress();
+    /* espaçamento */
+
+    if (line) {
+
+        document.getElementById("lineHeight")
+            .value = line;
+
+        rendition.themes.override(
+            "line-height",
+            line
+        );
+
+    }
+
+}
+
+
+/* =========================================
+   INICIAR
+========================================= */
+
+startBook();
 
 </script>
 
