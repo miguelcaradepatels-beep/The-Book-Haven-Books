@@ -2,27 +2,55 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<title>Teste</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Book Haven</title>
+
 <style>
 body {
     margin: 0;
     background: #f4ead8;
+    color: #33271f;
     font-family: Georgia, serif;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
+    text-align: center;
+    padding-top: 100px;
 }
 
 h1 {
-    color: #33271f;
+    font-size: 32px;
+}
+
+#status {
+    margin-top: 20px;
+    font-family: Arial, sans-serif;
 }
 </style>
 </head>
 
 <body>
 
-<h1>📖 The Book Haven carregou!</h1>
+<h1>📖 The Book Haven</h1>
+
+<div id="status">
+    Carregando Epub.js...
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/epubjs/dist/epub.min.js"></script>
+
+<script>
+
+if (typeof ePub === "function") {
+
+    document.getElementById("status").textContent =
+        "✅ Epub.js carregou normalmente!";
+
+} else {
+
+    document.getElementById("status").textContent =
+        "❌ Epub.js não carregou.";
+
+}
+
+</script>
 
 </body>
 </html>
