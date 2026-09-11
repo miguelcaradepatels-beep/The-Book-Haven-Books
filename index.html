@@ -1,11 +1,1223 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <title>The Book Haven</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>The Book Haven</title>
+
+<!-- Epub.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/epubjs@0.3.93/dist/epub.min.js"></script>
+
+<style>
+/* =========================================================
+   THE BOOK HAVEN — LEITOR
+   ========================================================= */
+
+:root {
+    --bg: #f3eee5;
+    --paper: #fffdf8;
+    --text: #29251f;
+    --muted: #756d60;
+    --accent: #76563c;
+    --accent-dark: #5b402d;
+    --border: #d8cdbb;
+    --shadow: rgba(45, 35, 25, 0.15);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+}
+
+body {
+    background:
+        radial-gradient(circle at top, rgba(255,255,255,.55), transparent 45%),
+        var(--bg);
+    color: var(--text);
+    font-family: Georgia, "Times New Roman", serif;
+    overflow: hidden;
+}
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.header {
+    height: 72px;
+    background: rgba(255, 253, 248, 0.96);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 24px;
+    position: relative;
+    z-index: 20;
+    box-shadow: 0 2px 12px rgba(0,0,0,.05);
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.logo-symbol {
+    width: 38px;
+    height: 38px;
+    border: 2px solid var(--accent);
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+}
+
+.logo-text {
+    font-size: 22px;
+    font-weight: bold;
+    letter-spacing: .3px;
+}
+
+.logo-subtitle {
+    color: var(--muted);
+    font-size: 12px;
+    margin-top: 2px;
+}
+
+.header-controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+button {
+    font-family: inherit;
+}
+
+.control-button {
+    border: 1px solid var(--border);
+    background: var(--paper);
+    color: var(--text);
+    border-radius: 8px;
+    min-width: 40px;
+    height: 40px;
+    padding: 0 12px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: .2s;
+}
+
+.control-button:hover {
+    background: #eee6d8;
+    transform: translateY(-1px);
+}
+
+/* =========================================================
+   MAIN
+   ========================================================= */
+
+.main {
+    height: calc(100vh - 72px);
+    display: flex;
+    position: relative;
+}
+
+/* =========================================================
+   SIDEBAR / TOC
+   ========================================================= */
+
+.sidebar {
+    width: 290px;
+    background: rgba(255, 253, 248, 0.98);
+    border-right: 1px solid var(--border);
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 15;
+    transform: translateX(-100%);
+    transition: transform .3s ease;
+    box-shadow: 5px 0 20px rgba(0,0,0,.08);
+    overflow-y: auto;
+}
+
+.sidebar.open {
+    transform: translateX(0);
+}
+
+.sidebar-title {
+    padding: 22px 20px 14px;
+    font-size: 20px;
+    font-weight: bold;
+    border-bottom: 1px solid var(--border);
+}
+
+.toc {
+    padding: 10px;
+}
+
+.toc-item {
+    display: block;
+    width: 100%;
+    text-align: left;
+    border: none;
+    background: transparent;
+    padding: 12px 14px;
+    border-radius: 7px;
+    color: var(--text);
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 15px;
+    line-height: 1.4;
+}
+
+.toc-item:hover {
+    background: #eee6d8;
+}
+
+.toc-item.active {
+    background: var(--accent);
+    color: white;
+}
+
+/* =========================================================
+   LEITOR
+   ========================================================= */
+
+.reader-area {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+}
+
+.reader {
+    width: min(1000px, calc(100% - 40px));
+    height: calc(100% - 95px);
+    margin-top: 20px;
+    background: var(--paper);
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    box-shadow:
+        0 12px 40px var(--shadow),
+        0 2px 5px rgba(0,0,0,.05);
+    overflow: hidden;
+    position: relative;
+}
+
+#viewer {
+    width: 100%;
+    height: 100%;
+}
+
+/* =========================================================
+   NAVEGAÇÃO
+   ========================================================= */
+
+.nav-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 52px;
+    height: 70px;
+    border: 1px solid var(--border);
+    background: rgba(255,253,248,.92);
+    color: var(--accent);
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 34px;
+    z-index: 10;
+    box-shadow: 0 4px 15px rgba(0,0,0,.08);
+    transition: .2s;
+}
+
+.nav-button:hover {
+    background: white;
+    transform: translateY(-50%) scale(1.04);
+}
+
+#prev {
+    left: 15px;
+}
+
+#next {
+    right: 15px;
+}
+
+/* =========================================================
+   BARRA INFERIOR
+   ========================================================= */
+
+.bottom-bar {
+    height: 55px;
+    width: min(1000px, calc(100% - 40px));
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    color: var(--muted);
+    font-size: 13px;
+}
+
+.progress-container {
+    flex: 1;
+    height: 5px;
+    background: #ddd3c4;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.progress {
+    height: 100%;
+    width: 0%;
+    background: var(--accent);
+    transition: width .3s;
+}
+
+/* =========================================================
+   LOADING
+   ========================================================= */
+
+.loading {
+    position: absolute;
+    inset: 0;
+    background: rgba(255,253,248,.96);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 15px;
+    z-index: 50;
+}
+
+.loading.hidden {
+    display: none;
+}
+
+.spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid #ddd3c4;
+    border-top-color: var(--accent);
+    border-radius: 50%;
+    animation: spin .8s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.loading-text {
+    font-size: 16px;
+}
+
+/* =========================================================
+   ERRO
+   ========================================================= */
+
+.error {
+    display: none;
+    position: absolute;
+    inset: 0;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 30px;
+    background: var(--paper);
+    z-index: 40;
+}
+
+.error.show {
+    display: flex;
+}
+
+.error-box {
+    max-width: 600px;
+}
+
+.error h2 {
+    color: var(--accent-dark);
+}
+
+.error p {
+    color: var(--muted);
+    line-height: 1.6;
+}
+
+/* =========================================================
+   DARK MODE
+   ========================================================= */
+
+body.dark {
+    --bg: #171512;
+    --paper: #211e1a;
+    --text: #e8e0d3;
+    --muted: #aaa092;
+    --accent: #b89469;
+    --accent-dark: #c9a77e;
+    --border: #40382f;
+    --shadow: rgba(0,0,0,.45);
+}
+
+body.dark .header,
+body.dark .sidebar,
+body.dark .nav-button,
+body.dark .control-button {
+    background: #211e1a;
+}
+
+body.dark .toc-item:hover,
+body.dark .control-button:hover {
+    background: #302b25;
+}
+
+body.dark .reader {
+    background: #211e1a;
+}
+
+/* =========================================================
+   RESPONSIVO
+   ========================================================= */
+
+@media (max-width: 700px) {
+
+    .header {
+        height: 62px;
+        padding: 0 12px;
+    }
+
+    .logo-text {
+        font-size: 18px;
+    }
+
+    .logo-subtitle {
+        display: none;
+    }
+
+    .logo-symbol {
+        width: 34px;
+        height: 34px;
+    }
+
+    .main {
+        height: calc(100vh - 62px);
+    }
+
+    .reader {
+        width: calc(100% - 12px);
+        height: calc(100% - 80px);
+        margin-top: 8px;
+        border-radius: 3px;
+    }
+
+    .bottom-bar {
+        width: calc(100% - 20px);
+        height: 55px;
+    }
+
+    .nav-button {
+        width: 40px;
+        height: 58px;
+        font-size: 28px;
+    }
+
+    #prev {
+        left: 5px;
+    }
+
+    #next {
+        right: 5px;
+    }
+
+    .header-controls {
+        gap: 4px;
+    }
+
+    .control-button {
+        min-width: 36px;
+        height: 36px;
+        padding: 0 8px;
+    }
+}
+</style>
 </head>
+
 <body>
-    <h1>The Book Haven</h1>
-    <p>Meu site está funcionando!</p>
+
+<!-- =======================================================
+     HEADER
+     ======================================================= -->
+
+<header class="header">
+
+    <div class="logo">
+
+        <div class="logo-symbol">
+            📖
+        </div>
+
+        <div>
+            <div class="logo-text">
+                The Book Haven
+            </div>
+
+            <div class="logo-subtitle">
+                Um lugar para histórias
+            </div>
+        </div>
+
+    </div>
+
+    <div class="header-controls">
+
+        <button
+            class="control-button"
+            id="menuButton"
+            title="Abrir sumário">
+            ☰
+        </button>
+
+        <button
+            class="control-button"
+            id="fontMinus"
+            title="Diminuir fonte">
+            A−
+        </button>
+
+        <button
+            class="control-button"
+            id="fontPlus"
+            title="Aumentar fonte">
+            A+
+        </button>
+
+        <button
+            class="control-button"
+            id="themeButton"
+            title="Modo escuro">
+            ☾
+        </button>
+
+    </div>
+
+</header>
+
+
+<!-- =======================================================
+     MAIN
+     ======================================================= -->
+
+<main class="main">
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar" id="sidebar">
+
+        <div class="sidebar-title">
+            Sumário
+        </div>
+
+        <div class="toc" id="toc">
+            <p style="padding:15px;color:#756d60;">
+                Carregando capítulos...
+            </p>
+        </div>
+
+    </aside>
+
+
+    <!-- READER -->
+
+    <section class="reader-area">
+
+        <div class="reader">
+
+            <div id="viewer"></div>
+
+            <button
+                class="nav-button"
+                id="prev"
+                title="Página anterior">
+                ‹
+            </button>
+
+            <button
+                class="nav-button"
+                id="next"
+                title="Próxima página">
+                ›
+            </button>
+
+        </div>
+
+
+        <div class="bottom-bar">
+
+            <span id="chapterName">
+                Carregando...
+            </span>
+
+            <div class="progress-container">
+                <div
+                    class="progress"
+                    id="progress">
+                </div>
+            </div>
+
+            <span id="pageInfo">
+                0%
+            </span>
+
+        </div>
+
+    </section>
+
+
+    <!-- LOADING -->
+
+    <div class="loading" id="loading">
+
+        <div class="spinner"></div>
+
+        <div class="loading-text">
+            Abrindo seu livro...
+        </div>
+
+    </div>
+
+
+    <!-- ERROR -->
+
+    <div class="error" id="error">
+
+        <div class="error-box">
+
+            <h2>
+                Não foi possível abrir o livro
+            </h2>
+
+            <p id="errorMessage">
+                Verifique se o arquivo EPUB está no repositório.
+            </p>
+
+        </div>
+
+    </div>
+
+</main>
+
+
+<script>
+
+/* =========================================================
+   CONFIGURAÇÃO
+   ========================================================= */
+
+const EPUB_URL =
+    "uma-historia-qualquer-de-uma-pessoa-qualquer.epub";
+
+
+/* =========================================================
+   VARIÁVEIS
+   ========================================================= */
+
+let book;
+let rendition;
+
+let fontSize = 100;
+
+const viewer = document.getElementById("viewer");
+const loading = document.getElementById("loading");
+const errorBox = document.getElementById("error");
+const errorMessage = document.getElementById("errorMessage");
+
+const sidebar = document.getElementById("sidebar");
+const toc = document.getElementById("toc");
+
+const chapterName = document.getElementById("chapterName");
+const progress = document.getElementById("progress");
+const pageInfo = document.getElementById("pageInfo");
+
+
+/* =========================================================
+   ABRIR EPUB
+   ========================================================= */
+
+function loadBook() {
+
+    try {
+
+        book = ePub(EPUB_URL);
+
+        rendition = book.renderTo("viewer", {
+
+            width: "100%",
+            height: "100%",
+
+            flow: "paginated",
+
+            manager: "default",
+
+            spread: "auto"
+
+        });
+
+
+        /* =================================================
+           ESTILO DO LIVRO
+           ================================================= */
+
+        rendition.themes.default({
+
+            body: {
+                "font-family":
+                    "Georgia, 'Times New Roman', serif",
+
+                "color":
+                    "#29251f",
+
+                "background":
+                    "#fffdf8",
+
+                "line-height":
+                    "1.7",
+
+                "padding":
+                    "30px 40px !important"
+            },
+
+            "p": {
+                "line-height":
+                    "1.7"
+            },
+
+            "h1": {
+                "font-family":
+                    "Georgia, serif",
+
+                "color":
+                    "#76563c"
+            },
+
+            "h2": {
+                "font-family":
+                    "Georgia, serif",
+
+                "color":
+                    "#76563c"
+            }
+
+        });
+
+
+        /* =================================================
+           TAMANHO DA FONTE
+           ================================================= */
+
+        rendition.themes.fontSize(
+            fontSize + "%"
+        );
+
+
+        /* =================================================
+           EVENTO DE PÁGINA
+           ================================================= */
+
+        rendition.on(
+            "relocated",
+            updateProgress
+        );
+
+
+        /* =================================================
+           EXIBIR PRIMEIRA PÁGINA
+           ================================================= */
+
+        rendition.display()
+            .then(() => {
+
+                loading.classList.add("hidden");
+
+                updateProgress();
+
+                loadNavigation();
+
+            })
+            .catch(showError);
+
+
+    } catch (error) {
+
+        showError(error);
+
+    }
+
+}
+
+
+/* =========================================================
+   SUMÁRIO
+   ========================================================= */
+
+function loadNavigation() {
+
+    book.loaded.navigation
+        .then(navigation => {
+
+            toc.innerHTML = "";
+
+            if (
+                !navigation ||
+                !navigation.toc ||
+                navigation.toc.length === 0
+            ) {
+
+                toc.innerHTML =
+                    "<p style='padding:15px;color:#756d60'>" +
+                    "O livro não possui sumário." +
+                    "</p>";
+
+                return;
+            }
+
+
+            navigation.toc.forEach((item, index) => {
+
+                const button =
+                    document.createElement("button");
+
+                button.className = "toc-item";
+
+                button.textContent =
+                    item.label.trim();
+
+                button.addEventListener(
+                    "click",
+                    () => {
+
+                        rendition.display(
+                            item.href
+                        );
+
+                        sidebar.classList.remove("open");
+
+                    }
+                );
+
+                toc.appendChild(button);
+
+            });
+
+        })
+        .catch(() => {
+
+            toc.innerHTML =
+                "<p style='padding:15px;color:#756d60'>" +
+                "Não foi possível carregar o sumário." +
+                "</p>";
+
+        });
+
+}
+
+
+/* =========================================================
+   PROGRESSO
+   ========================================================= */
+
+function updateProgress(location) {
+
+    if (!location) {
+
+        try {
+            location =
+                rendition.currentLocation();
+        } catch (e) {
+            return;
+        }
+
+    }
+
+    if (
+        !location ||
+        !location.start
+    ) {
+        return;
+    }
+
+
+    /* Percentual */
+
+    try {
+
+        const percentage =
+            book.locations.percentageFromCfi(
+                location.start.cfi
+            );
+
+        const percent =
+            Math.round(percentage * 100);
+
+        progress.style.width =
+            percent + "%";
+
+        pageInfo.textContent =
+            percent + "%";
+
+    } catch (e) {
+
+        pageInfo.textContent =
+            "Leitura";
+
+    }
+
+
+    /* Nome do capítulo */
+
+    if (
+        location.start &&
+        location.start.href
+    ) {
+
+        const href =
+            location.start.href;
+
+        const match =
+            findChapterName(href);
+
+        if (match) {
+            chapterName.textContent =
+                match;
+        }
+
+    }
+
+}
+
+
+/* =========================================================
+   ENCONTRAR NOME DO CAPÍTULO
+   ========================================================= */
+
+function findChapterName(href) {
+
+    const items =
+        document.querySelectorAll(".toc-item");
+
+    for (
+        let i = 0;
+        i < items.length;
+        i++
+    ) {
+
+        /*
+         * Não conseguimos garantir correspondência
+         * perfeita em todos os EPUBs.
+         * O título do capítulo continuará sendo
+         * atualizado pela navegação principal.
+         */
+
+    }
+
+    return null;
+
+}
+
+
+/* =========================================================
+   NAVEGAÇÃO
+   ========================================================= */
+
+document
+    .getElementById("prev")
+    .addEventListener(
+        "click",
+        () => {
+
+            if (rendition) {
+                rendition.prev();
+            }
+
+        }
+    );
+
+
+document
+    .getElementById("next")
+    .addEventListener(
+        "click",
+        () => {
+
+            if (rendition) {
+                rendition.next();
+            }
+
+        }
+    );
+
+
+/* =========================================================
+   TECLADO
+   ========================================================= */
+
+document.addEventListener(
+    "keydown",
+    event => {
+
+        if (event.key === "ArrowLeft") {
+
+            if (rendition) {
+                rendition.prev();
+            }
+
+        }
+
+        if (event.key === "ArrowRight") {
+
+            if (rendition) {
+                rendition.next();
+            }
+
+        }
+
+        if (event.key === "Escape") {
+
+            sidebar.classList.remove("open");
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   MENU
+   ========================================================= */
+
+document
+    .getElementById("menuButton")
+    .addEventListener(
+        "click",
+        () => {
+
+            sidebar.classList.toggle("open");
+
+        }
+    );
+
+
+/* =========================================================
+   TAMANHO DA FONTE
+   ========================================================= */
+
+document
+    .getElementById("fontPlus")
+    .addEventListener(
+        "click",
+        () => {
+
+            if (!rendition) return;
+
+            fontSize += 10;
+
+            if (fontSize > 160) {
+                fontSize = 160;
+            }
+
+            rendition.themes.fontSize(
+                fontSize + "%"
+            );
+
+            localStorage.setItem(
+                "bookhaven-font-size",
+                fontSize
+            );
+
+        }
+    );
+
+
+document
+    .getElementById("fontMinus")
+    .addEventListener(
+        "click",
+        () => {
+
+            if (!rendition) return;
+
+            fontSize -= 10;
+
+            if (fontSize < 70) {
+                fontSize = 70;
+            }
+
+            rendition.themes.fontSize(
+                fontSize + "%"
+            );
+
+            localStorage.setItem(
+                "bookhaven-font-size",
+                fontSize
+            );
+
+        }
+    );
+
+
+/* =========================================================
+   MODO ESCURO
+   ========================================================= */
+
+document
+    .getElementById("themeButton")
+    .addEventListener(
+        "click",
+        () => {
+
+            document.body.classList.toggle("dark");
+
+            const dark =
+                document.body.classList.contains("dark");
+
+
+            if (rendition) {
+
+                rendition.themes.default({
+
+                    body: {
+
+                        "font-family":
+                            "Georgia, 'Times New Roman', serif",
+
+                        "color":
+                            dark
+                                ? "#e8e0d3"
+                                : "#29251f",
+
+                        "background":
+                            dark
+                                ? "#211e1a"
+                                : "#fffdf8",
+
+                        "line-height":
+                            "1.7",
+
+                        "padding":
+                            "30px 40px !important"
+
+                    },
+
+                    "p": {
+                        "line-height":
+                            "1.7"
+                    },
+
+                    "h1": {
+                        "color":
+                            dark
+                                ? "#c9a77e"
+                                : "#76563c"
+                    },
+
+                    "h2": {
+                        "color":
+                            dark
+                                ? "#c9a77e"
+                                : "#76563c"
+                    }
+
+                });
+
+                rendition.themes.select("default");
+
+            }
+
+
+            localStorage.setItem(
+                "bookhaven-dark",
+                dark
+            );
+
+        }
+    );
+
+
+/* =========================================================
+   CARREGAR PREFERÊNCIAS
+   ========================================================= */
+
+function loadPreferences() {
+
+    const savedFont =
+        localStorage.getItem(
+            "bookhaven-font-size"
+        );
+
+    if (savedFont) {
+
+        fontSize =
+            parseInt(savedFont);
+
+    }
+
+
+    const savedDark =
+        localStorage.getItem(
+            "bookhaven-dark"
+        );
+
+    if (savedDark === "true") {
+
+        document.body.classList.add("dark");
+
+    }
+
+}
+
+
+/* =========================================================
+   ERRO
+   ========================================================= */
+
+function showError(error) {
+
+    console.error(error);
+
+    loading.classList.add("hidden");
+
+    errorBox.classList.add("show");
+
+    errorMessage.textContent =
+        "Não foi possível carregar o EPUB. " +
+        "Verifique se o arquivo " +
+        "'" + EPUB_URL + "'" +
+        " está na raiz do repositório e tente novamente.";
+
+}
+
+
+/* =========================================================
+   INICIAR
+   ========================================================= */
+
+loadPreferences();
+
+loadBook();
+
+</script>
+
 </body>
 </html>
